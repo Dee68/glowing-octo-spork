@@ -3,8 +3,10 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from .forms import ContactForm,SubscribersForm
 from . models import ContactMessage, Setting, SubscribedUser
+from product.models import *
 # Create your views here.
 def home(request):
+    products = Product.objects.all()
     if request.method == "POST":
         form = SubscribersForm(request.POST)
         if form.is_valid():
@@ -20,7 +22,7 @@ def home(request):
             return HttpResponseRedirect("/")
     else:
         form = SubscribersForm() 
-    context = {'form':form}
+    context = {'form':form,'products':products}
     return render(request, 'home/index.html', context)
 
 # contact page

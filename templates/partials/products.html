@@ -10,7 +10,7 @@
 			</div>
 			<div class="row">
 
-			{% comment %} {% for product in products %}
+			{% for product in products %}
 			
 				<div class="col-md-4 text-center animate-box">
 					<div class="product">
@@ -27,8 +27,8 @@
 						</div>
 					</div>
 				</div>
-			{% endfor %} {% endcomment %}
-			   <div class="col-md-4 text-center animate-box">
+			{% endfor %}
+			   {% comment %} <div class="col-md-4 text-center animate-box">
 					<div class="product">
 						<div class="product-grid" style="background-image:url({% static 'images/product-1.jpg' %});">
 							<span class="sale">Sale</span>
@@ -130,7 +130,7 @@
 						</div>
 					</div>
 				</div> 
-			</div>
+			</div> {% endcomment %}
 			
 		</div>
 	</div>
