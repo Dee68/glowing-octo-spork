@@ -132,7 +132,7 @@
 				<div class="col-md-6 col-xs-6 text-center menu-1">
 					<ul>
 						<li class="has-dropdown">
-							<a href="#">Products</a>
+							<a href="{% url 'products:products' %}">Products</a>
 							<ul class="dropdown">
 							  {% comment %} {% for cat in pcategories %} {% endcomment %}
 							  
@@ -151,7 +151,7 @@
 						</li>
 						<li><a href="{% url 'about' %}">About</a></li>
 						<li class="has-dropdown">
-							<a href="services.html">Services</a>
+							<a href="#">Services</a>
 							{% comment %} <ul class="dropdown">
 								<li><a href="#">Consultation</a></li>
 								<li><a href="#">Training</a></li>
@@ -230,17 +230,17 @@
 				</div>
 				<div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">About</a></li>
-						<li><a href="#">Help</a></li>
-						<li><a href="#">Contact</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Meetups</a></li>
+						<li><a href="{% url 'about' %}">About</a></li>
+						{% comment %} <li><a href="#">Help</a></li> {% endcomment %}
+						<li><a href="{% url 'contact' %}">Contact</a></li>
+						{% comment %} <li><a href="#">Terms</a></li>
+						<li><a href="#">Meetups</a></li> {% endcomment %}
 					</ul>
 				</div>
 
 				<div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
 					<ul class="fh5co-footer-links">
-						<li><a href="#">Shop</a></li>
+						<li><a href="{% url 'products:products' %}">Products</a></li>
 						<li><a href="#">Privacy</a></li>
 						<li><a href="#">Testimonials</a></li>
 						<li><a href="#">Handbook</a></li>
@@ -252,9 +252,9 @@
 					<ul class="fh5co-footer-links">
 						<li><a href="#">Find Designers</a></li>
 						<li><a href="#">Find Developers</a></li>
-						<li><a href="#">Teams</a></li>
+						{% comment %} <li><a href="#">Teams</a></li> {% endcomment %}
 						<li><a href="#">Advertise</a></li>
-						<li><a href="#">API</a></li>
+						{% comment %} <li><a href="#">API</a></li> {% endcomment %}
 					</ul>
 				</div>
 			</div>
