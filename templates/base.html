@@ -50,7 +50,7 @@
 	<!-- Modernizr JS -->
 	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
 	<script src="{% static 'js/jquery.js' %}"></script>
-    {% comment %} <script>
+    <script>
        function grandTotal(){
            $.ajax({
                url:"{% url 'products:get_cart_data' %}",
@@ -108,7 +108,7 @@
 
            })
        }
-   </script> {% endcomment %}
+   </script>
 	
 	<!-- FOR IE9 below -->
 	<!--[if lt IE 9]>
@@ -134,10 +134,10 @@
 						<li class="has-dropdown">
 							<a href="{% url 'products:products' %}">Products</a>
 							<ul class="dropdown">
-							  {% comment %} {% for cat in pcategories %} {% endcomment %}
+							  {% for cat in pcategories %}
 							  
 								<li class="has-dropdown">
-								 <a href="#">Birds</a>
+								 <a href="{% url 'products:show_category' cat.slug %}">{{ cat.title }}</a>
 								   {% comment %} <ul class="dropdown">
 								    <li><a href="#">Turkeys</a></li>
 									<li><a href="#">Geese</a></li>
@@ -145,7 +145,8 @@
 									<li><a href="#">Quails</a></li>
 								   </ul> {% endcomment %}
 								</li>
-								<li><a href="#">Equipments</a></li> 
+								{% endfor %}
+								{% comment %} <li><a href="#">Equipments</a></li>  {% endcomment %}
 								 {% comment %} {% endfor %} {% endcomment %}
 							</ul>
 						</li>
@@ -171,8 +172,8 @@
 							<li><a href="#">Profile</a></li>
 						    {% else %} 
 						    <li>
-						    <a href="#">Login</a></li>
-							<li><a href="#">Sign up</a></li>
+						    <a href="{% url 'login' %}">Login</a></li>
+							<li><a href="{% url 'register' %}">Sign up</a></li>
 						     {% endif %} 
 						</ul>
 						</li>

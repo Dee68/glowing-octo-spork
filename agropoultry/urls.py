@@ -23,6 +23,7 @@ from account.views import register, loginPage
 
 urlpatterns = [
     path('', include('home.urls', namespace='home')),
+    path('products/', include('product.urls', namespace='products')),
     path('account/', include('account.urls', namespace='account')),
     path('register/', register, name='register'),
     path('login/', loginPage, name='login'),
