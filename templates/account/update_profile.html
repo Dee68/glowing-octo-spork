@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Profile Update
+{% endblock title %}
+{% block description %}
+Mega Poultry Farm
+{% endblock description %}
+{% block keywords %}
+Agro,Poultry,Hatchery,Chicken, Machinery
+{% endblock keywords %}
+{% block aside %}
+<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({% static 'images/img_bg_6.jpg' %});">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>Profile Update</h1>
+							<h2>Inuwa Agro </h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</header>
+{% endblock aside %}
+{% block products %}
+<div id="fh5co-contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2 col-md-push-1 animate-box">
+					
+					<div class="fh5co-contact-info">
+						
+					</div>
+
+				</div>
+				<div class="col-md-6 animate-box">
+				   
+					<h3 style="text-align:center; text-transform:uppercase; color:#3c763d">Profile Information.</h3>
+					<form action="" method="POST" enctype="multipart/form-data">
+					   {% csrf_token %}
+                       <fieldset class="form-group">
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="fname">First Name</label> -->
+								{{ user_form.username }}
+							</div>
+							 {% comment %} <div class="col-md-6">
+								<!-- <label for="lname">Last Name</label> -->
+								<input type="text" id="lname" class="form-control" placeholder="Your lastname">
+							</div>  {% endcomment %}
+						</div> 
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="email">Email</label> -->
+								{{ user_form.email }}
+							</div>
+						</div> 
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								{{ user_form.first_name }}
+							</div>
+						</div> 
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ user_form.last_name }}
+							</div>
+						</div> 
+					<!-- user profile form -->
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ profile_form.phone }}
+							</div>
+						</div> 
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ profile_form.address }}
+							</div>
+						</div> 
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ profile_form.city }}
+							</div>
+						</div> 
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ profile_form.country }}
+							</div>
+						</div> 
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ profile_form.company }}
+							</div>
+						</div> 
+                        <div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ profile_form.image }}
+							</div>
+						</div> 
+
+						</fieldset>
+						
+						<div class="form-group">
+							<input type="submit" value="Update User" class="btn btn-primary">
+						</div>
+
+					</form>		
+				</div>
+				<div class="col-md-2 col-md-push-1 animate-box">
+					
+					<div class="fh5co-contact-info">
+						
+					</div>
+
+				</div>
+			</div>
+			
+		</div>
+</div>
+{% endblock  %}
+	
+{% block counter %}
+
+<div id="fh5co-started">
+<div class="container">
+<div class="row animate-box">
+
+</div> 
+</div>
+</div>
+</div>
+
+{% endblock counter %}
+
+

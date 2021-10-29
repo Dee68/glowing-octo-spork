@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+ {{ setting.title }}
+{% endblock title %}
+{% block description %}
+ {{ setting.description }}
+{% endblock description %}
+{% block keywords %}
+ {{ setting.keywords }}
+{% endblock keywords %}
+{% block aside %}
+	{% include "partials/aside.html" %}
+{% endblock aside %}
+
+{% block services %}
+   {% include "partials/services.html" %}
+{% endblock services %}
+{% block products %}
+	<div id="fh5co-product">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<span>Cool Stuff</span>
+					<h2>Products of category:{{ category.title }}</h2>
+					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+				</div>
+			</div>
+			<div class="row">
+			{% for product in products %}
+			
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({{ product.image.url}});">
+							<div class="inner">
+								<p>
+									<a href="" class="icon update-cart" data-product="{{ product.id }}" data-action="add"><i class="icon-shopping-cart"></i></a> 
+									<a href="{% url 'products:product_details' product.id product.slug %}" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="{% url 'products:product_details' product.id product.slug %}">{{ product.title }}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+				
+{% endblock products %}
+	
+{% block testimonial %}
+	{% include "partials/testimonial.html" %}
+{% endblock testimonial %}
+	
+
+{% block counter %}
+   {% include "partials/counter.html" %}
+{% endblock counter %}
+

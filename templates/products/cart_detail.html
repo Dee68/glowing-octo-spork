@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+cart
+{% endblock title %}
+{% block description %}
+Mega Poultry Farm
+{% endblock description %}
+{% block keywords %}
+Agro,Poultry,Hatchery,Chicken, Machinery
+{% endblock keywords %}
+{% block header %}
+  <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/font-awesome.css' %}">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  
+{% endblock header %}
+{% block aside %}
+<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({% static 'images/img_bg_6.jpg' %});">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>Shopping Cart</h1>
+							<h2>Inuwa Agro </h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</header>
+{% endblock aside %}
+{% block products %}
+{% if items|length == 0 %}
+    <div class="container-fluid">
+        <div class="jumbotron alert alert-danger" style="text-align:center;">
+            &times; Your Shopping Cart is empty !!!  
+        </div>
+    </div>
+{% else %}
+<div id="fh5co-contact">
+	<div class="container">
+	<section id="cart_items">
+		<div class="container">
+			
+			
+			<div class="table-responsive cart_info">
+               
+				<table class="table table-condensed">
+					<thead>
+						<tr class="cart_menu">
+							<td class="image">Product</td>
+							<td class="description">Description</td>
+							<td class="price">UnitPrice</td>
+							<td class="quantity">Quantity</td>
+							<td class="total">Total</td>
+							<td><i class="fa fa-trash"></i></td>
+						</tr>
+					</thead>
+					<tbody>
+                      {% for item in items %}
+					 
+						<tr id={{ item.id }}>
+							<td class="cart_product">
+								<a href=""><img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}" style="width:50px;height:50px;"alt=""></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">{{ item.product.title }}</a></h4>
+								<p>{{ item.product.description }}</p>
+							</td>
+							<td class="cart_price">
+								<p>&#8358;{{ item.product.price }}</p>
+							</td>
+							<td class="cart_quantity">
+								<div class="cart_quantity_button">
+								<img class="cart_quantity_up" onclick="change_quan('{{item.id}}','plus')" src="{% static 'images/plus.jpg' %}" style="width:30px;height:30px;">	
+								<input class="cart_quantity_input " type="text" name="quantity" value="{{ item.quantity }}" autocomplete="off" size="2" id="cart{{ item.id }}">
+								<img class="cart_quantity_up" onclick="change_quan('{{item.id}}','minus')" src="{% static 'images/minus.jpg' %}" style="width:30px;height:30px;">
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">&#8358;{{ item.get_total }}</p>
+							</td>
+							<td class="cart_delete">
+								<button class="cart_quantity_delete" onclick="remove_cart('{{item.id}}')" ><i class="fa fa-times"></i></button>
+							</td>
+						</tr>
+                    {% endfor %}
+
+                   				 
+						{% comment %} <tr>
+							<td class="cart_product">
+								<a href=""><img src="images/cart/two.png" alt=""></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">Colorblock Scuba</a></h4>
+								<p>Web ID: 1089772</p>
+							</td>
+							<td class="cart_price">
+								<p>$59</p>
+							</td>
+							<td class="cart_quantity">
+								<div class="cart_quantity_button">
+									<a class="cart_quantity_up" href=""> + </a>
+									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+									<a class="cart_quantity_down" href=""> - </a>
+								</div>
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">$59</p>
+							</td>
+							<td class="cart_delete">
+								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+							</td>
+						</tr>
+						<tr>
+							<td class="cart_product">
+								<a href=""><img src="images/cart/three.png" alt=""></a>
+							</td>
+							<td class="cart_description">
+								<h4><a href="">Colorblock Scuba</a></h4>
+								<p>Web ID: 1089772</p>
+							</td>
+							<td class="cart_price">
+								<p>$59</p>
+							</td>
+							<td class="cart_quantity">
+								<div class="cart_quantity_button">
+									<a class="cart_quantity_up" href=""> + </a>
+									<input class="cart_quantity_input" type="text" name="quantity" value="1" autocomplete="off" size="2">
+									<a class="cart_quantity_down" href=""> - </a>
+								</div>
+							</td>
+							<td class="cart_total">
+								<p class="cart_total_price">$59</p>
+							</td>
+							<td class="cart_delete">
+								<a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a>
+							</td>
+						</tr>   {% endcomment %}
+					
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+	</section> <!--/#cart_items-->
+
+	<section id="do_action">
+		<div class="container">
+			<div class="heading">
+				<h3>What would you like to do next?</h3>
+				<p>Choose if you have a discount code or reward points you want to use or would like to estimate your delivery cost.</p>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="chose_area">
+						<ul class="user_option">
+							<li>
+								<input type="checkbox">
+								<label>Use Coupon Code</label>
+							</li>
+							<li>
+								<input type="checkbox">
+								<label>Use Gift Voucher</label>
+							</li>
+							<li>
+								<input type="checkbox">
+								<label>Estimate Shipping & Taxes</label>
+							</li>
+						</ul>
+						<ul class="user_info">
+							<li class="single_field">
+								<label>Country:</label>
+								<select>
+									<option>Nigeria</option>
+									<option>Ghana</option>
+									<option>Cameroun</option>
+									<option>Liberia</option>
+									<option>Siereleon</option>
+									<option>Benin</option>
+									<option>Ivory Coast</option>
+									<option>Togo</option>
+								</select>
+								
+							</li>
+							{% comment %} <li class="single_field">
+								<label>Region / State:</label>
+								<select>
+									<option>Select</option>
+									<option>Dhaka</option>
+									<option>London</option>
+									<option>Dillih</option>
+									<option>Lahore</option>
+									<option>Alaska</option>
+									<option>Canada</option>
+									<option>Dubai</option>
+								</select>
+							
+							</li> {% endcomment %}
+							<li class="single_field zip-field">
+								<label>Zip Code:</label>
+								<input type="text">
+							</li>
+						</ul>
+						<a class="btn btn-default update" href="">Get Quotes</a>
+						<a class="btn btn-default check_out" href="">Continue</a>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="total_area">
+						<ul>
+						    <li>Quantity: <span id="quantity"> </span></li>
+							{% comment %} <li id="item_total">Cart Sub Total <span>${{ order.get_cart_total }}</span></li> {% endcomment %}
+							<li>Eco Tax <span>&#8358;2</span></li>
+							<li>Shipping Cost <span>Free</span></li>
+							<li >Cart Grand Total <span id="grand_total"></span></li>
+						</ul>
+							<a class="btn btn-default update" href="{% url 'products:cart_details' %}">Update</a>
+							<a class="btn btn-default check_out" href="{% url 'products:checkout' %}">Checkout</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!--/#do_action-->
+	
+	</div>
+</div>
+{% endif %}
+{% endblock  %}
+	
+{% block counter %}
+<script src="{% static 'js/jquery.js' %}"></script>
+<script>
+       function grandTotal(){
+           $.ajax({
+               url:"{% url 'products:get_cart_data' %}",
+               type:'get',
+               success:function(data){
+                   //p = Math.round(100-((data.offer/data.total)*100),2)
+                   //save = data.total-data.offer;
+				   gtotal = data.total + 2
+                   $("#item_total").html("&#x20A6;"+data.total);
+                    $("#quantity").html(data.quantity+" Items");
+					$("#cartitems").html(data.quantity);
+                    $("#grand_total").html("&#8358;"+ gtotal+".00");
+                    //$("#btamt").html("&#8377;"+data.offer);
+
+               }
+           })
+       }
+       grandTotal();
+
+       function change_quan(id,action){
+           let old = $("#cart"+id).val();
+            
+           quan = 0
+           if(action=="plus"){
+               quan += parseInt(old)+1
+           }else{
+               quan += parseInt(old)-1
+           }
+           
+
+
+           $("#cart"+id).val(quan);
+           
+           $.ajax({
+               url:"{% url 'products:change_quan' %}",
+               type:"get",
+               data:{cid:id, quantity:quan},
+               success:function(data){
+                   grandTotal();
+                 if(data==0){
+                    remove_cart(id);
+                 }
+               }
+           })
+       }
+
+       function remove_cart(id){
+           $.ajax({
+               url:"{% url 'products:change_quan' %}",
+               data:{delete_cart:id},
+               success:function(data){
+                    grandTotal();
+                    $("#row"+id).hide();
+               }
+
+           })
+       }
+</script>
+<div id="fh5co-started">
+<div class="container">
+<div class="row animate-box">
+
+</div> 
+</div>
+</div>
+</div>
+
+{% endblock counter %}
+
+

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Home Page
+{% endblock title %}
+{% block description %}
+Mega Poultry Farm
+{% endblock description %}
+{% block keywords %}
+Agro,Poultry,Hatchery,Chicken, Machinery
+{% endblock keywords %}
+{% block aside %}
+	{% include "partials/aside.html" %}
+{% endblock aside %}
+
+{% block services %}
+   {% include "partials/services.html" %}
+{% endblock services %}
+{% block products %}
+	{% include "partials/products.html" %}
+{% endblock products %}
+	
+{% block testimonial %}
+	{% include "partials/testimonial.html" %}
+{% endblock testimonial %}
+	
+
+{% block counter %}
+   {% include "partials/counter.html" %}
+{% endblock counter %}
+{% block newsletter %}
+   {% include "partials/newsletter.html" %}
+{% endblock newsletter %}

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+Contact Info
+{% endblock title %}
+{% block description %}
+Mega Poultry Farm
+{% endblock description %}
+{% block keywords %}
+Agro,Poultry,Hatchery,Chicken, Machinery
+{% endblock keywords %}
+{% block aside %}
+<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({% static 'images/img_bg_6.jpg' %});">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>Contact Us</h1>
+							<h2>Inuwa Agro </h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</header>
+{% endblock aside %}
+{% block products %}
+<div id="fh5co-contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 col-md-push-1 animate-box">
+					
+					<div class="fh5co-contact-info">
+						<h3>Contact Information</h3>
+						<ul>
+							<li class="address">198 West 21th Street, <br> Suite 721 New York NY 10016</li>
+							<li class="phone"><a href="tel://1234567920">+ 1235 2355 98</a></li>
+							<li class="email"><a href="mailto:info@yoursite.com">info@yoursite.com</a></li>
+							<li class="url"><a href="http://gettemplates.co">gettemplates.co</a></li>
+						</ul>
+					</div>
+
+				</div>
+				<div class="col-md-6 animate-box">
+				   {% if messages %}
+				    {% for message in messages %}
+					<div class="alert alert-{{ message.level_tag}}">
+					   {{ message }}
+					</div>
+					{% endfor %}
+				    
+				   {% else %}
+				   {% endif %}
+					<h3>Get In Touch</h3>
+					<form action="" method="POST">
+					   {% csrf_token %}
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="fname">First Name</label> -->
+								{{ form.name }}
+							</div>
+							 {% comment %} <div class="col-md-6">
+								<!-- <label for="lname">Last Name</label> -->
+								<input type="text" id="lname" class="form-control" placeholder="Your lastname">
+							</div>  {% endcomment %}
+						</div> 
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="email">Email</label> -->
+								{{ form.email }}
+							</div>
+						</div> 
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="subject">Subject</label> -->
+								{{ form.subject }}
+							</div>
+						</div> 
+
+						<div class="row form-group">
+							<div class="col-md-12">
+								<!-- <label for="message">Message</label> -->
+								{{ form.message }}
+							</div>
+						</div> 
+						
+						
+						
+						
+						<div class="form-group">
+							<input type="submit" value="Send Message" class="btn btn-primary">
+						</div>
+
+					</form>		
+				</div>
+			</div>
+			
+		</div>
+</div>
+{% endblock  %}
+	
+{% block counter %}
+{% comment %} <div class="row" id="fh5co-counter" style="align:center;">
+    <div class="container" id="map">
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3305.733248043701!2d-118.24532098539802!3d34.05071312525937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c648fa1d4803%3A0xdec27bf11f9fd336!2s123%20S%20Los%20Angeles%20St%2C%20Los%20Angeles%2C%20CA%2090012%2C%20USA!5e0!3m2!1sen!2sbd!4v1585634930544!5m2!1sen!2sbd" frameborder="0" style="border:0;" allowfullscreen aria-hidden="false" tabindex="0"></iframe>
+    </div>
+</div> {% endcomment %}
+<!--- add google map -->
+<div id="fh5co-started">
+<div class="container">
+<div class="row animate-box">
+<div id="map" class="animate-box" data-animate-effect="fadeIn" style="align:center;">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42762.0941914251!2d35.39891163072433!3d47.943523177247414!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40dc41116584dc59%3A0xdafe7f3801195a1a!2z0JLRltC70YzQvdGP0L3RgdGM0LosINCX0LDQv9C-0YDRltC30YzQutCwINC-0LHQu9Cw0YHRgtGMLCA3MDAwMA!5e0!3m2!1suk!2sua!4v1633875705981!5m2!1suk!2sua" width="80%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+ {% comment %} <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.3714257064535!2d-86.7550931378034!3d34.66757706940219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8862656f8475892d%3A0xf3b1aee5313c9d4d!2sHuntsville%2C+AL+35813%2C+USA!5e0!3m2!1sen!2sbd!4v1445253385137" width="80%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe> {% endcomment %}
+</div> 
+</div>
+</div>
+</div>
+
+{% endblock counter %}
+
+

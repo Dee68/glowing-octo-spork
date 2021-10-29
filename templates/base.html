@@ -1,0 +1,306 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title> {% block title %}
+     Inuwa Agro
+    {% endblock title %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Inuwa Agro description{% block description %}{% endblock %}" />
+	<meta name="keywords" content="Inuwa Agro keywords{% block keywords %}{% endblock %}" />
+	
+
+	
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+	<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
+	<!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
+	 <!-- Favicon  -->
+    <link rel="icon" href="{% static 'images/inuwalogo.png' %}">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="{% static 'css/animate.css' %}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="{% static 'css/icomoon.css' %}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="{% static 'css/flexslider.css' %}">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+	<!-- Modernizr JS -->
+	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
+	<script src="{% static 'js/jquery.js' %}"></script>
+    {% comment %} <script>
+       function grandTotal(){
+           $.ajax({
+               url:"{% url 'products:get_cart_data' %}",
+               type:'get',
+               success:function(data){
+                   //p = Math.round(100-((data.offer/data.total)*100),2)
+                   //save = data.total-data.offer;
+				   
+                   $("#item_total").html("&#x20A6;"+data.total);
+                    $("#quantity").html(data.quantity+" Items");
+					$("#cartitems").html(data.quantity);
+                    $("#grand_total").html("&#8358;"+data.total);
+                    //$("#btamt").html("&#8377;"+data.offer);
+
+               }
+           })
+       }
+       grandTotal();
+
+       function change_quan(id,action){
+           let old = $("#cart"+id).val();
+            
+           quan = 0
+           if(action=="plus"){
+               quan += parseInt(old)+1
+           }else{
+               quan += parseInt(old)-1
+           }
+           
+
+
+           $("#cart"+id).val(quan);
+           
+           $.ajax({
+               url:"{% url 'products:change_quan' %}",
+               type:"get",
+               data:{cid:id, quantity:quan},
+               success:function(data){
+                   grandTotal();
+                 if(data==0){
+                    remove_cart(id);
+                 }
+               }
+           })
+       }
+
+       function remove_cart(id){
+           $.ajax({
+               url:"{% url 'products:change_quan' %}",
+               data:{delete_cart:id},
+               success:function(data){
+                    grandTotal();
+                    $("#row"+id).hide();
+               }
+
+           })
+       }
+   </script> {% endcomment %}
+	
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script src="js/respond.min.js"></script>
+	<![endif]-->
+     {% block header %}
+
+	 {% endblock header %}
+	</head>
+	<body>
+		
+	<div class="fh5co-loader"></div>
+	
+	<div id="page">
+	<nav class="fh5co-nav" role="navigation">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 col-xs-2">
+					<div id="fh5co-logo"><a href="/"><img class="mix-blend-mode" src="{% static 'images/inuwalogo.png' %}" width="180" height="150"/></a></div>
+				</div>
+				<div class="col-md-6 col-xs-6 text-center menu-1">
+					<ul>
+						<li class="has-dropdown">
+							<a href="#">Products</a>
+							<ul class="dropdown">
+							  {% comment %} {% for cat in pcategories %} {% endcomment %}
+							  
+								<li class="has-dropdown">
+								 <a href="#">Birds</a>
+								   {% comment %} <ul class="dropdown">
+								    <li><a href="#">Turkeys</a></li>
+									<li><a href="#">Geese</a></li>
+									<li><a href="#">Ducks</a></li>
+									<li><a href="#">Quails</a></li>
+								   </ul> {% endcomment %}
+								</li>
+								<li><a href="#">Equipments</a></li> 
+								 {% comment %} {% endfor %} {% endcomment %}
+							</ul>
+						</li>
+						<li><a href="{% url 'about' %}">About</a></li>
+						<li class="has-dropdown">
+							<a href="services.html">Services</a>
+							{% comment %} <ul class="dropdown">
+								<li><a href="#">Consultation</a></li>
+								<li><a href="#">Training</a></li>
+								<li><a href="#">Repairs & Installations</a></li>
+								
+							</ul> {% endcomment %}
+						</li>
+						<li><a href="{% url 'contact' %}">Contact</a></li>
+						<li class="has-dropdown">
+						<a href="#"><i class="icon-lock login"></i> Account</a>
+						<ul class="dropdown">
+						     {% if user.id is not None %}
+						     <li>
+						     <span><img src="#" style="height:40px; border-radius:30%;"></span>
+						     <a href="#}">logout</a>
+						    </li>
+							<li><a href="#">Profile</a></li>
+						    {% else %} 
+						    <li>
+						    <a href="#">Login</a></li>
+							<li><a href="#">Sign up</a></li>
+						     {% endif %} 
+						</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="col-md-3 col-xs-4 text-right hidden-xs menu-2">
+					<ul>
+						<li class="search">
+							<div class="input-group">
+						      <input type="text" placeholder="Search..">
+						      <span class="input-group-btn">
+						        <button class="btn btn-primary" type="button"><i class="icon-search"></i></button>
+						      </span>
+						    </div>
+						</li>
+						<li class="shopping-cart"><a href="#" class="cart"><span><small id="cartitems">0</small><i class="icon-shopping-cart"></i></span></a></li>
+					</ul>
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+	
+	{% block aside %}
+	
+	{% endblock aside %}
+
+   {% block services %}
+   
+   {% endblock services %}
+	{% block products %}
+	
+	{% endblock products %}
+	
+	{% block testimonial %}
+	
+	{% endblock testimonial %}
+	
+
+{% block counter %}
+
+{% endblock counter %}
+{% block newsletter %}
+
+{% endblock newsletter %}
+
+  
+
+	<footer id="fh5co-footer" role="contentinfo">
+		<div class="container">
+			<div class="row row-pb-md">
+				<div class="col-md-4 fh5co-widget">
+					<h3><a href="/"><img class="mix-blend-mode" src="{% static 'images/inuwalogo.png' %}" width="180" height="150"/></a></h3>
+					<p>Facilis ipsum reprehenderit nemo molestias. Aut cum mollitia reprehenderit. Eos cumque dicta adipisci architecto culpa amet.</p>
+				</div>
+				<div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
+					<ul class="fh5co-footer-links">
+						<li><a href="#">About</a></li>
+						<li><a href="#">Help</a></li>
+						<li><a href="#">Contact</a></li>
+						<li><a href="#">Terms</a></li>
+						<li><a href="#">Meetups</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
+					<ul class="fh5co-footer-links">
+						<li><a href="#">Shop</a></li>
+						<li><a href="#">Privacy</a></li>
+						<li><a href="#">Testimonials</a></li>
+						<li><a href="#">Handbook</a></li>
+						<li><a href="#">Held Desk</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-2 col-sm-4 col-xs-6 col-md-push-1">
+					<ul class="fh5co-footer-links">
+						<li><a href="#">Find Designers</a></li>
+						<li><a href="#">Find Developers</a></li>
+						<li><a href="#">Teams</a></li>
+						<li><a href="#">Advertise</a></li>
+						<li><a href="#">API</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="row copyright">
+				<div class="col-md-12 text-center">
+					<p>
+						<small class="block">&copy; Inuwa Agro  All Rights Reserved.</small> 
+					</p>
+					<p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-linkedin"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+						</ul>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</footer>
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	
+	<!-- jQuery -->
+	<script src="{% static 'js/jquery.min.js' %}"></script>
+	<script src="{% static 'js/cart.js' %}"></script>
+	<!-- jQuery Easing -->
+	<script src="{% static 'js/jquery.easing.1.3.js' %}"></script>
+	<!-- Bootstrap -->
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+	<!-- Waypoints -->
+	<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+	<!-- Carousel -->
+	<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+	<!-- countTo -->
+	<script src="{% static 'js/jquery.countTo.js' %}"></script>
+	<!-- Flexslider -->
+	<script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+	<!-- Main -->
+	<script src="{% static 'js/main.js' %}"></script>
+    
+	</body>
+</html>
+

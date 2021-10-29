@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+ {{ setting.title }}
+{% endblock title %}
+{% block description %}
+ {{ setting.description }}
+{% endblock description %}
+{% block keywords %}
+ {{ setting.keywords }}
+{% endblock keywords %}
+{% block aside %}
+	{% include "partials/aside.html" %}
+{% endblock aside %}
+
+{% block services %}
+   {% include "partials/services.html" %}
+{% endblock services %}
+{% block products %}
+	 {% include "partials/products.html" %}
+{% endblock products %}
+	
+{% block testimonial %}
+	{% include "partials/testimonial.html" %}
+{% endblock testimonial %}
+	
+
+{% block counter %}
+   {% include "partials/counter.html" %}
+{% endblock counter %}
+
+{% comment %} {% block newsletter %}
+   {% include "partials/newsletter.html" %}
+{% endblock newsletter %} {% endcomment %}

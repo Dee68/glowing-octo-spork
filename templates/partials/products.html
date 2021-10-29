@@ -1,0 +1,136 @@
+{% load static %}
+<div id="fh5co-product">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<span>Cool Stuff</span>
+					<h2>Products.</h2>
+					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+				</div>
+			</div>
+			<div class="row">
+
+			{% comment %} {% for product in products %}
+			
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% if product.image %}{{ product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %});">
+							<div class="inner">
+								<p>
+									<a href="{% url 'products:cart_details' %}" class="icon update-cart" data-product="{{ product.id }}" data-action="add"><i class='icon-shopping-cart'></i></a>
+									<a href="{{ product.get_absolute_url }}" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="{{ product.get_absolute_url }}">{{ product.title }}
+						</div>
+					</div>
+				</div>
+			{% endfor %} {% endcomment %}
+			   <div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% static 'images/product-1.jpg' %});">
+							<span class="sale">Sale</span>
+							<div class="inner">
+								<p>
+									<a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+									<a href="single.html" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="single.html">Pavilion Speaker</a></h3>
+							<span class="price">$600</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% static 'images/product-2.jpg' %});">
+							<span class="sale">Sale</span>
+							<div class="inner">
+								<p>
+									<a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+									<a href="single.html" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="single.html">Pavilion Speaker</a></h3>
+							<span class="price">$600</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% static 'images/product-3.jpg' %});">
+							<div class="inner">
+								<p>
+									<a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+									<a href="single.html" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="single.html">Ligomancer</a></h3>
+							<span class="price">$780</span>
+						</div>
+					</div>
+				</div> 
+			</div>
+			<div class="row">
+			<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% static 'images/product-4.jpg' %});">
+							<span class="sale">Sale</span>
+							<div class="inner">
+								<p>
+									<a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+									<a href="single.html" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="single.html">Pavilion Speaker</a></h3>
+							<span class="price">$600</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% static 'images/product-5.jpg' %});">
+							<span class="sale">Sale</span>
+							<div class="inner">
+								<p>
+									<a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+									<a href="single.html" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="single.html">Pavilion Speaker</a></h3>
+							<span class="price">$600</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% static 'images/product-6.jpg' %});">
+							<div class="inner">
+								<p>
+									<a href="single.html" class="icon"><i class="icon-shopping-cart"></i></a>
+									<a href="single.html" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="single.html">Ligomancer</a></h3>
+							<span class="price">$780</span>
+						</div>
+					</div>
+				</div> 
+			</div>
+			
+		</div>
+	</div>
