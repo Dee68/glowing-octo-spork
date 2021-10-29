@@ -6,7 +6,7 @@ from django.contrib import admin
 class CategoryAdmin(DraggableMPTTAdmin):
     mptt_indent_field = "title"
     list_display = ('tree_actions', 'indented_title',
-                    'related_products_count', 'related_products_cumulative_count')
+                    'related_products_count', 'related_products_cumulative_count','image_tag')
     list_display_links = ('indented_title',)
     readonly_fields = ['image_tag']
     prepopulated_fields = {'slug':('title',)}
