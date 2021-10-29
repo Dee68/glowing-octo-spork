@@ -17,13 +17,13 @@
 						<div class="product-grid" style="background-image:url({% if product.image %}{{ product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %});">
 							<div class="inner">
 								<p>
-									<a href="#" class="icon update-cart" data-product="{{ product.id }}" data-action="add"><i class='icon-shopping-cart'></i></a>
-									<a href="{% url 'products:product_details' product.id %}" class="icon"><i class="icon-eye"></i></a>
+									<a href="#" class="icon update-cart"><i class='icon-shopping-cart'></i></a>
+									<a href="#" class="icon"><i class="icon-eye"></i></a>
 								</p>
 							</div>
 						</div>
 						<div class="desc">
-							<h3><a href="{{ product.get_absolute_url }}">{{ product.title }}
+							<h3><a href="#">{{ product.title }}
 						</div>
 					</div>
 				</div>
