@@ -18,7 +18,7 @@
 							<div class="inner">
 								<p>
 									<a href="#" class="icon update-cart" data-product="{{ product.id }}" data-action="add"><i class='icon-shopping-cart'></i></a>
-									<a href="{{ product.get_absolute_url }}" class="icon"><i class="icon-eye"></i></a>
+									<a href="{% url 'products:product_details' product.id %}" class="icon"><i class="icon-eye"></i></a>
 								</p>
 							</div>
 						</div>
