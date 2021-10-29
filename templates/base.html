@@ -165,7 +165,7 @@
 						<ul class="dropdown">
 						     {% if user.id is not None %}
 						     <li>
-						     <span><img src="{% if user.image %}{{ request.session.userimage }}{% else %}{% static 'images/userimage.png' %}" style="height:40px; border-radius:30%;"></span>
+						     <span><img src="{% if user.image %}{{ request.session.userimage }}{% else %}{% static 'images/userimage.png' %}{% endif %}" style="height:40px; border-radius:30%;"></span>
 						     <a href="#}">logout</a>
 						    </li>
 							<li><a href="#">Profile</a></li>
