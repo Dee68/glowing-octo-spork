@@ -19,13 +19,13 @@ from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import aboutUs, contactUs
-from account.views import register, loginPage
+from account.views import loginPage,RegistrationView
 
 urlpatterns = [
     path('', include('home.urls', namespace='home')),
     path('products/', include('product.urls', namespace='products')),
     path('account/', include('account.urls', namespace='account')),
-    path('register/', register, name='register'),
+    path('register/', RegistrationView.as_view(), name='register'),
     path('login/', loginPage, name='login'),
     path('about/', aboutUs, name='about'),
     path('contact/', contactUs, name='contact'),

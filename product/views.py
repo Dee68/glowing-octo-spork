@@ -90,7 +90,7 @@ def get_cart_data(request):
         total += float(item.product.price) * item.quantity# cart total
         quantity += int(item.quantity)
         num += 1# number of items in cart
-        res = {"total":total,"quantity":quantity,'"num':num}
+    res = {"total":total,"quantity":quantity,'"num':num}
     return JsonResponse(res)
 
 def change_quan(request):
