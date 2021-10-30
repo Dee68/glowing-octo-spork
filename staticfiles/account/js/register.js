@@ -1,5 +1,45 @@
 const usernameField = document.querySelector('#usernameField');
+const emailField = document.querySelector('#emailField');
 usernameField.addEventListener('keyup', (e) => {
     const usernameVal = e.target.value;
-    console.log(usernameVal);
+    if (usernameVal.length > 0) {
+        fetch('/validate-username/', {
+            body: JSON.stringify({ 'username': usernameVal }),
+            method: 'POST'
+        }).then(res => res.json).then(data => {
+            if (data.username_error) {
+                usernameField.classList.add('is-invalid');
+            }
+        })
+
+    }
+
 });
+
+emailField.addEventListener('keyup', (e) => {
+    const emailVal = e.target.value;
+
+    emailField.classList.remove("is-invalid");
+    emailFeedback.style.display = 'none';
+    emailSuccess.textContent = `Checking ${emailVal}`;
+    emailSuccess.style.display = 'block';
+    if (emailVal.length > 0) {
+        fetch("/validate-email/", {
+            body: JSON.stringify({ "email": emailVal }),
+            method: "POST",
+        })
+            .then(res => res.json())
+            .then((data) => {
+                console.log("data", data);
+                emailSuccess.style.display = 'none';
+                if (data.email_error) {
+                    signup.disabled = true;
+                    emailField.classList.add("is-invalid");
+                    emailFeedback.style.display = 'block';
+                    emailFeedback.innerHTML = `<p>${data.email_error}</p>`;
+                } else {
+                    signup.disabled = false;
+                }
+            });
+    }
+})

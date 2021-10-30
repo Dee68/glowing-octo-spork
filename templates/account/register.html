@@ -9,6 +9,9 @@ Mega Poultry Farm
 {% block keywords %}
 Agro,Poultry,Hatchery,Chicken, Machinery
 {% endblock keywords %}
+{% block head %}
+
+{% endblock head %}
 {% block content %}
 <!-- main -->
 	<div class="main-w3layouts wrapper">
@@ -16,9 +19,11 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 		<div class="main-agileinfo">
 			<div class="agileits-top">
 				<form action="" method="post">
-				  
+				  {% csrf_token %}
 					<input class="text" type="text" name="Username" placeholder="Username" id="usernameField">
 					<input class="text email" type="email" name="email" placeholder="Email" id="emailField">
+					<div class="invalid-feedback emailFeedback" style="display:none;"></div>
+                    <p class="text-sm text-success emailSuccess"></p>
 					<input class="text" type="password" name="password" placeholder="Password" id="password1Field">
 					<input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" id="Password2Field">
 					<div class="wthree-text">
@@ -52,5 +57,5 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 		</ul>
 	</div>
 	<!-- //main -->
-	
+	<script src="{% static 'account/js/register.js' %}"></script>
 {% endblock content %}
