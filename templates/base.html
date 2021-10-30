@@ -169,7 +169,7 @@
 						     <span><img src="{% if user.image %}{{ request.session.userimage }}{% else %}{% static 'images/userimage.png' %}{% endif %}" style="height:40px; border-radius:30%;"></span>
 						     <a href="#}">logout</a>
 						    </li>
-							<li><a href="#">Profile</a></li>
+							<li><a href="{% url 'account:userprofile' %}">Profile</a></li>
 						    {% else %} 
 						    <li>
 						    <a href="{% url 'login' %}">Login</a></li>
