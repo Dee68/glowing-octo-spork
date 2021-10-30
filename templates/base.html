@@ -167,7 +167,7 @@
 						     {% if user.id is not None %}
 						     <li>
 						     <span><img src="{% if user.image %}{{ request.session.userimage }}{% else %}{% static 'images/userimage.png' %}{% endif %}" style="height:40px; border-radius:30%;"></span>
-						     <a href="#}">logout</a>
+						     <a href="{% url 'logout' %}">logout</a>
 						    </li>
 							<li><a href="{% url 'account:userprofile' %}">Profile</a></li>
 						    {% else %} 

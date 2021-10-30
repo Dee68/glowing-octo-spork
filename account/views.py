@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -111,3 +111,8 @@ def index(request):
     userprofile = UserProfile.objects.get(user_id=current_user.id)
     context = {'userprofile':userprofile,'products':products,'categories':categories}
     return render(request, 'account/index.html', context)
+
+# logout
+def logoutPage(request):
+    logout(request)
+    return redirect('/')
