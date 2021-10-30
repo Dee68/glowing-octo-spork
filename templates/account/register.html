@@ -15,17 +15,19 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 {% block content %}
 <!-- main -->
 	<div class="main-w3layouts wrapper">
-		<h1>Creative SignUp Form</h1>
+		<h1>SignUp for a free account</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
-				<form action="" method="post">
+				<form action="{% url 'register' %}" method="post">
 				  {% csrf_token %}
-					<input class="text" type="text" name="Username" placeholder="Username" id="usernameField">
-					<input class="text email" type="email" name="email" placeholder="Email" id="emailField">
+				  {% include "partials/_messages.html" %}
+					<input class="text" type="text" name="username" placeholder="Username" id="usernameField" value="{{ fieldVals.username}}">
+					<input class="text email" type="email" name="email" placeholder="Email" id="emailField" value="{{ fieldVals.email}}">
 					<div class="invalid-feedback emailFeedback" style="display:none;"></div>
                     <p class="text-sm text-success emailSuccess"></p>
-					<input class="text" type="password" name="password" placeholder="Password" id="password1Field">
-					<input class="text w3lpass" type="password" name="password" placeholder="Confirm Password" id="Password2Field">
+					<input class="text" type="password" name="password1" placeholder="Password" id="password1Field">
+					<small class="float-right py-3 showPasswdToggle">SHOW</small>
+					<input class="text w3lpass" type="password" name="password2" placeholder="Confirm Password" id="Password2Field">
 					<div class="wthree-text">
 						<label class="anim">
 							<input type="checkbox" class="checkbox"  checked=true disabled=true>

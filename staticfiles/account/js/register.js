@@ -1,5 +1,7 @@
 const usernameField = document.querySelector('#usernameField');
 const emailField = document.querySelector('#emailField');
+const showPasswdToggle = document.querySelector(".showPasswdToggle");
+const password1Field = document.querySelector("#passwordField1");
 usernameField.addEventListener('keyup', (e) => {
     const usernameVal = e.target.value;
     if (usernameVal.length > 0) {
@@ -42,4 +44,16 @@ emailField.addEventListener('keyup', (e) => {
                 }
             });
     }
-})
+});
+
+const handleToggle = (e) => {
+    if (showPasswdToggle.textContent == 'SHOW') {
+        showPasswdToggle.textContent = 'HIDE';
+        password1Field.setAttribute("type", "password");
+    } else {
+        showPasswdToggle.textContent = 'SHOW';
+        password1Field.setAttribute("type", "text");
+    }
+}
+
+showPasswdToggle.addEventListener('click', handleToggle);

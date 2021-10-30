@@ -14,6 +14,8 @@ django-heroku = "*"
 whitenoise = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
+django-utils-six = "*"
+six = "*"
 
 [dev-packages]
 

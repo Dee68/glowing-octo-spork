@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib import messages
 import django_heroku
 import cloudinary
 import cloudinary_storage
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     # Media Cloudinary
     'cloudinary',
     'cloudinary_storage',
+    
 ]
 
 MIDDLEWARE = [
@@ -206,6 +208,9 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+MESSAGE_TAGS = {
+    messages.ERROR:'danger'
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
