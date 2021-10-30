@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views import View
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-from product.models import Customer
+from product.models import Customer,Product,Category
 from django.http import JsonResponse
 from django.core.validators import validate_email
 from django.core.mail import EmailMessage
@@ -99,3 +101,13 @@ class EmailValidation(View):
 def loginPage(request):
     context = {}
     return render(request, 'account/login.html', context)
+
+# profile page
+@login_required(login_url='/login')# check for login
+def index(request):
+    products = Product.objects.all()
+    categories = Category.objects.filter(parent=None)
+    current_user = request.user
+    userprofile = UserProfile.objects.get(user_id=current_user.id)
+    context = {'userprofile':userprofile,'products':products,'categories':categories}
+    return render(request, 'account/index.html', context)
