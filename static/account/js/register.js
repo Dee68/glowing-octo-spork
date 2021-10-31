@@ -2,6 +2,7 @@ const usernameField = document.querySelector('#usernameField');
 const emailField = document.querySelector('#emailField');
 const showPasswdToggle = document.querySelector(".showPasswdToggle");
 const password1Field = document.querySelector("#passwordField1");
+
 usernameField.addEventListener('keyup', (e) => {
     const usernameVal = e.target.value;
     if (usernameVal.length > 0) {

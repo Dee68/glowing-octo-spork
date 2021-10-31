@@ -175,6 +175,9 @@ input.email, input.text.w3lpass {
   outline: none;
   background-position: 0 0;
 }
+.is-invalid {
+  border: 2px solid red;
+}
 
 .text:focus::-webkit-input-placeholder, .text:valid::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.7);
