@@ -25,10 +25,10 @@ from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path('', include('home.urls', namespace='home')),
     path('products/', include('product.urls', namespace='products')),
-    path('account/', include('account.urls', namespace='account')),
     path('register/', RegistrationView.as_view(), name='register'),
-    path('validate-username/', csrf_exempt(UsernamevalidationView.as_view()), name='validate-username'),
-    path('validate-email/', csrf_exempt(EmailValidation.as_view()), name='validate-email'),
+    path('account/', include('account.urls', namespace='account')),
+    # path('validate-username', csrf_exempt(UsernamevalidationView.as_view()), name='validate-username'),
+    # path('validate-email', csrf_exempt(EmailValidation.as_view()), name='validate-email'),
     path('login/', loginPage, name='login'),
     path('logout/', logoutPage,name='logout'),
     path('about/', aboutUs, name='about'),
