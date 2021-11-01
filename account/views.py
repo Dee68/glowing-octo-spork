@@ -43,12 +43,12 @@ class RegistrationView(View):
                 user.is_active=False
                 user.save()
                 current_user = request.user
-                data = UserProfile()
-                data1 = Customer()
-                data1.user_id = current_user.id
-                data.image = "uploads/profile_pics/userimage.png"
-                data.save()
-                data1.save()
+                #data = UserProfile()
+                #data1 = Customer()
+                #data1.user_id = current_user.id
+                #data.image = "uploads/profile_pics/userimage.png"
+                #data.save()
+                #data1.save()
                 email_subject = 'Activate your account'
                 # body of email should contain thr followings
                 # -path to view
@@ -76,6 +76,24 @@ class RegistrationView(View):
                 return render(request, 'account/register.html')           
         return render(request, 'account/register.html')
 
+# path to view from email
+class VerificationView(View):
+    def get(self,request,uid64,token):
+        try:
+            id = force_text(urlsafe_base64_decode(uid64))
+            user = User.objects.get(pk=id)
+            if not token_generator.check_token(user, token):
+                messages.warning(request, 'user alredy activated')
+                return redirect('login')
+            if user.is_active:
+                return redirect('account:login')
+            user.is_active = True
+            user.save()
+            messages.success(request,'Account successfully activated')
+            return redirect('login')
+        except Exception as ex:
+            pass
+        return redirect('login')
 
 class UsernamevalidationView(View):
     def post(self,request):
