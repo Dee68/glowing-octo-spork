@@ -19,7 +19,7 @@ from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import aboutUs, contactUs
-from account.views import loginPage,RegistrationView,logoutPage
+from account.views import RegistrationView,LoginView,LogoutView
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
@@ -29,8 +29,8 @@ urlpatterns = [
     path('account/', include('account.urls', namespace='account')),
     # path('validate-username', csrf_exempt(UsernamevalidationView.as_view()), name='validate-username'),
     # path('validate-email', csrf_exempt(EmailValidation.as_view()), name='validate-email'),
-    path('login/', loginPage, name='login'),
-    path('logout/', logoutPage,name='logout'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(),name='logout'),
     path('about/', aboutUs, name='about'),
     path('contact/', contactUs, name='contact'),
     path('ckeditor/', include('ckeditor_uploader.urls')),

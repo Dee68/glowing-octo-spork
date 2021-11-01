@@ -125,9 +125,40 @@ class EmailValidation(View):
         #     return JsonResponse({'email_error':'Sorry,email already taken, choose another one'},status=409)
         #return JsonResponse({'email_valid':True})
 
-def loginPage(request):
-    context = {}
-    return render(request, 'account/login.html', context)
+class LoginView(View):
+    def get(self,request):
+        
+        return render(request, 'account/login.html')
+
+    def post(self,request):
+        username = request.POST['username']
+        password = request.POST['password']
+        if username and password:
+            user = authenticate(username=username,password=password)
+            if user:
+                if user.is_active:
+                    login(request,user)
+                    messages.success(request, 'Welcome, '+user.username)
+                    return redirect('home:home')
+                messages.info(request, 'Account not activated, please check your email')
+                return render(request, 'account/login.html')
+            
+            messages.error(request,'Invalid credentials, try again')
+            return render(request, 'account/login.html')
+
+        messages.error(request, 'Please fill all fields to login')
+        return render(request, 'account/login.html')
+
+class LogoutView(View):
+    def post(self,request):
+        logout(request)
+        messages.info(request, 'You have logged out')
+        return redirect('/')
+            
+
+# def loginPage(request):
+#     context = {}
+#     return render(request, 'account/login.html', context)
 
 # profile page
 @login_required(login_url='/login')# check for login
@@ -140,6 +171,6 @@ def index(request):
     return render(request, 'account/index.html', context)
 
 # logout
-def logoutPage(request):
-    logout(request)
-    return redirect('/')
+# def logoutPage(request):
+#     logout(request)
+#     return redirect('/')
