@@ -51,7 +51,7 @@ class RegistrationView(View):
                 data.image = "uploads/profile_pics/userimage.png"
                 data.save()
                 data1.save()
-                email_subject = 'Activate your account'
+                #email_subject = 'Activate your account'
                 # body of email should contain the followings
                 # -path to view
                 # -get domain we are in
@@ -60,23 +60,24 @@ class RegistrationView(View):
                 # -get token
 
                 # - encode uid
-                uid64 = urlsafe_base64_encode(force_bytes(user.pk))
+                #uid64 = urlsafe_base64_encode(force_bytes(user.pk))
 
                 # -get domain we are in
-                domain = get_current_site(request).domain
+                #domain = get_current_site(request).domain
 
                 # -get relative url
-                link = reverse('account:activate', kwargs={'uid64':uid64,'token':token_generator.make_token(user)})
-                activate_link = 'http://'+domain+link
+                #link = reverse('account:activate', kwargs={'uid64':uid64,'token':token_generator.make_token(user)})
+                #activate_link = 'http://'+domain+link
 
-                email_body = 'Hello '+user.username+', please use the link below to verify your account\n'+activate_link
-                email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.com',
-                        [user_email] )
+                #email_body = 'Hello '+user.username+', please use the link below to verify your account\n'+activate_link
+                #email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.com',
+                        #[user_email] )
 
-                email.send(fail_silently=False)
+                #email.send(fail_silently=False)
                 messages.success(request,"Account successfully created")
                 return render(request, 'account/register.html')           
-        return render(request, 'account/register.html')
+            return render(request, 'account/register.html')
+        
 
 # path to view from email
 class VerificationView(View):
