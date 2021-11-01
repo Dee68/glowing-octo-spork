@@ -19,7 +19,7 @@ from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import aboutUs, contactUs
-from account.views import loginPage,RegistrationView,UsernamevalidationView,EmailValidation,logoutPage
+from account.views import loginPage,RegistrationView,logoutPage
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [

@@ -22,9 +22,12 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 				  {% csrf_token %}
 				  {% include "partials/_messages.html" %}
 					<input class="text" type="text" name="username" placeholder="Username" id="usernameField" value="{{ fieldVals.username}}">
+					<div class="invalid-feedback" style="display:none;"></div>
+                    <p class="text-sm text-success usernameSuccess"></p>
 					<input class="text email" type="email" name="email" placeholder="Email" id="emailField" value="{{ fieldVals.email}}">
 					<div class="invalid-feedback emailFeedback" style="display:none;"></div>
                     <p class="text-sm text-success emailSuccess"></p>
+					<br>
 					<input class="text" type="password" name="password1" placeholder="Password" id="password1Field">
 					<small class="float-right py-3 showPasswdToggle">SHOW</small>
 					<input class="text w3lpass" type="password" name="password2" placeholder="Confirm Password" id="Password2Field">
