@@ -10,6 +10,8 @@ const showPasswdToggle = document.querySelector(".showPasswdToggle");
 const password1Field = document.querySelector("#password2Field");
 const password2Field = document.querySelector("#password2Field");
 
+const signup = document.querySelector(".signup");
+
 usernameField.addEventListener('keyup', (e) => {
     const usernameVal = e.target.value;
     usernameField.classList.remove("is-invalid");
@@ -22,11 +24,12 @@ usernameField.addEventListener('keyup', (e) => {
         }).then(res => res.json()).then(data => {
             usernameSuccess.style.display = 'none';
             if (data.username_error) {
+                signup.disabled = true;
                 usernameField.classList.add('is-invalid');
                 feedbackArea.style.display = 'block';
                 feedbackArea.innerHTML = `<p>${data.username_error}</p>`;
             } else {
-
+                signup.disabled = false;
             }
 
         });
@@ -51,12 +54,12 @@ emailField.addEventListener('keyup', (e) => {
             console.log("data", data);
             emailSuccess.style.display = 'none';
             if (data.email_error) {
-                // signup.disabled = true;
+                signup.disabled = true;
                 emailField.classList.add("is-invalid");
                 emailFeedback.style.display = 'block';
                 emailFeedback.innerHTML = `<p>${data.email_error}</p>`;
             } else {
-                // signup.disabled = false;
+                signup.disabled = false;
             }
         });
     }
