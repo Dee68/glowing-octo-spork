@@ -43,14 +43,16 @@ class RegistrationView(View):
                 user.is_active=False
                 user.save()
                 current_user = request.user
-                #data = UserProfile()
-                #data1 = Customer()
-                #data1.user_id = current_user.id
-                #data.image = "uploads/profile_pics/userimage.png"
-                #data.save()
-                #data1.save()
+                data = UserProfile()
+                data1 = Customer()
+                data.user.username = username
+                data1.user.username = username
+                data1.user_id = current_user.id
+                data.image = "uploads/profile_pics/userimage.png"
+                data.save()
+                data1.save()
                 email_subject = 'Activate your account'
-                # body of email should contain thr followings
+                # body of email should contain the followings
                 # -path to view
                 # -get domain we are in
                 # -get relative url
@@ -65,10 +67,10 @@ class RegistrationView(View):
 
                 # -get relative url
                 link = reverse('account:activate', kwargs={'uid64':uid64,'token':token_generator.make_token(user)})
-                activate_link = 'https://'+domain+link
+                activate_link = 'http://'+domain+link
 
                 email_body = 'Hello '+user.username+', please use the link below to verify your account\n'+activate_link
-                email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.herokuapp.com',
+                email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.com',
                         [user_email] )
 
                 email.send(fail_silently=False)
