@@ -35,7 +35,7 @@ class RegistrationView(View):
                     messages.error(request,"password must be 8 characters or more")
                     return render(request, 'account/register.html', context)
                 if not (password1 == password2):
-                    messages.error(request, 'password did not match')
+                    messages.error(request, 'passwords did not match')
                     return render(request, 'account/register.html', context)
                     
                 user = User.objects.create_user(username=username, email=user_email)
@@ -65,11 +65,11 @@ class RegistrationView(View):
 
                 # -get relative url
                 link = reverse('account:activate', kwargs={'uid64':uid64,'token':token_generator.make_token(user)})
-                activate_link = 'http://'+domain+link
+                activate_link = 'https://'+domain+link
 
                 email_body = 'Hello '+user.username+', please use the link below to verify your account\n'+activate_link
                 email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.herokuapp.com',
-                        [user_email,'ddimie283@gmail.com'] )
+                        [user_email] )
 
                 email.send(fail_silently=False)
                 messages.success(request,"Account successfully created")
