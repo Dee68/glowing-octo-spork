@@ -22,6 +22,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 				  {% csrf_token %}
 				  {% include "partials/_messages.html" %}
 					<input class="text" type="text" name="username" placeholder="Username" id="usernameField" value="{{ fieldVals.username}}">
+					
 					<div class="invalid-feedback" style="display:none;"></div>
                     <p class="text-sm text-success usernameSuccess"></p>
 					<input class="text email" type="email" name="email" placeholder="Email" id="emailField" value="{{ fieldVals.email}}">

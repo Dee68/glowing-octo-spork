@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
+from .forms import RegisterUserForm
 
 
 import json
@@ -24,33 +25,62 @@ class RegistrationView(View):
         return render(request, 'account/register.html')
 
     def post(self,request):
-        username = request.POST['username']
-        user_email = request.POST['email']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        context = {"fieldVals":request.POST}
-        if not User.objects.filter(username=username).exists():
-            if not User.objects.filter(email=user_email).exists():
-                if len(password1) < 8:
-                    messages.error(request,"password must be 8 characters or more")
+        form = RegisterUserForm()
+        context = {'form':form}
+        if request.method == 'POST':
+            form = RegisterUserForm(request.POST)
+            fieldVals = request.POST
+            username = request.POST['username']
+            user_email = request.POST['email']
+            password1 = request.POST['password1']
+            password2 = request.POST['password2']
+            context = {"fieldVals":fieldVals, 'form':form}
+            if not User.objects.filter(username=username).exists():
+                if not User.objects.filter(email=user_email).exists():
+                    if len(password1) < 8:
+                        messages.error(request,"password must be 8 characters or more")
+                        return render(request, 'account/register.html', context)
+                    if not (password1 == password2):
+                        messages.error(request, 'passwords did not match')
+                        return render(request, 'account/register.html', context)
+                    if form.is_valid():
+                        user = User.objects.create_user(username=username, email=user_email)
+                        user.set_password(password1)
+                        user.save()
+                        username = form.cleaned_data['username']
+                        password = form.cleaned_data['password1']
+                        user = authenticate(request, username=username, password=password)
+                        login(request, user)
+                        current_user = request.user
+                        data = UserProfile()
+                        data1 = Customer()
+                        data.user.username = username
+                        data1.user.username = username
+                        data1.user_id = current_user.id
+                        data.image = "uploads/profile_pics/userimage.png"
+                        data.save()
+                        data1.save()
+                        messages.success(request,"Account successfully created")
+                        return render(request, 'account/register.html', context) 
+                    messages.error(request, "Email or username not acceptable.")  
                     return render(request, 'account/register.html', context)
-                if not (password1 == password2):
-                    messages.error(request, 'passwords did not match')
-                    return render(request, 'account/register.html', context)
+                messages.error(request, "sorry email already in use, please choose another one.")
+                return render(request, 'account/register.html', context)
+            messages.error(request, "username already in use, choose another one.")
+            return render(request, 'account/register.html', context)
+        
+        
+                
                     
-                user = User.objects.create_user(username=username, email=user_email)
-                user.set_password(password1)
-                user.is_active=False
-                user.save()
-                current_user = request.user
-                data = UserProfile()
-                data1 = Customer()
-                data.user.username = username
-                data1.user.username = username
-                data1.user_id = current_user.id
-                data.image = "uploads/profile_pics/userimage.png"
-                data.save()
-                data1.save()
+                
+                
+            
+        
+        
+                    
+                
+                #user.is_active=False
+                
                 #email_subject = 'Activate your account'
                 # body of email should contain the followings
                 # -path to view
@@ -70,13 +100,12 @@ class RegistrationView(View):
                 #activate_link = 'http://'+domain+link
 
                 #email_body = 'Hello '+user.username+', please use the link below to verify your account\n'+activate_link
-                #email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.com',
-                        #[user_email] )
+                #email = EmailMessage(email_subject,email_body,'noreply@inuwaagropoultry.com',[user_email] )
 
                 #email.send(fail_silently=False)
-                messages.success(request,"Account successfully created")
-                return render(request, 'account/register.html')           
-            return render(request, 'account/register.html')
+                # messages.success(request,"Account successfully created")
+                # return render(request, 'account/register.html')           
+            #return render(request, 'account/register.html')
         
 
 # path to view from email
@@ -128,7 +157,6 @@ class EmailValidation(View):
 
 class LoginView(View):
     def get(self,request):
-        
         return render(request, 'account/login.html')
 
     def post(self,request):
@@ -153,7 +181,7 @@ class LoginView(View):
 class LogoutView(View):
     def post(self,request):
         logout(request)
-        messages.info(request, 'You have logged out')
+        #messages.info(request, 'You have logged out')
         return redirect('/')
             
 
