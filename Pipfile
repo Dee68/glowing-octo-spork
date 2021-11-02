@@ -16,6 +16,7 @@ cloudinary = "*"
 django-cloudinary-storage = "*"
 django-utils-six = "*"
 six = "*"
+python-decouple = "*"
 
 [dev-packages]
 

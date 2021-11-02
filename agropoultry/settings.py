@@ -12,8 +12,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from typing import cast
 from django.contrib import messages
 import django_heroku
+from decouple import config, Csv
 import cloudinary
 import cloudinary_storage
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8+d1lrryees74fkgfoa$#t%6@v*@$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["inuwaagropoultry.heroku.com"]
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv)
 
 
 # Application definition
@@ -241,9 +243,8 @@ django_heroku.settings(locals())
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # send_mail configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'ddimie283@gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ddimie283@gmail.com'# company email
-EMAIL_HOST_PASSWORD = '1432acts'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_PORT =config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER') #company email
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
