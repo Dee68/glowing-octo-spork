@@ -184,6 +184,8 @@ class LoginView(View):
 def profile_update(request):
     products = Product.objects.all()
     categories = Category.objects.filter(parent=None)
+    current_user = request.user
+    userprofile = UserProfile.objects.get(user_id=current_user.id)
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
@@ -195,13 +197,16 @@ def profile_update(request):
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.userprofile)
-    context = {'user_form':user_form,'profile_form':profile_form,'products':products,'categories':categories }
+    context = {'user_form':user_form,'profile_form':profile_form,'products':products,
+    'categories':categories,'userprofile':userprofile }
     return render(request, 'account/update_profile.html', context)
 
 @login_required(login_url='/login')# check for login
 def update_password(request):
     products = Product.objects.all()
     categories = Category.objects.filter(parent=None)
+    current_user = request.user
+    userprofile = UserProfile.objects.get(user_id=current_user.id)
     if request.method == "POST":
         form = ChangePasswordForm(request.user, request.POST)
         if form.is_valid():
@@ -214,7 +219,7 @@ def update_password(request):
             return HttpResponseRedirect("/account/change_password")
     form = ChangePasswordForm(request.user)    
     
-    context = {'form':form,'products':products,'categories':categories}
+    context = {'form':form,'products':products,'categories':categories,'userprofile':userprofile}
     return render(request, 'account/update_password.html', context)
             
 
