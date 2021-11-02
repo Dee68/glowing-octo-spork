@@ -54,8 +54,9 @@ class RegistrationView(View):
                         current_user = request.user
                         data = UserProfile()
                         data1 = Customer()
-                        data.user.username = username
-                        data1.user.username = username
+                        #data.user.username = username
+                        #data1.user.username = username
+                        data.user_id = current_user.id
                         data1.user_id = current_user.id
                         data.image = "uploads/profile_pics/userimage.png"
                         data.save()
