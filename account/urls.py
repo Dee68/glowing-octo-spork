@@ -9,6 +9,6 @@ urlpatterns = [
   path('validate-username', csrf_exempt(views.UsernamevalidationView.as_view()), name='validate-username'),
   path('validate-email', csrf_exempt(views.EmailValidation.as_view()), name='validate-email'),
   path('activate/<uid64>/<token>/', views.VerificationView.as_view(), name='activate'),
-  # path('login/', views.loginPage, name='login'),
-  # path('logout/', views.logoutPage,name='logout'),
+  path('update/', views.profile_update, name='update'),
+  path('change_password/', views.update_password, name='change_password'),
 ]

@@ -1,6 +1,59 @@
-{% extends "base.html" %}
+{% extends "base_auth.html" %}
 {% load static %}
 {% block title %}
+  Login
+{% endblock title %}
+{% block content %}
+<div class="main-w3layouts wrapper">
+		<h1>Login to your account</h1>
+		<div class="main-agileinfo">
+			<div class="agileits-top">
+				<form action="{% url 'login' %}" method="post">
+				  {% csrf_token %}
+				  {% include "partials/_messages.html" %}
+					<input class="text" type="text" name="username" placeholder="Username" id="usernameField" value="{{ fieldVals.username}}">
+					
+					<div class="invalid-feedback" style="display:none;"></div>
+                    <p class="text-sm text-success usernameSuccess"></p>
+					{% comment %} <input class="text email" type="email" name="email" placeholder="Email" id="emailField" value="{{ fieldVals.email}}">
+					<div class="invalid-feedback emailFeedback" style="display:none;"></div>
+                    <p class="text-sm text-success emailSuccess"></p> {% endcomment %}
+					<br>
+					<input class="text" type="password" name="password" placeholder="Password" id="password1Field">
+					{% comment %} <small class="float-right py-3 showPasswdToggle">SHOW</small> {% endcomment %}
+					{% comment %} <input class="text w3lpass" type="password" name="password2" placeholder="Confirm Password" id="Password2Field"> {% endcomment %}
+					<div class="wthree-text">
+						<label class="anim">
+							<input type="checkbox" class="checkbox"  checked=true disabled=true>
+							<span>Keep me logged in</span>
+						</label>
+						<div class="clear"> </div>
+					</div>
+					<input type="submit" value="LOGIN" class="signup">
+				</form>
+				<p>Don't have an Account? <a href="{% url 'register' %}"> Sign up Now!</a></p>
+			</div>
+		</div>
+		<!-- copyright -->
+		<div class="colorlibcopy-agile">
+			<p>© 2021 InuwaAgroPoulthatchery Ltd Login Form. All rights reserved </p>
+		</div>
+		<!-- //copyright -->
+		<ul class="colorlib-bubbles">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+{% endblock content %}
+{% comment %} {% block title %}
 Login
 {% endblock title %}
 {% block description %}
@@ -65,5 +118,5 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 {% endblock aside %}
 {% block products %}
 
-{% endblock products %}
+{% endblock products %} {% endcomment %}
 

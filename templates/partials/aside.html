@@ -1,6 +1,7 @@
 {% load static %}
 <aside id="fh5co-hero" class="js-fullheight">
 		<div class="flexslider js-fullheight">
+		      
 			<ul class="slides">
 			{% for pic in pictures %}
 			
@@ -9,6 +10,7 @@
 		   		<div class="container">
 		   			<div class="col-md-6 col-md-offset-3 col-md-pull-3 js-fullheight slider-text">
 		   				<div class="slider-text-inner">
+						   {% include "partials/_messages.html" %}
 		   					<div class="desc">
 		   						<span class="price">&#x20A6;{{ pic.product.price }}</span>
 		   						<h2>{{ pic.product.title }}</h2>

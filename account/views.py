@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
 from product.models import Customer,Product,Category
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.core.mail import EmailMessage
@@ -15,7 +15,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm,UserProfileForm, UserUpdateForm, ChangePasswordForm
 
 
 import json
@@ -147,7 +147,7 @@ class EmailValidation(View):
             return JsonResponse({'email_error':'Sorry,email already taken, choose another one'},status=409)
         try:
             validate_email(email)
-            return JsonResponse({'email_valid':True})
+            return JsonResponse({'email_valid':True}, status=200)
         except ValidationError:
             return JsonResponse({'email_error':'Email is invalid'},status=400)
         # if not validate_email(email):
@@ -168,7 +168,7 @@ class LoginView(View):
             if user:
                 if user.is_active:
                     login(request,user)
-                    # messages.success(request, 'Welcome, '+user.username)
+                    messages.success(request, 'Welcome, '+user.username)
                     return redirect('home:home')
                 messages.info(request, 'Account not activated, please check your email')
                 return render(request, 'account/login.html')
@@ -179,11 +179,43 @@ class LoginView(View):
         messages.error(request, 'Please fill all fields to login')
         return render(request, 'account/login.html')
 
-class LogoutView(View):
-    def post(self,request):
-        logout(request)
-        #messages.info(request, 'You have logged out')
-        return redirect('home:home')
+# profile update page
+@login_required(login_url='/login')# check for login
+def profile_update(request):
+    products = Product.objects.all()
+    categories = Category.objects.filter(parent=None)
+    if request.method == 'POST':
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=request.user.userprofile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile has been updated.')
+            return redirect('/account')
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = UserProfileForm(instance=request.user.userprofile)
+    context = {'user_form':user_form,'profile_form':profile_form,'products':products,'categories':categories }
+    return render(request, 'account/update_profile.html', context)
+
+@login_required(login_url='/login')# check for login
+def update_password(request):
+    products = Product.objects.all()
+    categories = Category.objects.filter(parent=None)
+    if request.method == "POST":
+        form = ChangePasswordForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request,'Password successfully changed.')
+            return HttpResponseRedirect("/account")
+        else:
+            messages.error(request, str(form.errors))
+            return HttpResponseRedirect("/account/change_password")
+    form = ChangePasswordForm(request.user)    
+    
+    context = {'form':form,'products':products,'categories':categories}
+    return render(request, 'account/update_password.html', context)
             
 
 # def loginPage(request):
@@ -201,6 +233,6 @@ def index(request):
     return render(request, 'account/index.html', context)
 
 # logout
-# def logoutPage(request):
-#     logout(request)
-#     return redirect('/')
+def logoutPage(request):
+    logout(request)
+    return redirect('/')
