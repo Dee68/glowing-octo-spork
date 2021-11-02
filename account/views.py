@@ -183,7 +183,7 @@ class LoginView(View):
 @login_required(login_url='/login')# check for login
 def profile_update(request):
     products = Product.objects.all()
-    categories = Category.objects.filter(parent=None)
+    pcategories = Category.objects.filter(parent=None)
     current_user = request.user
     userprofile = UserProfile.objects.get(user_id=current_user.id)
     if request.method == 'POST':
@@ -198,13 +198,13 @@ def profile_update(request):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.userprofile)
     context = {'user_form':user_form,'profile_form':profile_form,'products':products,
-    'categories':categories,'userprofile':userprofile }
+    'pcategories':pcategories,'userprofile':userprofile }
     return render(request, 'account/update_profile.html', context)
 
 @login_required(login_url='/login')# check for login
 def update_password(request):
     products = Product.objects.all()
-    categories = Category.objects.filter(parent=None)
+    pcategories = Category.objects.filter(parent=None)
     current_user = request.user
     userprofile = UserProfile.objects.get(user_id=current_user.id)
     if request.method == "POST":
@@ -219,7 +219,7 @@ def update_password(request):
             return HttpResponseRedirect("/account/change_password")
     form = ChangePasswordForm(request.user)    
     
-    context = {'form':form,'products':products,'categories':categories,'userprofile':userprofile}
+    context = {'form':form,'products':products,'pcategories':pcategories,'userprofile':userprofile}
     return render(request, 'account/update_password.html', context)
             
 
@@ -231,10 +231,10 @@ def update_password(request):
 @login_required(login_url='/login')# check for login
 def index(request):
     products = Product.objects.all()
-    categories = Category.objects.filter(parent=None)
+    pcategories = Category.objects.filter(parent=None)
     current_user = request.user
     userprofile = UserProfile.objects.get(user_id=current_user.id)
-    context = {'userprofile':userprofile,'products':products,'categories':categories}
+    context = {'userprofile':userprofile,'products':products,'pcategories':pcategories}
     return render(request, 'account/index.html', context)
 
 # logout
