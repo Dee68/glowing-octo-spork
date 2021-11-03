@@ -248,3 +248,42 @@ EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')#config('EMAIL_USE_TLS', cast=boo
 EMAIL_PORT =os.environ.get('EMAIL_PORT')#config('EMAIL_PORT', cast=int)
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')#config('EMAIL_HOST_USER') #company email
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')#config('EMAIL_HOST_PASSWORD')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
+                       'pathname=%(pathname)s lineno=%(lineno)s '
+                       'funcname=%(funcName)s %(message)s'),
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}
