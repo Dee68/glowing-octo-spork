@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast)
+ALLOWED_HOSTS = ['127.0.0.1:8000','.herokuapp.com']#config('ALLOWED_HOSTS', cast)
 
 
 # Application definition
@@ -243,8 +243,8 @@ django_heroku.settings(locals())
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # send_mail configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
-EMAIL_PORT =config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER') #company email
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')#config('EMAIL_HOST')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')#config('EMAIL_USE_TLS', cast=bool)
+EMAIL_PORT =os.environ.get('EMAIL_PORT')#config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')#config('EMAIL_HOST_USER') #company email
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')#config('EMAIL_HOST_PASSWORD')
