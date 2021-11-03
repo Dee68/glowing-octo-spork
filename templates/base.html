@@ -51,25 +51,58 @@
 	<script src="{% static 'js/modernizr-2.6.2.min.js' %}"></script>
 	<script src="{% static 'js/jquery.js' %}"></script>
     <script>
+
 	   var user = '{{ request.user }}'
-       function grandTotal(){
-           $.ajax({
+
+	    function getCookie(name) {
+				let cookieValue = null;
+				if (document.cookie && document.cookie !== '') {
+				const cookies = document.cookie.split(';');
+				for (let i = 0; i < cookies.length; i++) {
+					const cookie = cookies[i].trim();
+					// Does this cookie string begin with the name we want?
+					if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						break;
+					}
+				}
+				}
+			return cookieValue;
+   		}
+
+    function create_UUID(){
+			var dt = new Date().getTime();
+			var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+				var r = (dt + Math.random()*16)%16 | 0;
+				dt = Math.floor(dt/16);
+				return (c=='x' ? r :(r&0x3|0x8)).toString(16);
+			});
+			return uuid;
+    }
+
+       let device = getCookie('device');
+		if (device == null || device == undefined){
+			device = create_UUID();
+		}
+
+	document.cookie = 'device=' + device + ";domain=;path=\";
+
+	function grandTotal(){
+		$.ajax({
                url:"{% url 'products:get_cart_data' %}",
                type:'get',
                success:function(data){
-                   //p = Math.round(100-((data.offer/data.total)*100),2)
-                   //save = data.total-data.offer;
-				   
                    $("#item_total").html("&#x20A6;"+data.total);
                     $("#quantity").html(data.quantity+" Items");
 					$("#cartitems").html(data.quantity);
                     $("#grand_total").html("&#8358;"+data.total);
-                    //$("#btamt").html("&#8377;"+data.offer);
-
-               }
+                    }
            })
-       }
-       grandTotal();
+	}
+           
+       
+	   
+    grandTotal();
 
        function change_quan(id,action){
            let old = $("#cart"+id).val();
@@ -190,7 +223,7 @@
 						      </span>
 						    </div>
 						</li>
-						<li class="shopping-cart"><a href="#" class="cart"><span><small id="cartitems">0</small><i class="icon-shopping-cart"></i></span></a></li>
+						<li class="shopping-cart"><a href="{% url 'products:cart_details' %}" class="cart"><span><small id="cartitems">0</small><i class="icon-shopping-cart"></i></span></a></li>
 					</ul>
 				</div>
 			</div>

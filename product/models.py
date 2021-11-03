@@ -101,10 +101,15 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,blank=True)
     gender = models.CharField(max_length=6, choices=GENDER, default='male')
     title = models.CharField(max_length=5, choices=TITLE)
+    device = models.CharField(max_length=200,null=True, blank=True)
     
 
     def __str__(self):
-        return self.user.username
+        if self.user.username:
+            return self.user.username
+        else:
+            return self.device
+        
 
 class Cart(models.Model):
     user =models.ForeignKey(User,on_delete = models.CASCADE)
