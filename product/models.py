@@ -105,10 +105,12 @@ class Customer(models.Model):
     
 
     def __str__(self):
-        if self.user.username:
-            return self.user.username
+        if self.device:
+            name = self.device
+            return str(name)
         else:
-            return self.device
+            name = self.user.username
+            return str(name)
         
 
 class Cart(models.Model):
