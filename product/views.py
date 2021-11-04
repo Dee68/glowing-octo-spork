@@ -2,43 +2,45 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.contrib import messages
 from .models import *
+from home.models import Setting
 from .forms import ShippingForm
 # Create your views here.
 
 # all products
 def index(request):
+    setting = Setting.objects.get(pk=1)
     pictures = Picture.objects.filter(title__contains='slider')
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     products = Product.objects.all()
-    context = {'products':products,'pictures':pictures,'pcategories':pcategories}
+    context = {'products':products,'pictures':pictures,'pcategories':pcategories,'setting':setting}
     return render(request, 'products/index.html', context)
 
 # detail of  a single product
 def product_details(request, id, slug):
-   
+    setting = Setting.objects.get(pk=1)
     pictures = Picture.objects.filter(title__contains='slider')
     product = get_object_or_404(Product,id=id, slug=slug)
     pcategories = Category.objects.filter(parent=None)
     ppictures = Picture.objects.filter(product=product)
     context = {'product':product,'pcategories':pcategories,
-    'ppictures':ppictures,'pictures':pictures}
+    'ppictures':ppictures,'pictures':pictures,'setting':setting}
     return render(request, 'products/product_details.html', context)
 
 # get parent subcategories
 def show_category(request, category_slug):
-   
+    setting = Setting.objects.get(pk=1)
     pictures = Picture.objects.filter(title__contains='slider')
     pcat = get_object_or_404(Category, slug=category_slug)
     pcategories = Category.objects.filter(parent=None)
     categories = Category.objects.filter(parent=pcat)
     context = {'pcategories':pcategories, 'categories':categories,
-    'pictures':pictures}
+    'pictures':pictures,'setting':setting}
     return render(request, 'products/show_category.html', context)
 
 # gets products of a given category ****
 def category_products(request, cslug=None):
-    
+    setting = Setting.objects.get(pk=1)
     pictures = Picture.objects.filter(title__contains='slider')
     category = None
     products = Product.objects.filter(available=True)
@@ -50,49 +52,91 @@ def category_products(request, cslug=None):
     
     context = {'products':products,
     'categories':categories,'category':category,'pcategories':pcategories,
-    'pictures':pictures}
+    'pictures':pictures,'setting':setting}
     
     return render(request, 'products/category_product.html', context)
 
 # show cart details
 def add_to_cart(request):
+    setting = Setting.objects.get(pk=1)
     context = {}
-    items = Cart.objects.filter(user__id=request.user.id, status=False)
+    pcategories = Category.objects.filter(parent=None)
+    context['pcategories']= pcategories
+    context['setting'] = setting
+    items = Cart.objects.filter(customer__id=request.user.id, status=False)
     context['items'] = items
     if request.user.is_authenticated:
         if request.method == "POST":
             pid = request.POST['pid']
             qty = request.POST['qty']
-            do_exist = Cart.objects.filter(product__id=pid, user__id=request.user.id, status=False)
+            do_exist = Cart.objects.filter(product__id=pid, customer__id=request.user.id, status=False)
             if len(do_exist) > 0:
                 messages.warning(request,'Item already exists in your cart.')
             
             else:
                 product = get_object_or_404(Product, id=pid)
-                usr = get_object_or_404(User,id=request.user.id)
-                c = Cart(user=usr, product=product,quantity=qty)
+                usr = get_object_or_404(Customer,id=request.user.id)
+                c = Cart(customer=usr, product=product,quantity=qty)
                 c.save()
                 messages.success(request, '{}  Added to your cart'.format(product.title))
             
     else:
         # Anonymouse user
-        pass
-    pcategories = Category.objects.filter(parent=None)
-    context['pcategories']= pcategories
+        device = request.COOKIES['device']
+        customer,created = Customer.objects.get_or_create(device=device)
+        # customer.id = request.user.id
+        print(customer.id, request.user.id)
+        items = Cart.objects.filter(customer__id=customer.id, status=False)
+        context['items'] = items
+        if request.method == "POST":
+            pid = request.POST['pid']
+            qty = request.POST['qty']
+            do_exist = Cart.objects.filter(product__id=pid, customer__id=customer.id, status=False)
+            if len(do_exist) > 0:
+                messages.warning(request,'Item already exists in your cart.')
+                return render(request, 'products/cart_detail.html', context)
+            else:
+                product = get_object_or_404(Product, id=pid)
+                usr = get_object_or_404(Customer, id=customer.id)
+                c = Cart(customer=usr,product=product,quantity=qty)
+                c.save()
+                messages.success(request,'{} Added to your cart'.format(product.title))
+                return render(request, 'products/cart_detail.html', context)
+            
+        return render(request, 'products/cart_detail.html', context)
     return render(request, 'products/cart_detail.html', context)
 
 #using ajax to get cart details
 def get_cart_data(request):
-    items = Cart.objects.filter(user__id=request.user.id, status=False)
-    # set initial values to 0
-    total,quantity,num = 0,0,0
-    # loop through items in cart
-    for item in items:
-        total += float(item.product.price) * item.quantity# cart total
-        quantity += int(item.quantity)
-        num += 1# number of items in cart
-    res = {"total":total,"quantity":quantity,'"num':num}
-    return JsonResponse(res)
+    if request.user.is_authenticated:
+        items = Cart.objects.filter(customer__id=request.user.id, status=False)
+        # set initial values to 0
+        total,quantity,num = 0,0,0
+        # loop through items in cart
+        for item in items:
+            total += float(item.product.price) * item.quantity# cart total
+            quantity += int(item.quantity)
+            num += 1# number of items in cart
+        res = {"total":total,"quantity":quantity,'"num':num}
+        return JsonResponse(res)
+    else:
+        #Anonymouse user
+        device = request.COOKIES['device']
+        customer,created = Customer.objects.get_or_create(device=device)
+        items = Cart.objects.filter(customer__id=customer.id, status=False)
+        # set initial values to 0
+        total,quantity,num = 0,0,0
+        for item in items:
+            total += float(item.product.price) * item.quantity# cart total
+            quantity += int(item.quantity)
+            num += 1# number of items in cart
+        res = {"total":total,"quantity":quantity,'"num':num}
+        return JsonResponse(res)
+
+        
+    
+    
+    
 
 def change_quan(request):
     if "quantity" in request.GET:
@@ -111,6 +155,7 @@ def change_quan(request):
 
 # show checkout page
 def checkout(request):
+    setting = Setting.objects.get(pk=1)
     items = Cart.objects.filter(user_id__id=request.user.id, status=False)
     usr = User.objects.get(username=request.user.username)
     products=""
@@ -144,5 +189,5 @@ def checkout(request):
             messages.error(request,'Please fill in the required fields, to proceed further.')
             return HttpResponseRedirect('/product/checkout/')
     pcategories = Category.objects.filter(parent=None)
-    context={'pcategories':pcategories,'items':items,'form':form}
+    context={'pcategories':pcategories,'items':items,'form':form,'setting':setting}
     return render(request, 'products/checkout.html', context)

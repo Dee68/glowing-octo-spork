@@ -10,6 +10,7 @@ def home(request):
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     setting = Setting.objects.get(pk=1)
+    
     if request.method == "POST":
         form = SubscribersForm(request.POST)
         if form.is_valid():
@@ -25,7 +26,8 @@ def home(request):
             return HttpResponseRedirect("/")
     else:
         form = SubscribersForm() 
-    context = {'form':form,'products':products, 'pictures':pictures, 'pcategories':pcategories,'setting':setting}
+    context = {'form':form,'products':products, 'pictures':pictures, 
+    'pcategories':pcategories,'setting':setting}
     return render(request, 'home/index.html', context)
 
 # contact page

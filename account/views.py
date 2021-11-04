@@ -16,6 +16,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from .forms import RegisterUserForm,UserProfileForm, UserUpdateForm, ChangePasswordForm
+from home.models import Setting
 
 
 import json
@@ -182,6 +183,7 @@ class LoginView(View):
 # profile update page
 @login_required(login_url='/login')# check for login
 def profile_update(request):
+    setting = Setting.objects.get(pk=1)
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     current_user = request.user
@@ -198,11 +200,12 @@ def profile_update(request):
         user_form = UserUpdateForm(instance=request.user)
         profile_form = UserProfileForm(instance=request.user.userprofile)
     context = {'user_form':user_form,'profile_form':profile_form,'products':products,
-    'pcategories':pcategories,'userprofile':userprofile }
+    'pcategories':pcategories,'userprofile':userprofile,'setting':setting }
     return render(request, 'account/update_profile.html', context)
 
 @login_required(login_url='/login')# check for login
 def update_password(request):
+    setting = Setting.objects.get(pk=1)
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     current_user = request.user
@@ -219,7 +222,8 @@ def update_password(request):
             return HttpResponseRedirect("/account/change_password")
     form = ChangePasswordForm(request.user)    
     
-    context = {'form':form,'products':products,'pcategories':pcategories,'userprofile':userprofile}
+    context = {'form':form,'products':products,'pcategories':pcategories,
+    'userprofile':userprofile,'setting':setting}
     return render(request, 'account/update_password.html', context)
             
 
@@ -230,11 +234,13 @@ def update_password(request):
 # profile page
 @login_required(login_url='/login')# check for login
 def index(request):
+    setting = Setting.objects.get(pk=1)
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     current_user = request.user
     userprofile = UserProfile.objects.get(user_id=current_user.id)
-    context = {'userprofile':userprofile,'products':products,'pcategories':pcategories}
+    context = {'userprofile':userprofile,'products':products,
+    'pcategories':pcategories,'setting':setting}
     return render(request, 'account/index.html', context)
 
 # logout

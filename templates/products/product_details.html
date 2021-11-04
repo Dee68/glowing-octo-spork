@@ -40,7 +40,7 @@
 						<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 							<h2>{{ product.title }}</h2>
 							<p>
-							  <form action="{% url 'products:cart_details' %}" method="Post">
+							  <form action="{% url 'products:cart_details' %}" method="POST">
 							   {% csrf_token %}
 							    <input type="hidden" value="{{ product.id }}" name="pid">
                                 <input type="hidden" value="1" name="qty">
