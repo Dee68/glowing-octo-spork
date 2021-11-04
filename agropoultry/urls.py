@@ -23,7 +23,7 @@ from account.views import RegistrationView,LoginView,logoutPage
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    path('/', include('home.urls', namespace='home')),
+    path('', include('home.urls', namespace='home')),
     path('products/', include('product.urls', namespace='products')),
     path('register/', RegistrationView.as_view(), name='register'),
     path('account/', include('account.urls', namespace='account')),
