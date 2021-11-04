@@ -82,8 +82,8 @@ def add_to_cart(request):
             
     else:
         # Anonymouse user
-        device = request.COOKIES['device']
-        customer,created = Customer.objects.get_or_create(device=device)
+        DEV = request.COOKIES['device']
+        customer,created = Customer.objects.get_or_create(device=DEV)
         # customer.id = request.user.id
         print(customer.id, request.user.id)
         items = Cart.objects.filter(customer__id=customer.id, status=False)
