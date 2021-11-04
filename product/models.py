@@ -109,7 +109,7 @@ class Customer(models.Model):
             name = self.device
             return str(name)
         else:
-            name = self.user.username
+            name = self.user
             return str(name)
         
 
