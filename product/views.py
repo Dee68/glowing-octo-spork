@@ -82,7 +82,7 @@ def add_to_cart(request):
             
     else:
         # Anonymouse user
-        DEV = str(request.cookies['device'])
+        DEV = str(request.COOKIES['device'])
 
         customer,created = Customer.objects.get_or_create(device=DEV)
         # customer.id = request.user.id
