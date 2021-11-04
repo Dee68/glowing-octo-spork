@@ -127,7 +127,7 @@ class Cart(models.Model):
         return total
 
     def __str__(self):
-        return self.user.username
+        return self.customer
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
