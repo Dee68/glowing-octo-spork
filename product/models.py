@@ -109,12 +109,12 @@ class Customer(models.Model):
             name = self.device
             return str(name)
         else:
-            name = self.user
+            name = self.user.username
             return str(name)
         
 
 class Cart(models.Model):
-    customer =models.ForeignKey(Customer,on_delete = models.SET_NULL, null=True, blank=True)
+    customer =models.ForeignKey(Customer,on_delete = models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product,on_delete = models.CASCADE)
     quantity = models.IntegerField()
     status = models.BooleanField(default=False)
@@ -127,7 +127,7 @@ class Cart(models.Model):
         return total
 
     def __str__(self):
-        return self.customer
+        return self.customer.username
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
