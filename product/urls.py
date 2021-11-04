@@ -13,4 +13,4 @@ urlpatterns = [
     path('category/<str:category_slug>/', views.show_category, name='show_category'),
     path('<str:cslug>/', views.category_products, name='category_products'), 
 
-    ]
+    ] 
