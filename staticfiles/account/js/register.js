@@ -2,6 +2,13 @@ const usernameField = document.querySelector('#usernameField');
 const feedbackArea = document.querySelector(".invalid-feedback");
 const usernameSuccess = document.querySelector(".usernameSuccess");
 
+const registerForm = document.querySelector("#regform");
+
+const firstnameField = document.querySelector('#firstnameField');
+const firstArea = document.querySelector(".invalid-feedback");
+const usernameSuccess = document.querySelector(".firstnameSuccess");
+
+
 const emailField = document.querySelector('#emailField');
 const emailFeedback = document.querySelector(".emailFeedback");
 const emailSuccess = document.querySelector(".emailSuccess");
@@ -39,6 +46,8 @@ usernameField.addEventListener('keyup', (e) => {
 
 });
 
+
+
 emailField.addEventListener('keyup', (e) => {
     const emailVal = e.target.value;
 
@@ -65,6 +74,9 @@ emailField.addEventListener('keyup', (e) => {
     }
 });
 
+
+
+
 const handleToggle = (e) => {
     if (showPasswdToggle.textContent == 'SHOW') {
         showPasswdToggle.textContent = 'HIDE';
@@ -78,3 +90,5 @@ const handleToggle = (e) => {
 }
 
 showPasswdToggle.addEventListener('click', handleToggle);
+
+

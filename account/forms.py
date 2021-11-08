@@ -5,15 +5,45 @@ from django import forms
 from .models import UserProfile
 
 class RegisterUserForm(UserCreationForm):
+    # email = forms.EmailField(required=True)
+    # first_name = forms.CharField(max_length=100,required=True)
+    # last_name = forms.CharField(max_length=100,required=True)
     class Meta:
         model = User
-        fields = ['username','email','password1','password2']
+        fields = ('username','first_name','last_name','email','password1','password2')
         widgets = {
-            'username':forms.TextInput(attrs={'class':'text','placeholder':'Username','name':'username','id':'password1Field','value':"{{ fieldVals.username}}"}),
+            'username':forms.TextInput(attrs={'class':'text','placeholder':'Username','name':'username','id':'usernameField','value':"{{ fieldVals.username}}"}),
+            'first_name':forms.TextInput(attrs={'class':'text','placeholder':'Firstname','name':'firstname','id':'firstnameField','value':"{{ fieldVals.firstname}}"}),
+            'last_name':forms.TextInput(attrs={'class':'text','placeholder':'Lastname','name':'lastname','id':'lastnameField','value':"{{ fieldVals.lastname}}"}),
             'email':forms.EmailInput(attrs={'class':'text email','name':'email','id':'emailField','placeholder':'Email','value':"{{ fieldVals.email }}"}),
             'password1': forms.PasswordInput(attrs={'class':'text','id':'password1Field','placeholder':'Password','name':'password1'}),
             'password2':forms.PasswordInput(attrs={'class':'text w3lpass','name':'password2','id':'password2Field','placeholder':'Confirm Password'})
         }
+
+    # def clean_first_name(self, *args, **kwargs):
+    #     first_name = self.cleaned_data.get("first_name")
+    #     if self.cleaned_data['first_name'].strip() == '':
+    #         raise forms.ValidationError("First name is required.")
+    #     return first_name
+
+    # def clean_last_name(self, *args, **kwargs):
+    #     last_name = self.cleaned_data.get("last_name")
+    #     if len(last_name) == 0:
+    #         raise forms.ValidationError("Last name is required.")
+    #     return last_name
+
+    # def save(self, commit=True):
+    #     user = super(RegisterUserForm,self).save(commit=True)
+    #     user.username = self.cleaned_data['username']
+    #     user.email = self.cleaned_data['email']
+    #     user.first_name = self.cleaned_data['first_name']
+    #     user.last_name = self.cleaned_data['last_name']
+    #     user.password = self.cleaned_data['password1']
+    #     if commit:
+    #         user.save()
+    #     return user
+
+        
 
 
 class UserUpdateForm(UserChangeForm):
@@ -22,9 +52,11 @@ class UserUpdateForm(UserChangeForm):
         fields = ['username', 'email', 'first_name', 'last_name']   
         widgets = {
         'username':forms.TextInput(attrs={'class':'form-control','placeholder':'UserName'}),
-        'email':forms.EmailInput(attrs={'class':'form-control','placeholder':'Email.'}),
-        'first_name': forms.TextInput(attrs={'class':'form-control','placeholder':'First Name.'}),
+        'first_name':forms.TextInput(attrs={'class':'form-control','placeholder':'First Name'}),
         'last_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Last Name'}),
+        'email':forms.EmailInput(attrs={'class':'form-control','placeholder':'Email.'}),
+        # 'first_name': forms.TextInput(attrs={'class':'form-control','placeholder':'First Name.'}),
+        # 'last_name':forms.TextInput(attrs={'class':'form-control','placeholder':'Last Name'}),
     }
 
 class ChangePasswordForm(PasswordChangeForm):

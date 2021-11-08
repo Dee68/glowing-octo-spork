@@ -15,6 +15,7 @@ from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeEr
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 from .forms import RegisterUserForm,UserProfileForm, UserUpdateForm, ChangePasswordForm
 from home.models import Setting
 
@@ -32,45 +33,57 @@ class RegistrationView(View):
             form = RegisterUserForm(request.POST)
             fieldVals = request.POST
             username = request.POST['username']
+            firstname = request.POST['firstname']
+            lastname = request.POST['lastname']
             user_email = request.POST['email']
             password1 = request.POST['password1']
             password2 = request.POST['password2']
             context = {"fieldVals":fieldVals, 'form':form}
-            if not User.objects.filter(username=username).exists():
-                if not User.objects.filter(email=user_email).exists():
-                    if len(password1) < 8:
-                        messages.error(request,"password must be 8 characters or more")
-                        return render(request, 'account/register.html', context)
-                    if not (password1 == password2):
-                        messages.error(request, 'passwords did not match')
-                        return render(request, 'account/register.html', context)
-                    if form.is_valid():
-                        user = User.objects.create_user(username=username, email=user_email)
-                        user.set_password(password1)
-                        user.save()
-                        username = form.cleaned_data['username']
-                        password = form.cleaned_data['password1']
-                        user = authenticate(request, username=username, password=password)
-                        login(request, user)
-                        current_user = request.user
-                        data = UserProfile()
-                        data1 = Customer()
-                        #data.user.username = username
-                        #data1.user.username = username
-                        data.user_id = current_user.id
-                        data1.user_id = current_user.id
-                        data.image = "uploads/profile_pics/userimage.png"
-                        data.save()
-                        data1.save()
-                        messages.success(request,"Account successfully created")
-                        return render(request, 'account/register.html', context) 
-                    messages.error(request, "Email or username not acceptable.")  
-                    return render(request, 'account/register.html', context)
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "username already in use, choose another one.")
+                return render(request, 'account/register.html', context)
+            if User.objects.filter(email=user_email).exists():
                 messages.error(request, "sorry email already in use, please choose another one.")
                 return render(request, 'account/register.html', context)
-            messages.error(request, "username already in use, choose another one.")
-            return render(request, 'account/register.html', context)
-        
+            if len(password1) < 8:
+                messages.error(request,"password must be 8 characters or more")
+                return render(request, 'account/register.html', context)
+            if not (password1 == password2):
+                messages.error(request, 'passwords did not match')
+                return render(request, 'account/register.html', context)        
+                    
+            if (len(firstname) == 0 or len(lastname) == 0):
+                messages.error(request, mark_safe("Please fill in all fields,<br> they are all required"))
+                return render(request, 'account/register.html', context)
+            if form.is_valid():
+                user = User.objects.create_user(username=username, email=user_email, 
+                password=password1,first_name=firstname,last_name=lastname)
+                user.set_password(password1)
+                # form.save()
+                user.save()
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password1']
+                user = authenticate(request, username=username, password=password)
+                login(request, user)
+                current_user = request.user
+                data = UserProfile()
+                data1 = Customer()
+                        
+                data.user_id = current_user.id
+                data1.user_id = current_user.id
+                data.image = "uploads/profile_pics/userimage.png"
+                data.save()
+                data1.save()
+                messages.success(request,mark_safe("Account created successfully.<br>You can now log in."))
+                return render(request, 'account/register.html', context)
+            else:
+                messages.error(request, "Invalid form, please fill in all fields.")  
+                return render(request, 'account/register.html', context)
+
+                        
+                    # messages.error(request, "Invalid form, please fill in all fields.")  
+                    # return render(request, 'account/register.html', context)
+        return render(request, 'account/register.html', context)
         
                 
                     
@@ -128,6 +141,8 @@ class VerificationView(View):
         except Exception as ex:
             pass
         return redirect('login')
+
+
 
 class UsernamevalidationView(View):
     def post(self,request):

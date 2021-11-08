@@ -1,46 +1,21 @@
-// var updateBtns = document.getElementsByClassName("update-cart");
-// for (var i = 0; i < updateBtns.length; i++) {
-//     updateBtns[i].addEventListener("click", function () {
-//         var productId = this.dataset.product
-//         var action = this.dataset.action
-//         console.log('ProductId:', productId, 'Action:', action)
-//         console.log('User:', user)
-//         if (user == 'AnonymousUser') {
-//             console.log('user is not authenticated')
-//         } else {
-//             updateUserOrder(productId, action)
-//         }
-//     })
+var carts = JSON.parse(localStorage.getItem('carts'));
+var total = localStorage.getItem('total');
+if (carts === null || carts === undefined) {
+    localStorage.setItem('carts', JSON.stringify([]));
+    carts = JSON.parse(localStorage.getItem('carts'));
+}
+if (total === null || total === undefined) {
+    localStorage.setItem('total', 0);
+    total = localStorage.getItem('total');
+}
+var cartitems = document.querySelector("#cartitems");
+var grandtotal = document.querySelector("#grand_total");
+var qty = document.querySelector("#quantity");
+var pcart = document.getElementsByClassName('pcart');
+qty.innerHTML += total;
+grandtotal.innerHTML += Number("0.00");
+cartitems.innerHTML = carts.length;
 
-// }
-// console.log('updateBtns length:', updateBtns.length);
-// function updateUserOrder(productId, action) {
-//     console.log('user is authenticated, sending data..');
-//     var url = "/product/update_item/"
-
-//     const data = { "productId": productId, "action": action }
-
-//     fetch(url, {
-//         // mode: "cors",
-//         // credentials: "include",
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//             "Accept": "application/json",
-//             "X-CSRFToken": csrftoken
-//         },
-//         body: JSON.stringify(data)
-//     })
-//         .then(response => response.json())
-//         .then((data) => {
-//             console.log("data", data);
-//             location.reload();
-//         })
-//         .catch((error) => {
-//             console.log('Error:', error);
-//         })
-
-
-
-
-// }
+function addTocart(pid) {
+    pcart.innerHTML += "<td class='cart_product'>new</td><td class='cart_description'>new</td><td class='cart_price'>new</td><td class='cart_quantity'>1</td><td class='cart_total'>200</td><td class='cart_delete'></td>";
+}

@@ -1,18 +1,23 @@
-/* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript
-//We start indexing at one because CSRF_token is considered and input field
-*/
-
-//Query All input fields
-// var form_fields = document.getElementsByTagName('input')
-// form_fields[2].placeholder = 'Username..';
-// form_fields[3].placeholder = 'Email..';
-// form_fields[4].placeholder = 'Firstname..';
-// form_fields[5].placeholder = 'Lastname..';
-// form_fields[6].placeholder = 'Enter password...';
-// form_fields[7].placeholder = 'Re-enter Password...';
-
-
-// for (var field in form_fields) {
-//     form_fields[field].className += ' form-control'
-// }
-// console.log(form_fields[1].name, form_fields[3].name);
+var hours = 24;
+var now = new.Date().getTime();
+var stepTime = localStorage.getTime('stepTime');
+if (stepTime == null) {
+    localStorage.stepTime('stepTime', now);
+} else {
+    if (now - stepTime > hours * 60 * 60 * 1000) {
+        localStorage.clear();
+        localStorage.stepTime('stepTime', now);
+    }
+}
+var carts = JSON.parse(localStorage.getItem('carts'));
+var total = localStorage.getItem('total');
+if (carts === null || carts === undefined) {
+    localStorage.setItem('carts', JSON.stringify([]));
+    carts = JSON.parse(localStorage.getItem('carts'));
+}
+if (total === null || total === undefined) {
+    localStorage.setItem('total', 0);
+    total = localStorage.getItem('total');
+}
+var cartitems = document.querySelector("#cartitems");
+cartitems.innerHTML = carts.length;

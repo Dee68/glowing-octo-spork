@@ -33,13 +33,13 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 </header>
 {% endblock aside %}
 {% block products %}
-{% comment %} {% if items|length == 0 %}
+{% if items|length == 0 %}
     <div class="container-fluid">
         <div class="jumbotron alert alert-danger" style="text-align:center;">
             &times; Your Shopping Cart is empty !!!  
         </div>
     </div>
-{% else %} {% endcomment %}
+{% else %} 
 <div id="fh5co-contact">
 	<div class="container">
 	<section id="cart_items">
@@ -60,16 +60,16 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 						</tr>
 					</thead>
 					<tbody>
-					{% if items|length == 0 %}
+					{% comment %} {% if items|length == 0 %}
     				<div class="container-fluid">
         				<div class="jumbotron alert alert-danger" style="text-align:center;">
            			 	&times; Your Shopping Cart is empty !!!  
         				</div>
     				</div>
-					{% else %}
-                      {% for item in items %}
+					{% else %} {% endcomment %}
+                      {% for item in items %} 
 					 
-						<tr id={{ item.id }}>
+						<tr class="pcart">
 							<td class="cart_product">
 								<a href=""><img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}" style="width:50px;height:50px;"alt=""></a>
 							</td>
@@ -93,9 +93,9 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 								<button class="cart_quantity_delete" onclick="remove_cart('{{item.id}}')" ><i class="fa fa-times"></i></button>
 							</td>
 						</tr>
-                    {% endfor %}
+                    {{% endfor %} 
 
-                   	{% endif %} 
+                   	{% endif %}  
 					</tbody>
 				</table>
 			</div>
@@ -171,7 +171,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 							{% comment %} <li id="item_total">Cart Sub Total <span>${{ order.get_cart_total }}</span></li> {% endcomment %}
 							<li>Eco Tax <span>&#8358;2</span></li>
 							<li>Shipping Cost <span>Free</span></li>
-							<li >Cart Grand Total <span id="grand_total"></span></li>
+							<li >Cart Grand Total <span id="grand_total">&#8358;</span></li>
 						</ul>
 							<a class="btn btn-default update" href="{% url 'products:cart_details' %}">Update</a>
 							<a class="btn btn-default check_out" href="{% url 'products:checkout' %}">Checkout</a>
@@ -188,7 +188,8 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 	
 {% block counter %}
 <script src="{% static 'js/jquery.js' %}"></script>
-<script>
+<script src="{% static 'js/cart.js' %}"></script>
+{% comment %} <script>
        function grandTotal(){
            $.ajax({
                url:"{% url 'products:get_cart_data' %}",
@@ -246,7 +247,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 
            })
        }
-</script>
+</script> {% endcomment %}
 <div id="fh5co-started">
 <div class="container">
 <div class="row animate-box">

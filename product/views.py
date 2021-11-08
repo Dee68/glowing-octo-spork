@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, response
 from django.contrib import messages
 from .models import *
 from home.models import Setting
@@ -58,53 +58,11 @@ def category_products(request, cslug=None):
 
 # show cart details
 def add_to_cart(request):
-    setting = Setting.objects.get(pk=1)
     context = {}
     pcategories = Category.objects.filter(parent=None)
+    setting = Setting.objects.get(pk=1)
     context['pcategories']= pcategories
     context['setting'] = setting
-    items = Cart.objects.filter(customer__id=request.user.id, status=False)
-    context['items'] = items
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            pid = request.POST['pid']
-            qty = request.POST['qty']
-            do_exist = Cart.objects.filter(product__id=pid, customer__id=request.user.id, status=False)
-            if len(do_exist) > 0:
-                messages.warning(request,'Item already exists in your cart.')
-            
-            else:
-                product = get_object_or_404(Product, id=pid)
-                usr = get_object_or_404(Customer,id=request.user.id)
-                c = Cart(customer=usr, product=product,quantity=qty)
-                c.save()
-                messages.success(request, '{}  Added to your cart'.format(product.title))
-            
-    else:
-        # Anonymouse user
-        DEV = str(request.COOKIES['device'])
-
-        customer,created = Customer.objects.get_or_create(device=DEV)
-        # customer.id = request.user.id
-        print(customer.id, request.user.id)
-        items = Cart.objects.filter(customer__id=customer.id, status=False)
-        context['items'] = items
-        if request.method == "POST":
-            pid = request.POST['pid']
-            qty = request.POST['qty']
-            do_exist = Cart.objects.filter(product__id=pid, customer__id=customer.id, status=False)
-            if len(do_exist) > 0:
-                messages.warning(request,'Item already exists in your cart.')
-                return render(request, 'products/cart_detail.html', context)
-            else:
-                product = get_object_or_404(Product, id=pid)
-                usr = get_object_or_404(Customer, id=customer.id)
-                c = Cart(customer=usr,product=product,quantity=qty)
-                c.save()
-                messages.success(request,'{} Added to your cart'.format(product.title))
-                return render(request, 'products/cart_detail.html', context)
-            
-        return render(request, 'products/cart_detail.html', context)
     return render(request, 'products/cart_detail.html', context)
 
 #using ajax to get cart details

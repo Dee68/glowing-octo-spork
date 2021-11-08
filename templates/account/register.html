@@ -18,13 +18,22 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 		<h1>SignUp for a free account</h1>
 		<div class="main-agileinfo">
 			<div class="agileits-top">
-				<form action="{% url 'register' %}" method="post">
+				<form action="{% url 'register' %}" method="post" id="regform" name="regform">
 				  {% csrf_token %}
 				  {% include "partials/_messages.html" %}
 					<input class="text" type="text" name="username" placeholder="Username" id="usernameField" value="{{ fieldVals.username}}">
 					
 					<div class="invalid-feedback" style="display:none;"></div>
                     <p class="text-sm text-success usernameSuccess"></p>
+					<br>
+                   <input class="text" type="text" name="firstname" placeholder="Firstname" id="firstnameField" value="{{ fieldVals.firstname}}">
+				   <div class="invalid-feedback" style="display:none;"></div>
+                    <p class="text-sm text-success firstnameSuccess"></p>
+					<br>
+				   <input class="text" type="text" name="lastname" placeholder="Lastname" id="lastnameField" value="{{ fieldVals.lastname}}">
+				   <div class="invalid-feedback" style="display:none;"></div>
+                    <p class="text-sm text-success lastnameSuccess"></p>
+
 					<input class="text email" type="email" name="email" placeholder="Email" id="emailField" value="{{ fieldVals.email}}">
 					<div class="invalid-feedback emailFeedback" style="display:none;"></div>
                     <p class="text-sm text-success emailSuccess"></p>
