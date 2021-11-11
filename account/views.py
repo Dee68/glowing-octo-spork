@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-from product.models import Product,Category
+from product.models import Product,Category, Customer
 from django.http import JsonResponse,HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -67,13 +67,13 @@ class RegistrationView(View):
                 login(request, user)
                 current_user = request.user
                 data = UserProfile()
-                #data1 = Customer()
+                data1 = Customer()
                         
                 data.user_id = current_user.id
-                #data1.user_id = current_user.id
+                data1.user_id = current_user.id
                 data.image = "uploads/profile_pics/userimage.png"
                 data.save()
-                #data1.save()
+                data1.save()
                 messages.success(request,mark_safe("Account created successfully.<br>You can now log in."))
                 return render(request, 'account/register.html', context)
             else:

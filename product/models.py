@@ -84,33 +84,33 @@ class Picture(models.Model):
     def __str__(self):
         return self.title
 
-# class Customer(models.Model):
-#     GENDER = (
-#         ('male','male'),
-#         ('female','female'),
-#     )
-#     TITLE = (
-#         ('mr.','mr.'),
-#         ('mrs.','mrs.'),
-#         ('ms.','ms.'),
-#         ('dr.','dr.'),
-#         ('prof.', 'prof.'),
-#         ('king','king'),
-#         ('chief','chief'),
-#     )
-#     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,blank=True)
-#     gender = models.CharField(max_length=6, choices=GENDER, default='male')
-#     title = models.CharField(max_length=5, choices=TITLE)
-#     # device = models.CharField(max_length=200,null=True, blank=True)
+class Customer(models.Model):
+    GENDER = (
+        ('male','male'),
+        ('female','female'),
+    )
+    TITLE = (
+        ('mr.','mr.'),
+        ('mrs.','mrs.'),
+        ('ms.','ms.'),
+        ('dr.','dr.'),
+        ('prof.', 'prof.'),
+        ('king','king'),
+        ('chief','chief'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,blank=True)
+    gender = models.CharField(max_length=6, choices=GENDER, default='male')
+    title = models.CharField(max_length=5, choices=TITLE)
+    # device = models.CharField(max_length=200,null=True, blank=True)
     
 
-#     def __str__(self):
-#         name = self.user.username
-#         return str(name)
+    def __str__(self):
+        name = self.user.username
+        return str(name)
         
 
 class Cart(models.Model):
-    #customer =models.ForeignKey(Customer,on_delete = models.CASCADE, null=True, blank=True)
+    customer =models.ForeignKey(Customer,on_delete = models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product,on_delete = models.CASCADE)
     quantity = models.IntegerField()
     status = models.BooleanField(default=False)
