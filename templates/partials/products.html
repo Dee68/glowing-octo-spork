@@ -17,7 +17,7 @@
 						<div class="product-grid" style="background-image:url({% if product.image %}{{ product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %});">
 							<div class="inner">
 								<p>
-									<a href="{% url 'products:cart_details' %}" class="icon update-cart"><i class='icon-shopping-cart'></i></a>
+									<a href="#" class="icon update-cart"><i class='icon-shopping-cart'></i></a>
 									<a href="{{ product.get_absolute_url }}" class="icon"><i class="icon-eye"></i></a>
 								</p>
 							</div>

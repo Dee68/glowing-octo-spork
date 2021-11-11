@@ -1,23 +1,30 @@
-var hours = 24;
-var now = new.Date().getTime();
-var stepTime = localStorage.getTime('stepTime');
-if (stepTime == null) {
-    localStorage.stepTime('stepTime', now);
-} else {
-    if (now - stepTime > hours * 60 * 60 * 1000) {
-        localStorage.clear();
-        localStorage.stepTime('stepTime', now);
-    }
+// var now = new Date().getTime();
+// var stepTime = localStorage.getItem('stepTime');
+
+// if (stepTime == null) {
+//     localStorage.setItem('stepTime', now);
+// } else {
+//     if (now - stepTime > (24 * 60 * 60 * 1000)) {
+//         localStorage.clear();
+//         localStorage.setItem('stepTime', now);
+//     }
+// }
+const addTocartBtns = document.getElementsByClassName("update-cart");
+setTimeout(() => {
+    this.convertToArray();
+});
+
+function convertToArray() {
+    const addTocartBtns = document.getElementsByClassName("update-cart");
+    const addBtnArr = Array.from(addTocartBtns);
+    return addBtnArr;
 }
-var carts = JSON.parse(localStorage.getItem('carts'));
-var total = localStorage.getItem('total');
-if (carts === null || carts === undefined) {
-    localStorage.setItem('carts', JSON.stringify([]));
-    carts = JSON.parse(localStorage.getItem('carts'));
+const addBtnArr = convertToArray();
+
+for (let index = 0; index < addTocartBtns.length; index++) {
+    addTocartBtns[i].addEventListener("click", function (e) {
+        console.log(e.target);
+    });
+
 }
-if (total === null || total === undefined) {
-    localStorage.setItem('total', 0);
-    total = localStorage.getItem('total');
-}
-var cartitems = document.querySelector("#cartitems");
-cartitems.innerHTML = carts.length;
+

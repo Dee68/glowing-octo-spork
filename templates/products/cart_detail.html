@@ -33,13 +33,13 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 </header>
 {% endblock aside %}
 {% block products %}
-{% if items|length == 0 %}
+{% comment %} {% if items|length == 0 %}
     <div class="container-fluid">
         <div class="jumbotron alert alert-danger" style="text-align:center;">
             &times; Your Shopping Cart is empty !!!  
         </div>
     </div>
-{% else %} 
+{% else %}  {% endcomment %}
 <div id="fh5co-contact">
 	<div class="container">
 	<section id="cart_items">
@@ -60,14 +60,14 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 						</tr>
 					</thead>
 					<tbody>
-					{% comment %} {% if items|length == 0 %}
+					{% if items|length == 0 %}
     				<div class="container-fluid">
         				<div class="jumbotron alert alert-danger" style="text-align:center;">
            			 	&times; Your Shopping Cart is empty !!!  
         				</div>
     				</div>
-					{% else %} {% endcomment %}
-                      {% for item in items %} 
+					{% else %} 
+                      {% comment %} {% for item in items %} 
 					 
 						<tr class="pcart">
 							<td class="cart_product">
@@ -93,7 +93,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 								<button class="cart_quantity_delete" onclick="remove_cart('{{item.id}}')" ><i class="fa fa-times"></i></button>
 							</td>
 						</tr>
-                    {{% endfor %} 
+                    {{% endfor %}  {% endcomment %}
 
                    	{% endif %}  
 					</tbody>
