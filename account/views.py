@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile
-from product.models import Customer,Product,Category
+from product.models import Product,Category
 from django.http import JsonResponse,HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
