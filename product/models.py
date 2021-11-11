@@ -114,7 +114,7 @@ class Customer(models.Model):
         
 
 class Cart(models.Model):
-    customer =models.ForeignKey(Customer,on_delete = models.CASCADE, null=True, blank=True)
+    #customer =models.ForeignKey(Customer,on_delete = models.CASCADE, null=True, blank=True)
     product = models.ForeignKey(Product,on_delete = models.CASCADE)
     quantity = models.IntegerField()
     status = models.BooleanField(default=False)
