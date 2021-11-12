@@ -92,62 +92,62 @@
 	document.cookie = "device=" + device + ";domain=;path=/"
  */
 
- //function grandTotal(){
-          // $.ajax({
-               //url:"",
-               //type:'get',
-               //success:function(data){
-                   //p = Math.round(100-((data.offer/data.total)*100),2)
+    function grandTotal(){
+         $.ajax({
+               url:"",
+               type:'get',
+               success:function(data){
+                   p = Math.round(100-((data.offer/data.total)*100),2)
                    //save = data.total-data.offer;
-				 //  gtotal = data.total + 2
-                   //$("#item_total").html("&#x20A6;"+data.total);
-                   // $("#quantity").html(data.quantity+" Items");
-					//$("#cartitems").html(data.quantity);
-                    //$("#grand_total").html("&#8358;"+gtotal+".00");
+				   gtotal = data.total + 2
+                   $("#item_total").html("&#x20A6;"+data.total);
+                    $("#quantity").html(data.quantity+" Items");
+					$("#cartitems").html(data.quantity);
+                    $("#grand_total").html("&#8358;"+gtotal+".00");
                     
-               //}
-           //})
-       //}
-       //grandTotal(); 
+               }
+           })
+       }
+    grandTotal(); 
 
-      // function change_quan(id,action){
-          // let old = $("#cart"+id).val();
+      function change_quan(id,action){
+           let old = $("#cart"+id).val();
             
-         //  quan = 0
-          // if(action=="plus"){
-           //    quan += parseInt(old)+1
-          // }else{
-            //   quan += parseInt(old)-1
-          // }
+           quan = 0
+           if(action=="plus"){
+               quan += parseInt(old)+1
+           }else{
+               quan += parseInt(old)-1
+           }
            
 
 
-         //  $("#cart"+id).val(quan);
+          $("#cart"+id).val(quan);
            
-          // $.ajax({
-              // url:"",
-              // type:"get",
-              // data:{cid:id, quantity:quan},
-               //success:function(data){
-                //   grandTotal();
-                // if(data==0){
-                 //   remove_cart(id);
-                // }
-              // }
-           //})
-       //} 
+           $.ajax({
+               url:"",
+               type:"get",
+               data:{cid:id, quantity:quan},
+               success:function(data){
+                   grandTotal();
+                 if(data==0){
+                    remove_cart(id);
+                 }
+               }
+           })
+       } 
 
-       //function remove_cart(id){
-        //   $.ajax({
-            //   url:"",
-              // data:{delete_cart:id},
-              // success:function(data){
-                //    grandTotal();
-               //     $("#row"+id).hide();
-              // }
+       function remove_cart(id){
+           $.ajax({
+               url:"",
+               data:{delete_cart:id},
+               success:function(data){
+                    grandTotal();
+                    $("#row"+id).hide();
+               }
 
-           //})
-      // }
+           })
+      }
 	      
 
 	
@@ -232,8 +232,10 @@
 						      </span>
 						    </div>
 						</li>
-						<li class="shopping-cart"><a href="{% url 'products:cart_details' %}" class="cart" id="cartitems"><span><small ></small><i class="icon-shopping-cart"></i></span></a></li>
+						<li class="shopping-cart"><a href="{% url 'products:cart_details' %}" class="cart" id="cartitems"><span id="cartBtn"><small >0</small><i class="icon-shopping-cart"></i></span></a></li>
+                       
 					</ul>
+					
 				</div>
 			</div>
 			
@@ -263,7 +265,12 @@
 
 {% endblock newsletter %}
 
-  
+  <div class="cartBox">
+		<div class="cart">
+			<i class="fa fa-close"></i>
+			<h1>Cart</h1>
+		</div>
+	</div>
 
 	<footer id="fh5co-footer" role="contentinfo">
 		<div class="container">

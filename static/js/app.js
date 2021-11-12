@@ -8,23 +8,22 @@
 //         localStorage.clear();
 //         localStorage.setItem('stepTime', now);
 //     }
-// }
-const addTocartBtns = document.getElementsByClassName("update-cart");
-setTimeout(() => {
-    this.convertToArray();
-});
+//
 
-function convertToArray() {
-    const addTocartBtns = document.getElementsByClassName("update-cart");
-    const addBtnArr = Array.from(addTocartBtns);
-    return addBtnArr;
-}
-const addBtnArr = convertToArray();
+window.onload = function () {
+    //cart box
+    const cartBtn = document.querySelector("#cartBtn");
 
-for (let index = 0; index < addTocartBtns.length; index++) {
-    addTocartBtns[i].addEventListener("click", function (e) {
-        console.log(e.target);
+    //console.log(cartBtn.firstChild);
+    const cartBox = document.querySelector(".cartBox");
+    cartBtn.addEventListener("click", function (e) {
+        cartBox.classList.add('active');
     });
 
 }
 
+if (typeof (Storage) !== 'undefined') {
+    console.log("local storage is working");
+} else {
+    console.log("local storge not working");
+}
