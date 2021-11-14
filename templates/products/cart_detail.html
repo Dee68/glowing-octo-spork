@@ -32,14 +32,9 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 		</div>
 </header>
 {% endblock aside %}
+
 {% block products %}
-{% comment %} {% if items|length == 0 %}
-    <div class="container-fluid">
-        <div class="jumbotron alert alert-danger" style="text-align:center;">
-            &times; Your Shopping Cart is empty !!!  
-        </div>
-    </div>
-{% else %}  {% endcomment %}
+
 <div id="fh5co-contact">
 	<div class="container">
 	<section id="cart_items">
@@ -193,7 +188,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 {% block counter %}
 <script src="{% static 'js/jquery.js' %}"></script>
 <script src="{% static 'js/cart.js' %}"></script>
-{% comment %} <script>
+<script>
        function grandTotal(){
            $.ajax({
                url:"{% url 'products:get_cart_data' %}",
@@ -251,7 +246,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 
            })
        }
-</script> {% endcomment %}
+</script>
 <div id="fh5co-started">
 <div class="container">
 <div class="row animate-box">
