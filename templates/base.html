@@ -94,7 +94,7 @@
 
     function grandTotal(){
          $.ajax({
-               url:"",
+               url:"{% url 'products:get_cart_data' %}",
                type:'get',
                success:function(data){
                    p = Math.round(100-((data.offer/data.total)*100),2)
@@ -103,7 +103,7 @@
                    $("#item_total").html("&#x20A6;"+data.total);
                     $("#quantity").html(data.quantity+" Items");
 					$("#cartitems").html(data.quantity);
-                    $("#grand_total").html("&#8358;"+gtotal+".00");
+                    $("#grand_total").html("&#8358;"+gtotal+ ".00");
                     
                }
            })
@@ -125,7 +125,7 @@
           $("#cart"+id).val(quan);
            
            $.ajax({
-               url:"",
+               url:"{% url 'products:change_quan' %}",
                type:"get",
                data:{cid:id, quantity:quan},
                success:function(data){
@@ -139,7 +139,7 @@
 
        function remove_cart(id){
            $.ajax({
-               url:"",
+               url:"{% url 'products:change_quan' %}",
                data:{delete_cart:id},
                success:function(data){
                     grandTotal();
@@ -233,7 +233,7 @@
 						    </div>
 						</li>
 						{% if request.user.is_authenticated %}
-						<li class="shopping-cart"><a href="{% url 'products:cart_details' %}" class="cart" id="cartitems"><span id="cartBtn"><small >0</small><i class="icon-shopping-cart"></i></span></a></li>
+						<li class="shopping-cart"><a href="{% url 'products:cart_details' %}" class="cart"><span><small  id="cartitems" >0</small><i class="icon-shopping-cart"></i></span></a></li>
 						{% else %}
 						{% endif %}
                        

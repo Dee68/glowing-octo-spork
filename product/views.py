@@ -65,21 +65,23 @@ def add_to_cart(request):
     context['setting'] = setting
     
     if request.user.is_authenticated:
-        items = Cart.objects.filter(user__id=request.user.id, status=False)
+        items = Cart.objects.filter(customer__id=request.user.id, status=False)
         context['items'] = items
         if request.method == "POST":
             pid = request.POST['pid']
             qty = request.POST['qty']
-            do_exist = Cart.objects.filter(product__id=pid, user__id=request.user.id, status=False)
+            do_exist = Cart.objects.filter(product__id=pid, customer__id=request.user.id, status=False)
             if len(do_exist) > 0:
                 messages.warning(request,'Item already exists in your cart.')
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             
             else:
                 product = get_object_or_404(Product, id=pid)
                 usr = get_object_or_404(User,id=request.user.id)
-                c = Cart(user=usr, product=product,quantity=qty)
+                c = Cart(customer=usr, product=product,quantity=qty)
                 c.save()
                 messages.success(request, '{}  Added to your cart'.format(product.title))
+                return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
             
     else:
         # Anonymouse user
@@ -105,17 +107,7 @@ def get_cart_data(request):
     else:
         #Anonymouse user
         pass
-        # device = request.COOKIES['device']
-        # customer,created = Customer.objects.get_or_create(device=device)
-        # items = Cart.objects.filter(customer__id=customer.id, status=False)
-        # # set initial values to 0
-        # total,quantity,num = 0,0,0
-        # for item in items:
-        #     total += float(item.product.price) * item.quantity# cart total
-        #     quantity += int(item.quantity)
-        #     num += 1# number of items in cart
-        # res = {"total":total,"quantity":quantity,'"num':num}
-        # return JsonResponse(res)
+        
         return JsonResponse("working on it again")
 
         
