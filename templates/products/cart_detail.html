@@ -187,7 +187,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 	
 {% block counter %}
 <script src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/cart.js' %}"></script>
+{% comment %} <script src="{% static 'js/cart.js' %}"></script> {% endcomment %}
 <script>
        function grandTotal(){
            $.ajax({
