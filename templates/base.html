@@ -232,7 +232,10 @@
 						      </span>
 						    </div>
 						</li>
+						{% if request.user.is_authenticated %}
 						<li class="shopping-cart"><a href="{% url 'products:cart_details' %}" class="cart" id="cartitems"><span id="cartBtn"><small >0</small><i class="icon-shopping-cart"></i></span></a></li>
+						{% else %}
+						{% endif %}
                        
 					</ul>
 					
