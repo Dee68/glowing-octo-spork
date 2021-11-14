@@ -92,23 +92,17 @@ def add_to_cart(request):
 
 #using ajax to get cart details
 def get_cart_data(request):
-    if request.user.is_authenticated:
-        items = Cart.objects.filter(customer__id=request.user.id, status=False)
-       # set initial values to 0
-        total,quantity,num = 0,0,0
-        #loop through items in cart
-        for item in items:
-            total += float(item.product.price) * item.quantity# cart total
-            quantity += int(item.quantity)
-            num += 1# number of items in cart
-        res = {"total":total,"quantity":quantity,'"num':num}
-        return JsonResponse(res)
+    items = Cart.objects.filter(customer__id=request.user.id, status=False)
+    # set initial values to 0
+    total,quantity,num = 0,0,0
+    #loop through items in cart
+    for item in items:
+        total += float(item.product.price) * item.quantity# cart total
+        quantity += int(item.quantity)
+        num += 1# number of items in cart
+    res = {"total":total,"quantity":quantity,'"num':num}
+    return JsonResponse(res)
         
-    else:
-        #Anonymouse user
-        pass
-        
-        return JsonResponse("working on it again")
 
         
     
