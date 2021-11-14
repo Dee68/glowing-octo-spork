@@ -35,12 +35,18 @@
 						<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 							<h2 id="pro{{ product.id }}">{{ product.title }}</h2>
 							<p>
-							  <form action="{% url 'products:cart_details' %}" method="POST">
+							{% if request.user.is_authenticated %}
+							<form action="{% url 'products:cart_details' %}" method="POST">
 							   {% csrf_token %} 
 							    <input type="hidden" value="{{ product.id }}" name="pid" id="p{{ product.id }}">
                                 <input type="hidden" value="1" name="qty" id="qty">
 								<button class="btn btn-primary btn-outline btn-lg addToCart"  id="addToCart">Add to Cart</button>
 							  </form> 
+							{% else %}
+							<p> Please register in order to shop in the site.</p>
+							<a href="{% url 'register' %}" class="btn btn-primary btn-outline btn-lg">Register</a>
+							{% endif %}
+							  
 								{% comment %} <a href="#" class="btn btn-primary btn-outline btn-lg">Compare</a> {% endcomment %}
 								
 							</p>
