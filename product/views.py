@@ -3,7 +3,9 @@ from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, respon
 from django.contrib import messages
 from .models import *
 from home.models import Setting
+from django.conf import settings
 from .forms import ShippingForm
+from paypal.standard.forms import PayPalPaymentsForm
 # Create your views here.
 
 # all products
@@ -124,10 +126,47 @@ def change_quan(request):
         cart_obj.delete()
         return HttpResponse(1)
 
+# process payment using paypal
+def process_payment(request):
+    items = Cart.objects.filter(customer_id__id=request.user.id,status=False)
+    products=""
+    amt=0
+    inv = "INV10001-"
+    cart_ids = ""
+    p_ids =""
+    for j in items:
+        products += str(j.product.title)+"\n"
+        p_ids += str(j.product.id)+","
+        amt += float(j.product.price)
+        inv +=  str(j.id)
+        cart_ids += str(j.id)+","
+    host = request.get_host()
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': str(amt),
+        'item_name': products,
+        'invoice': inv,
+        'notify_url': 'http://{}{}'.format(host,
+                                           reverse('paypal-ipn')),
+        'return_url': 'http://{}{}'.format(host,
+                                           reverse('payment_done')),
+        'cancel_return': 'http://{}{}'.format(host,
+                                              reverse('payment_cancelled')),
+    }
+    usr = User.objects.get(username=request.user.username)
+    ord = Order(customer=usr,cart_id=cart_ids,product_ids=p_ids)
+    ord.save()
+    ord.transaction_id = str(ord.id)+inv
+    ord.save()
+    request.session["order_id"] = ord.id
+    
+    form = PayPalPaymentsForm(initial=paypal_dict)
+    return render(request, 'products/process_payment.html', {'form': form})
+
 # show checkout page
 def checkout(request):
     setting = Setting.objects.get(pk=1)
-    items = Cart.objects.filter(user_id__id=request.user.id, status=False)
+    items = Cart.objects.filter(customer__id=request.user.id, status=False)
     usr = User.objects.get(username=request.user.username)
     products=""
     amt=0
@@ -162,3 +201,10 @@ def checkout(request):
     pcategories = Category.objects.filter(parent=None)
     context={'pcategories':pcategories,'items':items,'form':form,'setting':setting}
     return render(request, 'products/checkout.html', context)
+
+def payment_done(request):
+    return HttpResponse("Payment Successful.")
+
+def payment_cancelled(request):
+    return HttpResponse("Payment Cancelled.")
+

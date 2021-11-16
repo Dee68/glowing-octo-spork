@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
     'mptt',
+    'paypal.standard.ipn',
     'ckeditor',
     'ckeditor_uploader',
     # Media Cloudinary
@@ -224,7 +225,8 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 
-
+#paypal
+PAYPAL_RECEIVER_EMAIL = 'mrdee316@gmail.com'
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

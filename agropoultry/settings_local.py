@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
     'mptt',
+    'paypal.standard.ipn',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -119,6 +120,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+
+PAYPAL_RECEIVER_EMAIL = 'mrdee316@gmail.com'
 
 #ckeditor upload path
 CKEDITOR_UPLOAD_PATH="ckeditor_uploads/"

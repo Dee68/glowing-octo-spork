@@ -17,6 +17,7 @@ django-cloudinary-storage = "*"
 django-utils-six = "*"
 six = "*"
 python-decouple = "*"
+django-paypal = "*"
 
 [dev-packages]
 

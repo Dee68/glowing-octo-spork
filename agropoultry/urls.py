@@ -19,6 +19,7 @@ from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
 from home.views import aboutUs, contactUs
+from product.views import process_payment, payment_done, payment_cancelled
 from account.views import RegistrationView,LoginView,logoutPage
 from django.views.decorators.csrf import csrf_exempt
 
@@ -34,6 +35,10 @@ urlpatterns = [
     path('about/', aboutUs, name='about'),
     path('contact/', contactUs, name='contact'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('paypal/', include('paypal.standard.ipn.urls')),
+    path('process_payment/', process_payment, name='process_payment'),
+    path('payment_done/', payment_done, name='payment_done'),
+    path('payment_cancelled/', payment_cancelled, name='payment_cancelled'),
     path('admin/', admin.site.urls),
 ]
 
