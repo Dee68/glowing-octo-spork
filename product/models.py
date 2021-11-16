@@ -148,7 +148,7 @@ class Order(models.Model):
     #     return total
 
     def __str__(self) :
-        return str(self.customer.username)
+        return str(self.customer.user.username)
 
 
 
