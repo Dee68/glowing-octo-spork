@@ -161,3 +161,11 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+class Notification(models.Model):
+    recipient = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    text = RichTextField()
+    read = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return f"Notification for: self.recipient.user"
