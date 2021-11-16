@@ -101,6 +101,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,blank=True)
     gender = models.CharField(max_length=6, choices=GENDER, default='male')
     title = models.CharField(max_length=5, choices=TITLE)
+    wishlist = models.ManyToManyField(Product,blank=True)
     # device = models.CharField(max_length=200,null=True, blank=True)
     
 
@@ -126,6 +127,7 @@ class Cart(models.Model):
         return str(self.id)
 
 class Order(models.Model):
+    
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     cart_id = models.CharField(max_length=250)
@@ -145,7 +147,7 @@ class Order(models.Model):
     #     total = sum([item.quantity for item in orderitems])
     #     return total
 
-    def __str__(self) -> str:
+    def __str__(self) :
         return str(self.customer.username)
 
 
