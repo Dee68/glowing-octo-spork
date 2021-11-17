@@ -78,7 +78,7 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 							<form action="{% url 'products:checkout' %}" method="POST" name="shipping">
 							   {% csrf_token %}
 							   {% comment %} {{ form.customer }} {% endcomment %}
-							   <input type="text" name="customer" id="id_customer" value="{{request.user}}" required="false">
+							   <input type="text" name="customer" id="id_customer" value="{{request.user}}" required="false" disabled="true">
 							   {{ form.address }}
 							   {{ form.city }}
 							   {{ form.state}}

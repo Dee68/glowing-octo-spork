@@ -7,9 +7,8 @@ from .models import ShippingAddress
 class ShippingForm(forms.ModelForm):
     class Meta:
         model = ShippingAddress
-        fields = ['customer','address','city','state','zipcode']
+        fields = ['address','city','state','zipcode']
         labels = {
-            'customer':'',
             'address':'',
             'city':'',
             'state':'',
@@ -17,7 +16,6 @@ class ShippingForm(forms.ModelForm):
         }
         
         widgets = {
-            'customer':forms.TextInput(attrs={'name':'customer'}),
             'address':forms.TextInput(attrs={'placeholder':'Enter Address','address':'address'}),
             'city':forms.TextInput(attrs={'placeholder':'Enter City','city':'city'}),
             'state':forms.TextInput(attrs={'placeholder':'Enter State','state':'state'}),

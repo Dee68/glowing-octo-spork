@@ -184,9 +184,9 @@ def checkout(request):
         inv +=  str(j.id)
         cart_ids += str(j.id)+","
     ord = Order(customer=usr,cart_id=cart_ids,product_ids=p_ids,invoice_id=inv)
-    customer = request.user
+   
     form = ShippingForm()
-    print(customer)
+   
     #print(request.user)
     if request.method == 'POST':
         form = ShippingForm(request.POST)
@@ -194,22 +194,22 @@ def checkout(request):
         pcategories = Category.objects.filter(parent=None)
         if form.is_valid():
             data = ShippingAddress(order=ord)#initialize object
-            data.customer = customer
+            data.customer = request.user#form.cleaned_data['customer']
             data.address = form.cleaned_data['address']
             data.city = form.cleaned_data['city']
             data.state = form.cleaned_data['state']
             data.zipcode = form.cleaned_data['zipcode']
             ord.save()
             data.save()
-            context = {'pcategories':pcategories,'items':items,'form':form,'setting':setting,'customer':customer}
-            render(request, 'products/checkout.html', context)
+            # context = {'pcategories':pcategories,'items':items,'form':form,'setting':setting}
+            # render(request, 'products/checkout.html', context)
             messages.success(request,'Shipping info successfully created.')
             return HttpResponseRedirect(request. META['HTTP_REFERER'])
         else:
             messages.error(request,'Please fill in the required fields, to proceed further.')
             return HttpResponseRedirect(request. META['HTTP_REFERER'])
     pcategories = Category.objects.filter(parent=None)
-    context={'pcategories':pcategories,'items':items,'form':form,'setting':setting,'customer':customer}
+    context={'pcategories':pcategories,'items':items,'form':form,'setting':setting}
     return render(request, 'products/checkout.html', context)
 
 @login_required(login_url='/login')# check for login
