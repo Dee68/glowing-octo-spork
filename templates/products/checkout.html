@@ -57,13 +57,13 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 					</li>
 				</ul>
 			</div><!--/checkout-options-->
-			 {% if messages %}
+			 {% comment %} {% if messages %}
 			 {% for msg in messages %}
 			  <div class="alert alert-{{msg.level_tag}} text-center">{{ msg }}</div>
 			 {% endfor %}
 
 			 {% else %}
-			 {% endif %}
+			 {% endif %} {% endcomment %}
 
 			<div class="register-req">
 				<p>Please use Register And Checkout to easily get access to your order history, or use Checkout as Guest</p>
@@ -74,18 +74,21 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 					<div class="col-sm-6">
 						<div class="shopper-info">
 							<p>Shipping Information</p>
-							<form action="" method="POST">
+							{% include "partials/_messages.html" %}
+							<form action="{% url 'products:checkout' %}" method="POST" name="shipping">
 							   {% csrf_token %}
-							   {{ form.customer}}
+							   {% comment %} {{ form.customer }} {% endcomment %}
+							   <input type="text" name="customer" id="id_customer" value="{{request.user}}" required="false">
 							   {{ form.address }}
 							   {{ form.city }}
 							   {{ form.state}}
 							   {{ form.zipcode }}
-								{% comment %} <input type="text" placeholder="User Name">
-								<input type="text" placeholder="User Address">
-								<input type="text" placeholder="Enter City">
-								<input type="text" placeholder="Enter State">
-								<input type="text" placeholder="Enter Zipcode"> {% endcomment %}
+							   {% comment %} 
+							    <input type="text"  value="{{ request.user.username }}",name="customer">
+								<input type="text" placeholder="User Address" name="address">
+								<input type="text" placeholder="Enter City" name="city">
+								<input type="text" placeholder="Enter State" name="state">
+								<input type="text" placeholder="Enter Zipcode" name="zipcode">{% endcomment %}
 								<button class="btn btn-primary">Send Info</button>
 							</form>
 							

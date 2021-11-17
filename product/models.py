@@ -124,7 +124,7 @@ class Cart(models.Model):
         return total
 
     def __str__(self):
-        return str(self.id)
+        return "Cart Id:{} attached to customer:{}".format(str(self.id),str(self.customer))
 
 class Order(models.Model):
     customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,blank=True)
@@ -147,7 +147,7 @@ class Order(models.Model):
     #     return total
 
     def __str__(self) :
-        return  "Order of {} on {}".format(str(self.id),str(self.date_ordered))
+        return  "Order of ID:{} on this date: {}".format(str(self.id),str(self.date_ordered.strftime('%d /%m/%Y')))
 
 
 

@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404,redirect
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect, response
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from .models import *
 from home.models import Setting
 from django.conf import settings
@@ -59,6 +60,7 @@ def category_products(request, cslug=None):
     return render(request, 'products/category_product.html', context)
 
 # show cart details
+@login_required(login_url='/login')# check for login
 def add_to_cart(request):
     context = {}
     pcategories = Category.objects.filter(parent=None)
@@ -127,6 +129,7 @@ def change_quan(request):
         return HttpResponse(1)
 
 # process payment using paypal
+@login_required(login_url='/login')# check for login
 def process_payment(request):
     items = Cart.objects.filter(customer_id__id=request.user.id,status=False)
     products=""
@@ -154,7 +157,7 @@ def process_payment(request):
                                               reverse('payment_cancelled')),
     }
     usr = User.objects.get(username=request.user.username)
-    ord = Order(customer=usr,cart_id=cart_ids,product_ids=p_ids)
+    ord = Order(customer=usr,cart_id=cart_ids,product_ids=p_ids,invoice_id=inv)
     ord.save()
     ord.transaction_id = str(ord.id)+inv
     ord.save()
@@ -164,6 +167,7 @@ def process_payment(request):
     return render(request, 'products/process_payment.html', {'form': form})
 
 # show checkout page
+@login_required(login_url='/login')# check for login
 def checkout(request):
     setting = Setting.objects.get(pk=1)
     items = Cart.objects.filter(customer__id=request.user.id, status=False)
@@ -179,32 +183,40 @@ def checkout(request):
         amt += float(j.product.price)
         inv +=  str(j.id)
         cart_ids += str(j.id)+","
-    ord = Order(customer=usr,cart_id=cart_ids,product_ids=p_ids)
+    ord = Order(customer=usr,cart_id=cart_ids,product_ids=p_ids,invoice_id=inv)
+    customer = request.user
     form = ShippingForm()
+    print(customer)
+    #print(request.user)
     if request.method == 'POST':
         form = ShippingForm(request.POST)
-        
+        fieldVal = request.POST
+        pcategories = Category.objects.filter(parent=None)
         if form.is_valid():
             data = ShippingAddress(order=ord)#initialize object
-            data.customer = form.cleaned_data['customer']
+            data.customer = customer
             data.address = form.cleaned_data['address']
             data.city = form.cleaned_data['city']
             data.state = form.cleaned_data['state']
             data.zipcode = form.cleaned_data['zipcode']
             ord.save()
             data.save()
+            context = {'pcategories':pcategories,'items':items,'form':form,'setting':setting,'customer':customer}
+            render(request, 'products/checkout.html', context)
             messages.success(request,'Shipping info successfully created.')
-            return HttpResponseRedirect('/product/checkout/')
+            return HttpResponseRedirect(request. META['HTTP_REFERER'])
         else:
             messages.error(request,'Please fill in the required fields, to proceed further.')
-            return HttpResponseRedirect('/product/checkout/')
+            return HttpResponseRedirect(request. META['HTTP_REFERER'])
     pcategories = Category.objects.filter(parent=None)
-    context={'pcategories':pcategories,'items':items,'form':form,'setting':setting}
+    context={'pcategories':pcategories,'items':items,'form':form,'setting':setting,'customer':customer}
     return render(request, 'products/checkout.html', context)
 
+@login_required(login_url='/login')# check for login
 def payment_done(request):
     return HttpResponse("Payment Successful.")
 
+@login_required(login_url='/login')# check for login
 def payment_cancelled(request):
     return HttpResponse("Payment Cancelled.")
 

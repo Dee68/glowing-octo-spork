@@ -1,5 +1,6 @@
 from django import forms
-from django.db.models import fields
+from django import forms
+from django.forms import widgets
 from .models import ShippingAddress
 
 
@@ -15,10 +16,10 @@ class ShippingForm(forms.ModelForm):
             'zipcode':''
         }
         
-        forms.widgets = {
-            'customer':forms.TextInput(attrs={'placeholder':'Enter UserName'}),
-            'address':forms.TextInput(attrs={'placeholder':'Enter Address'}),
-            'city':forms.TextInput(attrs={'placeholder':'Enter City'}),
-            'state':forms.TextInput(attrs={'placeholder':'Enter State'}),
-            'zipcode':forms.TextInput(attrs={'placeholder':'Enter Zipcode'}),
+        widgets = {
+            'customer':forms.TextInput(attrs={'name':'customer'}),
+            'address':forms.TextInput(attrs={'placeholder':'Enter Address','address':'address'}),
+            'city':forms.TextInput(attrs={'placeholder':'Enter City','city':'city'}),
+            'state':forms.TextInput(attrs={'placeholder':'Enter State','state':'state'}),
+            'zipcode':forms.TextInput(attrs={'placeholder':'Enter Zipcode','zipcode':'zipcode'}),
         }
