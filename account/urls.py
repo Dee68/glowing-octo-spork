@@ -11,4 +11,6 @@ urlpatterns = [
   path('activate/<uid64>/<token>/', views.VerificationView.as_view(), name='activate'),
   path('update/', views.profile_update, name='update'),
   path('change_password/', views.update_password, name='change_password'),
+  path('whishlist/', views.whishlist,name='whishlist'),
+  path('add_to_wishlist/<int:id>/', views.add_to_whishlist, name='add_to_wishlist'),
 ]

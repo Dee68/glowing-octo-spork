@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.views import View
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
@@ -18,6 +18,7 @@ from django.urls import reverse
 from django.utils.safestring import mark_safe
 from .forms import RegisterUserForm,UserProfileForm, UserUpdateForm, ChangePasswordForm
 from home.models import Setting
+
 
 
 import json
@@ -257,6 +258,25 @@ def index(request):
     context = {'userprofile':userprofile,'products':products,
     'pcategories':pcategories,'setting':setting}
     return render(request, 'account/index.html', context)
+
+#whishlist
+@login_required
+def add_to_whishlist(request, id):
+    product = get_object_or_404(Product,id=id)
+    
+    if product.users_wishlist.filter(id=request.user.id).exists():
+        product.users_wishlist.remove(request.user)
+        messages.warning(request, product.title +" removed from wishlist.")
+    else:
+        product.users_wishlist.add(request.user)
+        messages.success(request, "Added "+ product.title +" to whishlist.")
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+
+@login_required
+def whishlist(request):
+    products = Product.objects.filter(users_wishlist=request.user)
+    print(products)
+    return render(request,'account/whishlist.html',{'products':products})
 
 # logout
 def logoutPage(request):

@@ -6,6 +6,7 @@ from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from mptt.models import MPTTModel, TreeForeignKey
 
+
 # Create your models here.
 class Category(MPTTModel):
     STATUS = (
@@ -59,9 +60,10 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=12, decimal_places=2)
     amount = models.IntegerField()
     miniamount = models.IntegerField()
-    in_stock = models.IntegerField(default=1)
+    in_stock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    users_wishlist = models.ManyToManyField(User, related_name='users_wishlist',blank=True)
 
     
 
@@ -102,7 +104,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True,blank=True)
     gender = models.CharField(max_length=6, choices=GENDER, default='male')
     title = models.CharField(max_length=5, choices=TITLE)
-    wishlist = models.ManyToManyField(Product,blank=True)
+    
     # device = models.CharField(max_length=200,null=True, blank=True)
     
 
