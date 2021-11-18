@@ -254,7 +254,7 @@ def index(request):
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     current_user = request.user
-    userprofile = UserProfile.objects.get(user_id=current_user.id)
+    userprofile = get_object_or_404(UserProfile, user=request.user)#UserProfile.objects.get(user_id=current_user.id)
     context = {'userprofile':userprofile,'products':products,
     'pcategories':pcategories,'setting':setting}
     return render(request, 'account/index.html', context)
