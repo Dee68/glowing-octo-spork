@@ -664,6 +664,14 @@ h1, h2, h3, h4, h5, h6, figure {
   font-size: 23px;
   content: "\e007";
 }
+.fh5co-contact-info ul li.bell::before {
+  font-size: 23px;
+  content: "\e006";
+}
+.fh5co-contact-info ul li.lock::before {
+  font-size: 23px;
+  content: "\e007";
+}
 .fh5co-contact-info ul li.cart::before {
   font-size: 30px;
   content: "\ea12";
