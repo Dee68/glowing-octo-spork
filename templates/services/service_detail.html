@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+{{ setting.title }} | {{ service.title }}
+{% endblock title %}
+{% block description %}
+{{ setting.description }}
+{% endblock description %}
+{% block keywords %}
+ {{ setting.keywords }}
+{% endblock keywords %}
+{% block aside %}
+<header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({% static 'images/aboutbg.jpg' %});">
+		<div class="overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 col-md-offset-2 text-center">
+					<div class="display-t">
+						<div class="display-tc animate-box" data-animate-effect="fadeIn">
+							<h1>{{ service.title }}</h1>
+							<h2>InuwaAgro Poult Hatchery Ltd<a href="/" target="_blank">InuwaAgro</a></h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>	
+{% endblock aside %}
+
+{% block products %}
+<div id="fh5co-about">
+
+	<div class="container">
+
+	<div class="about-content">
+
+	<div class="row animate-box">
+
+	<div class="col-md-6">
+
+	<div class="desc">
+	{{ service.description|safe}}
+	</div>
+	</div>
+	<div class="col-md-6">
+
+	<div class="desc">
+	<img class="img-responsive" src="{{ service.image.url }}" style="width:300px;height:auto;">
+	</div>
+	</div>
+	</div>
+	</div>
+	
+
+{% endblock products %}
+{% block testimonial %}
+<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<span>Productive Staff</span>
+					<h2>Meet Our Team</h2>
+					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{% static 'images/person1.jpg' %}" alt="Free HTML5 Templates by gettemplates.co">
+						<h3>Samson Inuwa</h3>
+						<strong class="role">Chief Executive Officer</strong>
+						<p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id repellat velit eaque aspernatur expedita. Possimus itaque adipisci.</p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="#"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{% static 'images/person2.jpg' %}" alt="Free HTML5 Templates by gettemplates.co">
+						<h3>Hush Raven</h3>
+						<strong class="role">Co-Owner</strong>
+						<p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id repellat velit eaque aspernatur expedita. Possimus itaque adipisci.</p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="#"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+					<div class="fh5co-staff">
+						<img src="{% static 'images/person3.jpg' %}" alt="Free HTML5 Templates by gettemplates.co">
+						<h3>Alex King</h3>
+						<strong class="role">Co-Owner</strong>
+						<p>Quos quia provident consequuntur culpa facere ratione maxime commodi voluptates id repellat velit eaque aspernatur expedita. Possimus itaque adipisci.</p>
+						<ul class="fh5co-social-icons">
+							<li><a href="#"><i class="icon-facebook"></i></a></li>
+							<li><a href="#"><i class="icon-twitter"></i></a></li>
+							<li><a href="#"><i class="icon-dribbble"></i></a></li>
+							<li><a href="#"><i class="icon-github"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>		
+    </div>
+</div>
+{% endblock testimonial %}
+

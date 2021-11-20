@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.safestring import mark_safe
 
@@ -16,6 +17,10 @@ class Service(models.Model):
     image = models.ImageField(blank=True,upload_to="services/")
     contract = RichTextUploadingField(blank=True, null=True)
     icon_status = models.CharField(max_length=20,choices=ICON_STATUS, default='calendar')
+
+    def get_absolute_url(self):
+        return reverse('services:service_detail', args=[self.slug])
+
 
 
     def __str__(self):
