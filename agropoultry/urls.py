@@ -26,6 +26,7 @@ from django.views.decorators.csrf import csrf_exempt
 urlpatterns = [
     path('', include('home.urls', namespace='home')),
     path('products/', include('product.urls', namespace='products')),
+    path('services/', include('service.urls', namespace='services')),
     path('register/', RegistrationView.as_view(), name='register'),
     path('account/', include('account.urls', namespace='account')),
     # path('validate-username', csrf_exempt(UsernamevalidationView.as_view()), name='validate-username'),

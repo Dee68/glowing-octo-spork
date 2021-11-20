@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     # Media Cloudinary
     'cloudinary',
     'cloudinary_storage',
+    'service.apps.ServiceConfig',
     
 ]
 

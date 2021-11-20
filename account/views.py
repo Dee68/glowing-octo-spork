@@ -253,7 +253,7 @@ def index(request):
     setting = Setting.objects.get(pk=1)
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
-    current_user = request.user
+    # current_user = request.user
     userprofile = get_object_or_404(UserProfile, user=request.user)#UserProfile.objects.get(user_id=current_user.id)
     context = {'userprofile':userprofile,'products':products,
     'pcategories':pcategories,'setting':setting}
@@ -274,9 +274,11 @@ def add_to_whishlist(request, id):
 
 @login_required
 def whishlist(request):
+    setting = Setting.objects.get(pk=1)
     products = Product.objects.filter(users_wishlist=request.user)
-    print(products)
-    return render(request,'account/whishlist.html',{'products':products})
+    pcategories = Category.objects.filter(parent=None)
+    # print(products)
+    return render(request,'account/whishlist.html',{'products':products,'setting':setting,'pcategories':pcategories})
 
 # logout
 def logoutPage(request):
