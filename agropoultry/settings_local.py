@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'service.apps.ServiceConfig',
+    
+
+    
 ]
 
 MIDDLEWARE = [
@@ -75,6 +78,13 @@ TEMPLATES = [
         },
     },
 ]
+
+# AUTHENTICATION_BACKENDS = [
+#     'social_core.backends.linkedin.LinkedinOAuth2',
+#     'social_core.backends.instagram.InstagramOAuth2',
+#     'social_core.backends.facebook.FacebookOAuth2',
+#     'django.contrib.auth.backends.ModelBackend',
+# ]
 
 WSGI_APPLICATION = 'agropoultry.wsgi.application'
 
@@ -121,6 +131,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 
 PAYPAL_RECEIVER_EMAIL = 'mrdee316@gmail.com'

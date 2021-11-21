@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'service.apps.ServiceConfig',
     
+    
 ]
 
 MIDDLEWARE = [
@@ -211,6 +212,8 @@ CKEDITOR_CONFIGS = {
         ]),
     }
 }
+
+
 
 MESSAGE_TAGS = {
     messages.ERROR:'danger'

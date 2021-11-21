@@ -4,8 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-pillow = "*"
+Django = "*"
+Pillow = "*"
 django-mptt = "*"
 django-ckeditor = "*"
 psycopg2 = "*"

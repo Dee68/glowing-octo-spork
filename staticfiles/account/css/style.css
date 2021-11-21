@@ -185,8 +185,8 @@ input.text.email.is-invalid {
 .showPasswdToggle:hover {
   transform: scale(1.2);
 }
-
 .text-success{color:#e3ebdc !important}
+
 .text:focus, .text:valid {
   box-shadow: none;
   outline: none;
@@ -195,10 +195,11 @@ input.text.email.is-invalid {
 .invalid-feedback p {
   color:#C71C22 !important
 }
-.invalid-feedback{display:none;width:100%;margin-top:0.25rem;font-size:80%;color:#C71C22}
+.invalid-feedback{display:none;width:100%;margin-top:0.25rem;font-size:80%;color:#C71C22 !important}
 .is-invalid {
   border: 2px solid red;
 }
+
 .text:focus::-webkit-input-placeholder, .text:valid::-webkit-input-placeholder {
   color: rgba(255, 255, 255, 0.7);
   font-size: .9em;
@@ -208,6 +209,65 @@ input.text.email.is-invalid {
   -ms-transform: translateY(-30px);
   transform: translateY(-30px);
   visibility: visible !important;
+}
+
+/* add appropriate colors to fb, twitter and google buttons */
+.fb {
+  background-color: #3B5998;
+  color: white;
+}
+
+.twitter {
+  background-color: #55ACEE;
+  color: white;
+}
+
+.google {
+  background-color: #dd4b39;
+  color: white;
+}
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  margin: 5px 0;
+  opacity: 0.85;
+  display: inline-block;
+  font-size: 17px;
+  line-height: 20px;
+  text-decoration: none; /* remove underline from anchors */
+}
+.seperator {
+  float: left;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  text-align: center;
+  margin: 50px 0 0;
+}
+.seperator b {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  text-align: center;
+  line-height: 40px;
+  background: #fff;
+  display: inline-block;
+  border: 1px solid #e0e0e0;
+  border-radius: 50%;
+  position: relative;
+  top: -22px;
+  z-index: 1;
+}
+
+.login-form {
+  background: #fff;
+  width: 450px;
+  border-radius: 6px;
+  margin: 0 auto;
+  display: table;
+  padding: 15px 30px 30px;
+  box-sizing: border-box;
 }
 
 ::-webkit-input-placeholder {
@@ -251,7 +311,19 @@ input[type="submit"]:hover {
   transition: .5s all;
   background: #8DC26F;
 }
-
+a.socialbtns {
+  font-size: .9em;
+  color: #fff;
+  background: #76b852;
+  outline: none;
+  border: 1px solid #76b852;
+  cursor: pointer;
+  padding: 0.9em;
+  -webkit-appearance: none;
+  width: 100%;
+  margin: 2em 0;
+  letter-spacing: 4px;
+}
 .agileits-top p {
   font-size: 1em;
   color: #fff;
