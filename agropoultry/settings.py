@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'service.apps.ServiceConfig',
     'social_django',
-    'django-extensions',
-    'werkzeug',
+    # 'django-extensions',
+    # 'werkzeug',
     
     
 ]
