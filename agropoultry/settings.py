@@ -12,7 +12,12 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import os
+from typing import cast
 from django.contrib import messages
+import django_heroku
+from decouple import config, Csv
+import cloudinary
+import cloudinary_storage
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8+d1lrryees74fkgfoa$#t%6@v*@$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['inuwaagropoultry.org','localhost','127.0.0.1:8000']
+ALLOWED_HOSTS = ['127.0.0.1:8000','.herokuapp.com']#config('ALLOWED_HOSTS', cast)
 
 
 # Application definition
@@ -37,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'werkzeug_debugger_runserver',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'product.apps.ProductConfig',
@@ -46,27 +50,27 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
     'ckeditor',
     'ckeditor_uploader',
+    # Media Cloudinary
+    'cloudinary',
+    'cloudinary_storage',
     'service.apps.ServiceConfig',
     'social_django',
-    'django_extensions',
-    #'werkzeug',
+    'django-extensions',
+    'werkzeug',
     
-
     
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
     'social_django.middleware.SocialAuthExceptionMiddleware',
-
-    
 ]
 
 ROOT_URLCONF = 'agropoultry.urls'
@@ -81,7 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',  
+                'django.contrib.messages.context_processors.messages',
 
                 'social_django.context_processors.backends', 
                 'social_django.context_processors.login_redirect', 
@@ -104,13 +108,22 @@ WSGI_APPLICATION = 'agropoultry.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd299rhjfiji87p',#os.environ.get('DB_NAME'),
+        'USER': 'cdfnrktdabdplp',#os.environ.get('DB_USER'),
+        'PASSWORD': 'c0cd9ecc79d560a2bd70bb3bcb3579909c303c26463947988128ae2723187c14',#os.environ.get('DB_USER_PASSWORD'),
+        'HOST': 'ec2-23-23-199-57.compute-1.amazonaws.com',
+        'PORT':5432
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -136,17 +149,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Europe/Zaporozhye'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
-
-
-
-PAYPAL_RECEIVER_EMAIL = 'mrdee316@gmail.com'
 
 #ckeditor upload path
 CKEDITOR_UPLOAD_PATH="ckeditor_uploads/"
@@ -219,13 +228,16 @@ CKEDITOR_CONFIGS = {
     }
 }
 
+
+
 MESSAGE_TAGS = {
     messages.ERROR:'danger'
 }
 
-LOGIN_URL = 'login'
-LOGOUT_URL = 'logout'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'https://inuwaagropoultry.heroku.com/login/'
+LOGOUT_URL = 'https://inuwaagropoultry.heroku.com/logout/'
+LOGIN_REDIRECT_URL = 'https://inuwaagropoultry.heroku.com/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -236,21 +248,71 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'uploads/')
 
+#paypal
+PAYPAL_RECEIVER_EMAIL = 'mrdee316@gmail.com'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUD_NAME'),
+    'API_KEY': os.environ.get('API_KEY'),
+    'API_SECRET': os.environ.get('API_SECRET'),
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+#django_heroku.settings(locals())
+django_heroku.settings(config=locals(), staticfiles=False,logging=False)
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 # send_mail configuration
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'ddimie283@gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'ddimie283@gmail.com'# company email
-EMAIL_HOST_PASSWORD = '1432acts'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')#config('EMAIL_HOST')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')#config('EMAIL_USE_TLS', cast=bool)
+EMAIL_PORT =os.environ.get('EMAIL_PORT')#config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')#config('EMAIL_HOST_USER') #company email
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')#config('EMAIL_HOST_PASSWORD')
 
-SOCIAL_AUTH_FACEBOOK_KEY	=	'198989949076850'	# Facebook App	ID
-SOCIAL_AUTH_FACEBOOK_SECRET	=	'59855e2f79e54807100706d3de62e854'	# Facebook App Secret
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
+                       'pathname=%(pathname)s lineno=%(lineno)s '
+                       'funcname=%(funcName)s %(message)s'),
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    }
+}
 
-#SECURE_SSL_REDIRECT = True
+SOCIAL_AUTH_FACEBOOK_KEY	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')	# Facebook App	ID
+SOCIAL_AUTH_FACEBOOK_SECRET	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')	# Facebook App Secret
