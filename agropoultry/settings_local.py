@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['inuwaagropoultry.org','localhost','127.0.0.1:8000']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # 'werkzeug_debugger_runserver',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'product.apps.ProductConfig',
@@ -46,6 +47,9 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'service.apps.ServiceConfig',
+    'social_django',
+    'django_extensions',
+    #'werkzeug',
     
 
     
@@ -59,6 +63,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+
+    
 ]
 
 ROOT_URLCONF = 'agropoultry.urls'
@@ -74,17 +82,21 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',  
+
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect', 
             ],
         },
     },
 ]
 
-# AUTHENTICATION_BACKENDS = [
-#     'social_core.backends.linkedin.LinkedinOAuth2',
-#     'social_core.backends.instagram.InstagramOAuth2',
-#     'social_core.backends.facebook.FacebookOAuth2',
-#     'django.contrib.auth.backends.ModelBackend',
-# ]
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
+]
 
 WSGI_APPLICATION = 'agropoultry.wsgi.application'
 
@@ -211,6 +223,9 @@ MESSAGE_TAGS = {
     messages.ERROR:'danger'
 }
 
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGIN_REDIRECT_URL = '/'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -234,3 +249,8 @@ DEFAULT_FROM_EMAIL = 'ddimie283@gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ddimie283@gmail.com'# company email
 EMAIL_HOST_PASSWORD = '1432acts'
+
+SOCIAL_AUTH_FACEBOOK_KEY	=	'198989949076850'	# Facebook App	ID
+SOCIAL_AUTH_FACEBOOK_SECRET	=	'59855e2f79e54807100706d3de62e854'	# Facebook App Secret
+
+#SECURE_SSL_REDIRECT = True

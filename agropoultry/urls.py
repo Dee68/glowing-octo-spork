@@ -41,7 +41,7 @@ urlpatterns = [
     path('payment_done/', payment_done, name='payment_done'),
     path('payment_cancelled/', payment_cancelled, name='payment_cancelled'),
     path('admin/', admin.site.urls),
-    #path('social-auth/', include('social_django.urls', namespace="social")),
+    path('social-auth/', include('social_django.urls', namespace="social")),
 ]
 
 if settings.DEBUG:

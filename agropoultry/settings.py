@@ -54,6 +54,9 @@ INSTALLED_APPS = [
     'cloudinary',
     'cloudinary_storage',
     'service.apps.ServiceConfig',
+    'social_django',
+    'django-extensions',
+    'werkzeug',
     
     
 ]
@@ -67,6 +70,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'agropoultry.urls'
@@ -82,9 +86,20 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends', 
+                'social_django.context_processors.login_redirect', 
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+    'account.authentication.EmailAuthBackend',
 ]
 
 WSGI_APPLICATION = 'agropoultry.wsgi.application'
@@ -219,6 +234,10 @@ MESSAGE_TAGS = {
     messages.ERROR:'danger'
 }
 
+LOGIN_URL = 'https://inuwaagropoultry.heroku.com/login/'
+LOGOUT_URL = 'https://inuwaagropoultry.heroku.com/logout/'
+LOGIN_REDIRECT_URL = 'https://inuwaagropoultry.heroku.com/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
@@ -294,3 +313,6 @@ LOGGING = {
         },
     }
 }
+
+SOCIAL_AUTH_FACEBOOK_KEY	=	'198989949076850'	# Facebook App	ID
+SOCIAL_AUTH_FACEBOOK_SECRET	=	'59855e2f79e54807100706d3de62e854'	# Facebook App Secret
