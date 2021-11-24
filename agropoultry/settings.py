@@ -316,3 +316,17 @@ LOGGING = {
 
 SOCIAL_AUTH_FACEBOOK_KEY	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')	# Facebook App	ID
 SOCIAL_AUTH_FACEBOOK_SECRET	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')	# Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'fields': 'id, name, email, picture.type(large), link'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
+#HTTPS settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True

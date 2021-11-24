@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['inuwaagropoultry.org','localhost','127.0.0.1:8000']
+ALLOWED_HOSTS = ['inuwaagropoultry.org','localhost','127.0.0.1']
 
 
 # Application definition
@@ -250,7 +250,20 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ddimie283@gmail.com'# company email
 EMAIL_HOST_PASSWORD = '1432acts'
 
-SOCIAL_AUTH_FACEBOOK_KEY	=	'198989949076850'	# Facebook App	ID
-SOCIAL_AUTH_FACEBOOK_SECRET	=	'59855e2f79e54807100706d3de62e854'	# Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_KEY	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')	# Facebook App	ID
+SOCIAL_AUTH_FACEBOOK_SECRET	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')	# Facebook App Secret
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'fields': 'id, name, email, picture.type(large), link'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
+    ('name', 'name'),
+    ('email', 'email'),
+    ('picture', 'picture'),
+    ('link', 'profile_url'),
+]
 
-#SECURE_SSL_REDIRECT = True
+#HTTPS settings
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
