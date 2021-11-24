@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1:8000','.herokuapp.com']#config('ALLOWED_HOSTS', cast)
+ALLOWED_HOSTS = ['inuwaagropoultry.herokuapp.com','.herokuapp.com']#config('ALLOWED_HOSTS', cast)
 
 
 # Application definition
@@ -326,7 +326,11 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
     ('picture', 'picture'),
     ('link', 'profile_url'),
 ]
-#HTTPS settings
+# HTTPS settings
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
+# HSTS settings
+SECURE_HSTS_SECONDS = 31536000 # 1 year
+SECURE_HSTS_PRELOAD = True
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
