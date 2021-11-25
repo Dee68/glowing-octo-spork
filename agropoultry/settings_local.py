@@ -91,7 +91,7 @@ TEMPLATES = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.instagram.InstagramOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
@@ -249,7 +249,7 @@ DEFAULT_FROM_EMAIL = 'ddimie283@gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ddimie283@gmail.com'# company email
 EMAIL_HOST_PASSWORD = '1432acts'
-
+# facebook
 SOCIAL_AUTH_FACEBOOK_KEY	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')	# Facebook App	ID
 SOCIAL_AUTH_FACEBOOK_SECRET	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')	# Facebook App Secret
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link']
@@ -262,7 +262,9 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
     ('picture', 'picture'),
     ('link', 'profile_url'),
 ]
-
+# tweeter
+SOCIAL_AUTH_TWITTER_KEY = '4KUtGxNtl3eCNfEJSd7ev8yNZ'
+SOCIAL_AUTH_TWITTER_SECRET = 'vPbv4wITGVgJB1Yfw1UbWYpiK0xCc6ra1wvIbHWqgrxJcxCI49'
 #HTTPS settings
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True

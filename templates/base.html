@@ -208,7 +208,7 @@
 						<li class="has-dropdown">
 						<a href="#"><i class="icon-lock login"></i> Account</a>
 						<ul class="dropdown">
-						    {% for auth in backends.associated %}
+						    {% comment %} {% for auth in backends.associated %}
 							{% if auth.provider == 'facebook' %}
 							<li>
 						     <span><img src="{{ auth.extra_data.picture.data.url }}" style="height:40px; border-radius:30%;"></span>
@@ -217,10 +217,13 @@
 							{% else %}
 							{% endif %}
 							
-							{% endfor %}
-						     {% if user.id is not None %}
+							{% endfor %} {% endcomment %}
+							
+						     {% if user.id is not None  %}
 						     <li>
-						     <span><img src="{% if userprofile.image %}{{ userprofile.image.url }}{% else %}{% static 'images/userimage.png' %}{% endif %}" style="height:40px; border-radius:30%;"></span>
+						     <span>
+							 <img src="{% if userprofile.image %}{{ userprofile.image.url }}{% else %}{% static 'images/userimage.png' %}{% endif %}" style="height:40px; border-radius:30%;">
+							 </span>
 						     <a href="{% url 'logout' %}">logout</a>
 						    </li>
 							<li><a href="{% url 'account:userprofile' %}">Profile</a></li>
@@ -229,6 +232,7 @@
 						    <a href="{% url 'login' %}">Login</a></li>
 							<li><a href="{% url 'register' %}">Sign up</a></li>
 						     {% endif %} 
+							
 						</ul>
 						</li>
 					</ul>
