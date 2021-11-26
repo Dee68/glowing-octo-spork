@@ -21,7 +21,8 @@ from django.conf import settings
 from home.views import aboutUs, contactUs
 from product.views import process_payment, payment_done, payment_cancelled
 from account.views import RegistrationView,LoginView,logoutPage
-from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import views as auth_views
+# from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('', include('home.urls', namespace='home')),
@@ -42,6 +43,11 @@ urlpatterns = [
     path('payment_cancelled/', payment_cancelled, name='payment_cancelled'),
     path('admin/', admin.site.urls),
     path('social-auth/', include('social_django.urls', namespace="social")),
+    # authentication views from django
+    path('reset_password/', auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_sent'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 ]
 
 if settings.DEBUG:

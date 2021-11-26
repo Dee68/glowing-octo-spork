@@ -26,7 +26,7 @@ class UserProfile(models.Model):
         return self.user.first_name +''+self.user.last_name +'[' +self.user.username +']'
 
     def __str__(self):
-        return self.user.username
+        return str(self.user.username)
 
 
     def image_tag(self):
