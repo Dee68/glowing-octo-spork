@@ -26,14 +26,14 @@ def update_customer(sender, instance, created, **kwargs):
     if created==False:
         instance.customer.save()
 
-@receiver(user_logged_in, sender=User)
-def instatiate_user_profile(sender, user, request, **kwargs):
-    if user==request.user:
-        UserProfile.objects.create(user=user)
+# @receiver(user_logged_in, sender=User)
+# def instatiate_user_profile(sender, user, request, **kwargs):
+#     if user==request.user:
+#         UserProfile.objects.create(user=user)
 
-@receiver(user_logged_in, sender=User)
-def instatiate_customer(sender, user, request, **kwargs):
-    if user==request.user:
-        Customer.objects.create(user=user)
+# @receiver(user_logged_in, sender=User)
+# def instatiate_customer(sender, user, request, **kwargs):
+#     if user==request.user:
+#         Customer.objects.create(user=user)
 
     
