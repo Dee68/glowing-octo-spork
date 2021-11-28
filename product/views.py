@@ -131,6 +131,7 @@ def change_quan(request):
 # process payment using paypal
 @login_required(login_url='/login')# check for login
 def process_payment(request):
+    setting = Setting.objects.get(pk=1)
     items = Cart.objects.filter(customer_id__id=request.user.id,status=False)
     products=""
     amt=0
@@ -164,7 +165,7 @@ def process_payment(request):
     request.session["order_id"] = ord.id
     
     form = PayPalPaymentsForm(initial=paypal_dict)
-    return render(request, 'products/process_payment.html', {'form': form})
+    return render(request, 'products/process_payment.html', {'form': form,'setting':setting})
 
 # show checkout page
 @login_required(login_url='/login')# check for login
@@ -201,10 +202,11 @@ def checkout(request):
             data.zipcode = form.cleaned_data['zipcode']
             ord.save()
             data.save()
-            # context = {'pcategories':pcategories,'items':items,'form':form,'setting':setting}
+            context = {'pcategories':pcategories,'data':data,'ord':ord,'setting':setting}
             # render(request, 'products/checkout.html', context)
             messages.success(request,'Shipping info successfully created.')
-            return HttpResponseRedirect(request. META['HTTP_REFERER'])
+            return render(request, 'products/checkout.html', context)
+            #return HttpResponseRedirect(request. META['HTTP_REFERER'])
         else:
             messages.error(request,'Please fill in the required fields, to proceed further.')
             return HttpResponseRedirect(request. META['HTTP_REFERER'])
@@ -214,9 +216,29 @@ def checkout(request):
 
 @login_required(login_url='/login')# check for login
 def payment_done(request):
-    return HttpResponse("Payment Successful.")
+     setting = Setting.objects.get(pk=1)
+     if "order_id" in request.session:
+        order_id = request.session["order_id"]
+        ord_obj = get_object_or_404(Order,id=order_id)
+        ord_obj.complete=True
+        ord_obj.save()
+        
+        for i in ord_obj.cart_id.split(",")[:-1]:
+            cart_object = Cart.objects.get(id=i)
+            cart_object.status=True
+            cart_object.save()
+     return render(request,"products/payment_success.html",{'setting':setting})
+
+    
 
 @login_required(login_url='/login')# check for login
 def payment_cancelled(request):
-    return HttpResponse("Payment Cancelled.")
+    setting = Setting.objects.get(pk=1)
+    return render(request,"products/payment_failed.html",{'setting':setting})
+
+@login_required(login_url='/login')# check for login
+def order_history(request):
+    pass
+    #context = {}
+
 

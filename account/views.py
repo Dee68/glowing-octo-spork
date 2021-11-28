@@ -25,11 +25,13 @@ import json
 # Create your views here.
 class RegistrationView(View):
     def get(self,request):
-        return render(request, 'account/register.html')
+        setting = Setting.objects.get(pk=1)
+        return render(request, 'account/register.html',{'setting':setting})
 
     def post(self,request):
+        setting = Setting.objects.get(pk=1)
         form = RegisterUserForm()
-        context = {'form':form}
+        context = {'form':form,'setting':setting}
         if request.method == 'POST':
             form = RegisterUserForm(request.POST)
             fieldVals = request.POST
@@ -39,7 +41,7 @@ class RegistrationView(View):
             user_email = request.POST['email']
             password1 = request.POST['password1']
             password2 = request.POST['password2']
-            context = {"fieldVals":fieldVals, 'form':form}
+            context = {"fieldVals":fieldVals, 'form':form, 'setting':setting}
             if User.objects.filter(username=username).exists():
                 messages.error(request, "username already in use, choose another one.")
                 return render(request, 'account/register.html', context)
@@ -175,9 +177,11 @@ class EmailValidation(View):
 
 class LoginView(View):
     def get(self,request):
-        return render(request, 'account/login.html')
+        setting = Setting.objects.get(pk=1)
+        return render(request, 'account/login.html',{'setting':setting})
 
     def post(self,request):
+        settings = Setting.objects.get(pk=1)
         username = request.POST['username']
         password = request.POST['password']
         if username and password:
@@ -188,13 +192,13 @@ class LoginView(View):
                     messages.success(request, 'Welcome, '+user.username)
                     return redirect('home:home')
                 messages.info(request, 'Account not activated, please check your email')
-                return render(request, 'account/login.html')
+                return render(request, 'account/login.html',{'setting':setting})
             
             messages.error(request,'Invalid credentials, try again')
-            return render(request, 'account/login.html')
+            return render(request, 'account/login.html',{'setting':setting})
 
         messages.error(request, 'Please fill all fields to login')
-        return render(request, 'account/login.html')
+        return render(request, 'account/login.html',{'setting':setting})
 
 # profile update page
 @login_required(login_url='/login')# check for login

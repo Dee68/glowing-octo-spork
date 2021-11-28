@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
- Checkout
+ {{ setting.title }} | Checkout
 {% endblock title %}
 {% block description %}
-Mega Poultry Farm
+ {{ setting.description }}
 {% endblock description %}
 {% block keywords %}
-Agro,Poultry,Hatchery,Chicken, Machinery
+ {{ setting.keywords }}
 {% endblock keywords %}
 {% block header %}
   <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
@@ -127,7 +127,11 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 						</div>
 						<div class="row">
 						      <a class="btn btn-primary" href="{% url 'products:cart_details' %}">Back To Cart</a>
-							  <a class="btn btn-primary" href="{% url 'process_payment' %}">Proceed To Payment</a>
+							  {% if data %}
+							   <a class="btn btn-primary" href="{% url 'process_payment' %}">Proceed To Payment</a>
+							  {% else %}
+							  {% endif %}
+							  
 							</div>
 					</div>
 					</div>
