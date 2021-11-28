@@ -1,5 +1,6 @@
 from django.dispatch import receiver
-from django.db.models.signals import post_save, user_logged_in
+from django.db.models.signals import post_save
+from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import User
 from product.models import Customer
 from .models import UserProfile
