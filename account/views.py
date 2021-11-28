@@ -68,15 +68,15 @@ class RegistrationView(View):
                 password = form.cleaned_data['password1']
                 user = authenticate(request, username=username, password=password)
                 login(request, user)
-                current_user = request.user
-                data = UserProfile()
-                data1 = Customer()
+                # current_user = request.user
+                # data = UserProfile()
+                # data1 = Customer()
                         
-                data.user_id = current_user.id
-                data1.user_id = current_user.id
-                data.image = "uploads/profile_pics/userimage.png"
-                data.save()
-                data1.save()
+                # data.user_id = current_user.id
+                # data1.user_id = current_user.id
+                # data.image = "uploads/profile_pics/userimage.png"
+                # data.save()
+                # data1.save()
                 messages.success(request,mark_safe("Account created successfully.<br>You can now log in."))
                 return render(request, 'account/register.html', context)
             else:
