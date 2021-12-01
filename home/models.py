@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.core.mail import send_mail
 from ckeditor_uploader.fields import RichTextUploadingField
+import uuid
 # Create your models here.
 class Setting(models.Model):
     STATUS = (
@@ -69,7 +70,8 @@ class SubscribedUser(models.Model):
 #         return self.email
 
 class MailMessage(models.Model):
-    subject = models.CharField(max_length=100, null=True)
+    msgid = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    subject = models.CharField(max_length=100,default='Thanking you')
     message = models.TextField()
     attachement = models.FileField(blank=True, null=True)
     subscribers = models.ManyToManyField(SubscribedUser)
