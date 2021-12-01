@@ -80,12 +80,13 @@ class MailMessage(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self):
+        subscribers = SubscribedUser.objects.all()
         if self.send_it:
             # create/get list of subscribers
-            # subscribers_list = []
-            # for subscriber in self.subscribers:
-            #     subscribers_list.append(subscriber.email)
-            subscribers_list = self.subscribers.email
+            subscribers_list = []
+            for subscriber in subscribers:
+                subscribers_list.append(subscriber.email)
+            # subscribers_list = self.subscribers
             # then send message
             send_mail(
                 str(self.subject),
