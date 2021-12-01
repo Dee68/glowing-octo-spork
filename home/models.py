@@ -85,7 +85,7 @@ class MailMessage(models.Model):
             # subscribers_list = []
             # for subscriber in self.subscribers:
             #     subscribers_list.append(subscriber.email)
-            subscribers_list = self.subscribers
+            subscribers_list = self.subscribers.email
             # then send message
             send_mail(
                 str(self.subject),
