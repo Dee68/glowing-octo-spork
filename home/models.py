@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.core.mail import send_mail
 from ckeditor_uploader.fields import RichTextUploadingField
 # Create your models here.
@@ -86,6 +87,7 @@ class MailMessage(models.Model):
             send_mail(
                 str(self.subject),
                 str(self.message),
+                settings.EMAIL_HOST_USER,
                 subscribers_list,
                 fail_silently=False
             )
