@@ -22,6 +22,7 @@ social-auth-app-django = "*"
 Werkzeug = "==0.16.0"
 pyOpenSSL = "==19.0.0"
 django-extensions = "*"
+django-pandas = "*"
 
 [dev-packages]
 

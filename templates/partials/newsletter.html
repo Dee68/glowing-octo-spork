@@ -11,15 +11,8 @@
 			<div class="row animate-box">
 			    
 				<div class="col-md-8 col-md-offset-2">
-				    {% if messages %}
-					   {% for msg in messages %}
-					   <div class = "alert alert-{{ level_tag}}" role="alert">
-					    {{ msg }}
-					   </div>
-					   {% endfor %}
-					{% else %}
-				{% endif %}
-					<form class="form-inline" method="POST"  action="#">
+				   {% include "partials/_messages.html" %}
+					<form class="form-inline" method="POST">
 					    {% csrf_token %}
 						<div class="col-md-6 col-sm-6">
 						   

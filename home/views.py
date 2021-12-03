@@ -4,6 +4,7 @@ from django.contrib import messages
 from .forms import ContactForm,SubscribersForm
 from . models import ContactMessage, Setting, SubscribedUser
 from product.models import *
+from django_pandas.io import read_frame
 # Create your views here.
 def home(request):
     pictures = Picture.objects.filter(title__contains='slider')
@@ -21,6 +22,7 @@ def home(request):
                 messages.warning(request,'This email already exists in our database.')
                 return HttpResponseRedirect("/")
             else:
+            
                 data.save()# save to database
             messages.success(request,'Subscription successful')
             return HttpResponseRedirect("/")
@@ -29,6 +31,7 @@ def home(request):
     context = {'form':form,'products':products, 'pictures':pictures, 
     'pcategories':pcategories,'setting':setting}
     return render(request, 'home/index.html', context)
+
 
 # contact page
 def contactUs(request):

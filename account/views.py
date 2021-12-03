@@ -181,7 +181,7 @@ class LoginView(View):
         return render(request, 'account/login.html',{'setting':setting})
 
     def post(self,request):
-        settings = Setting.objects.get(pk=1)
+        setting = Setting.objects.get(pk=1)
         username = request.POST['username']
         password = request.POST['password']
         if username and password:

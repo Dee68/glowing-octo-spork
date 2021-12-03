@@ -1,7 +1,11 @@
 from django.db import models
+from django.http import request
 from django.conf import settings
+from django.contrib import messages
 from django.core.mail import send_mail
 from ckeditor_uploader.fields import RichTextUploadingField
+# from .forms import MailMessageForm
+from django_pandas.io import read_frame
 import uuid
 # Create your models here.
 class Setting(models.Model):
@@ -62,40 +66,44 @@ class SubscribedUser(models.Model):
     def __str__(self):
         return self.email
 
-# class SubscribedUser(models.Model):
-#     email = models.EmailField(null=True, max_length=50)
-#     date = models.DateTimeField(null=True, auto_now_add=True)
-
-#     def __str__(self):
-#         return self.email
 
 class MailMessage(models.Model):
-    msgid = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     subject = models.CharField(max_length=100,default='Thanking you')
     message = models.TextField()
-    attachement = models.FileField(blank=True, null=True)
-    subscribers = models.ManyToManyField(SubscribedUser)
+    # attachement = models.FileField(blank=True, null=True)
+    # subscribers = models.ManyToManyField(SubscribedUser)
     send_it = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self):
         subscribers = SubscribedUser.objects.all()
-        if self.send_it:
-            # create/get list of subscribers
-            subscribers_list = []
-            for subscriber in subscribers:
-                subscribers_list.append(subscriber.email)
-            # subscribers_list = self.subscribers
+        datasets = read_frame(subscribers, fieldnames=['email'])
+        subscribers_list = datasets['email'].values.tolist()
+        
+        
+        if self.send_it == True:
             # then send message
             send_mail(
-                str(self.subject),
-                str(self.message),
-                settings.EMAIL_HOST_USER,
-                subscribers_list,
-                fail_silently=False
+            str(self.subject),
+            str(self.message),
+            settings.EMAIL_HOST_USER,
+            subscribers_list,
+            fail_silently=False
             )
+            # create obj & save it
+            # msg = MailMessage(subject=self.subject,
+            # message=self.message,
+            # send_it=self.send_it)
+            # msg.save()
+            # msg= MailMessage.objects.create(
+            #     subject=self.subject,
+            #     message=self.message,
+            #     send_it=self.send_it)
 
+       
+            
     def __str__(self):
         return self.subject
 

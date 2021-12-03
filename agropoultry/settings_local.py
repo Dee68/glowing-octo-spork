@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')#'django-insecure-=_hkgn0hx0#cxf9wr(vb8+d1lrryees74fkgfoa$#t%6@v*@$i'
+SECRET_KEY = 'django-insecure-=_hkgn0hx0#cxf9wr(vb8+d1lrryees74fkgfoa$#t%6@v*@$i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -248,7 +248,7 @@ EMAIL_USE_TLS = True
 # DEFAULT_FROM_EMAIL = 'ddimie283@gmail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'ddimie283@gmail.com'# company email
-EMAIL_HOST_PASSWORD = '1432acts'
+EMAIL_HOST_PASSWORD = 'ropgjrrvdjdbenwd'
 # facebook
 SOCIAL_AUTH_FACEBOOK_KEY	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')	# Facebook App	ID
 SOCIAL_AUTH_FACEBOOK_SECRET	=	os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')	# Facebook App Secret
