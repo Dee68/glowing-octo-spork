@@ -66,9 +66,16 @@ class SubscribedUser(models.Model):
     def __str__(self):
         return self.email
 
+subscribers = SubscribedUser.objects.all()
+datasets = read_frame(subscribers, fieldnames=['email'])
+subscribers_list = datasets['email'].values.tolist()
+        
+
+
 
 class MailMessage(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # id = models.AutoField(primary_key=True)
+    # uid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     subject = models.CharField(max_length=100,default='Thanking you')
     message = models.TextField()
     # attachement = models.FileField(blank=True, null=True)
@@ -77,11 +84,9 @@ class MailMessage(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def save(self):
-        subscribers = SubscribedUser.objects.all()
-        datasets = read_frame(subscribers, fieldnames=['email'])
-        subscribers_list = datasets['email'].values.tolist()
-        
+
+
+    def save(self, *args, **kwargs):
         
         if self.send_it == True:
             # then send message
@@ -92,15 +97,18 @@ class MailMessage(models.Model):
             subscribers_list,
             fail_silently=False
             )
-            # create obj & save it
-            # msg = MailMessage(subject=self.subject,
+            
+#             # create obj & save it
+            # msg = MailMessage(pk=self.id, subject=self.subject,
             # message=self.message,
             # send_it=self.send_it)
-            # msg.save()
-            # msg= MailMessage.objects.create(
+            # msg.save(self)
+            # msg = MailMessage.objects.create(
             #     subject=self.subject,
             #     message=self.message,
             #     send_it=self.send_it)
+            # msg.save()
+            
 
        
             
