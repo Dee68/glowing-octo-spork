@@ -16,7 +16,7 @@
 	
 
   	<!-- Facebook and Twitter integration --> 
-	<meta property="og:title" content=""/>
+	{% comment %} <meta property="og:title" content=""/>
 	<meta property="og:image" content=""/>
 	<meta property="og:url" content=""/>
 	<meta property="og:site_name" content=""/>
@@ -24,7 +24,7 @@
 	<meta name="twitter:title" content="" />
 	<meta name="twitter:image" content="" />
 	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+	<meta name="twitter:card" content="" /> {% endcomment %}
 
 	<!-- <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet"> -->
 	<!-- <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i" rel="stylesheet"> -->
@@ -204,7 +204,11 @@
 							</ul> {% endcomment %}
 						</li>
 						<li><a href="{% url 'contact' %}">Contact</a></li>
-						<li><a href="#"><i class="icon-bell"></i></a></li>
+						{% if user.id is not None %}
+						 <li><a href="#"><i class="icon-bell"></i></a></li>
+						{% else %}
+						{% endif %}
+						
 						<li class="has-dropdown">
 						<a href="#"><i class="icon-lock login"></i> Account</a>
 						<ul class="dropdown">
@@ -220,6 +224,7 @@
 							{% endfor %} {% endcomment %}
 							
 						     {% if user.id is not None  %}
+
 						     <li>
 						     <span>
 							 <img src="{% if userprofile.image %}{{ userprofile.image.url }}{% else %}{% static 'images/userimage.png' %}{% endif %}" style="height:40px; border-radius:30%;">
