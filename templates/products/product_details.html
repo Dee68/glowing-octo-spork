@@ -72,9 +72,9 @@
 								<div class="col-md-10 col-md-offset-1">
 									<span class="price">Price: #{{ product.price }}</span>
 									<h2>{{ product.title }}</h2>
-									<p>{{ product.description }}</p>
+									<p>{{ product.description | safe }}</p>
 
-									<div class="row">
+									{% comment %} <div class="row">
 										<div class="col-md-6">
 											<h2 class="uppercase">Keep it simple</h2>
 											<p>Ullam dolorum iure dolore dicta fuga ipsa velit veritatis</p>
@@ -83,7 +83,7 @@
 											<h2 class="uppercase">Less is more</h2>
 											<p>Ullam dolorum iure dolore dicta fuga ipsa velit veritatis</p>
 										</div>
-									</div>
+									</div> {% endcomment %}
 
 								</div>
 							</div>
@@ -92,17 +92,19 @@
 								<div class="col-md-10 col-md-offset-1">
 									<h3>Product Specification</h3>
 									<ul>
-										<li>Paragraph placeat quis fugiat provident veritatis quia iure a debitis adipisci dignissimos consectetur magni quas eius</li>
-										<li>adipisci dignissimos consectetur magni quas eius nobis reprehenderit soluta eligendi</li>
-										<li>Veritatis tenetur odio delectus quibusdam officiis est.</li>
-										<li>Magni quas eius nobis reprehenderit soluta eligendi quo reiciendis fugit? Veritatis tenetur odio delectus quibusdam officiis est.</li>
+									{% for sp in specifications %}
+									  <li>{{ sp|safe}}</li>
+									{% endfor %}
+										{% comment %} <li>Lowest cost of live weight produced</li>
+										<li>Superior performance on lower cost feed rations</li>
+										<li>Most feed efficient.</li>
+										<li>Excellent growth rate.</li> {% endcomment %}
 									</ul>
-									<ul>
-										<li>Paragraph placeat quis fugiat provident veritatis quia iure a debitis adipisci dignissimos consectetur magni quas eius</li>
-										<li>adipisci dignissimos consectetur magni quas eius nobis reprehenderit soluta eligendi</li>
-										{% comment %} <li>Veritatis tenetur odio delectus quibusdam officiis est.</li>
-										<li>Magni quas eius nobis reprehenderit soluta eligendi quo reiciendis fugit? Veritatis tenetur odio delectus quibusdam officiis est.</li> {% endcomment %}
-									</ul>
+									{% comment %} <ul>
+										<li>Best broiler uniformity for processing</li>
+										<li>Competitive breeder</li>
+										
+									</ul> {% endcomment %}
 								</div>
 							</div>
 

@@ -14,7 +14,7 @@
 		   					<div class="desc">
 		   						<span class="price">&#x20A6;{{ pic.product.price }}</span>
 		   						<h2>{{ pic.product.title }}</h2>
-		   						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove.</p>
+		   						<p>{{ pic.product.description| safe }}.</p>
 			   					<p><a href="{{ pic.product.get_absolute_url }}" class="btn btn-primary btn-outline btn-lg">Purchase Now</a></p>
 		   					</div>
 		   				</div>

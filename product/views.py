@@ -24,10 +24,11 @@ def product_details(request, id, slug):
     setting = Setting.objects.get(pk=1)
     pictures = Picture.objects.filter(title__contains='slider')
     product = get_object_or_404(Product,id=id, slug=slug)
+    specifications = product.specification.split(",")
     pcategories = Category.objects.filter(parent=None)
     ppictures = Picture.objects.filter(product=product)
     context = {'product':product,'pcategories':pcategories,
-    'ppictures':ppictures,'pictures':pictures,'setting':setting}
+    'ppictures':ppictures,'pictures':pictures,'setting':setting,'specifications':specifications}
     return render(request, 'products/product_details.html', context)
 
 # get parent subcategories
