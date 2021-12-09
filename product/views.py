@@ -13,19 +13,19 @@ from paypal.standard.forms import PayPalPaymentsForm
 # all products
 def index(request):
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     products = Product.objects.all()
     context = {'products':products,'pictures':pictures,'pcategories':pcategories,
-    'setting':setting,'userprofile':userprofile}
+    'setting':setting}
     return render(request, 'products/index.html', context)
 
 # detail of  a single product
 def product_details(request, id, slug):
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     product = get_object_or_404(Product,id=id, slug=slug)
     specifications = product.specification.split(",")
@@ -33,25 +33,25 @@ def product_details(request, id, slug):
     ppictures = Picture.objects.filter(product=product)
     context = {'product':product,'pcategories':pcategories,
     'ppictures':ppictures,'pictures':pictures,'setting':setting,
-    'specifications':specifications,'userprofile':userprofile}
+    'specifications':specifications}
     return render(request, 'products/product_details.html', context)
 
 # get parent subcategories
 def show_category(request, category_slug):
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     pcat = get_object_or_404(Category, slug=category_slug)
     pcategories = Category.objects.filter(parent=None)
     categories = Category.objects.filter(parent=pcat)
     context = {'pcategories':pcategories, 'categories':categories,
-    'pictures':pictures,'setting':setting,'userprofile':userprofile}
+    'pictures':pictures,'setting':setting}
     return render(request, 'products/show_category.html', context)
 
 # gets products of a given category ****
 def category_products(request, cslug=None):
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     category = None
     products = Product.objects.filter(available=True)
@@ -63,7 +63,7 @@ def category_products(request, cslug=None):
     
     context = {'products':products,
     'categories':categories,'category':category,'pcategories':pcategories,
-    'pictures':pictures,'setting':setting,'userprofile':userprofile}
+    'pictures':pictures,'setting':setting}
     
     return render(request, 'products/category_product.html', context)
 
@@ -71,16 +71,17 @@ def category_products(request, cslug=None):
 @login_required(login_url='/login')# check for login
 def add_to_cart(request):
     context = {}
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    
     pcategories = Category.objects.filter(parent=None)
     setting = Setting.objects.get(pk=1)
-    context['userprofile'] = userprofile
     context['pcategories']= pcategories
     context['setting'] = setting
     
     if request.user.is_authenticated:
         items = Cart.objects.filter(customer__id=request.user.id, status=False)
         context['items'] = items
+        userprofile = get_object_or_404(UserProfile, user=request.user)
+        context['userprofile'] = userprofile
         if request.method == "POST":
             pid = request.POST['pid']
             qty = request.POST['qty']
