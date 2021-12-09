@@ -35,17 +35,19 @@ def product_details(request, id, slug):
 # get parent subcategories
 def show_category(request, category_slug):
     setting = Setting.objects.get(pk=1)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     pcat = get_object_or_404(Category, slug=category_slug)
     pcategories = Category.objects.filter(parent=None)
     categories = Category.objects.filter(parent=pcat)
     context = {'pcategories':pcategories, 'categories':categories,
-    'pictures':pictures,'setting':setting}
+    'pictures':pictures,'setting':setting,'userprofile':userprofile}
     return render(request, 'products/show_category.html', context)
 
 # gets products of a given category ****
 def category_products(request, cslug=None):
     setting = Setting.objects.get(pk=1)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     category = None
     products = Product.objects.filter(available=True)
@@ -57,7 +59,7 @@ def category_products(request, cslug=None):
     
     context = {'products':products,
     'categories':categories,'category':category,'pcategories':pcategories,
-    'pictures':pictures,'setting':setting}
+    'pictures':pictures,'setting':setting,'userprofile':userprofile}
     
     return render(request, 'products/category_product.html', context)
 
@@ -136,6 +138,7 @@ def change_quan(request):
 @login_required(login_url='/login')# check for login
 def process_payment(request):
     setting = Setting.objects.get(pk=1)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     items = Cart.objects.filter(customer_id__id=request.user.id,status=False)
     products=""
     amt=0
@@ -169,12 +172,13 @@ def process_payment(request):
     request.session["order_id"] = ord.id
     
     form = PayPalPaymentsForm(initial=paypal_dict)
-    return render(request, 'products/process_payment.html', {'form': form,'setting':setting})
+    return render(request, 'products/process_payment.html', {'form': form,'setting':setting,'userprofile':userprofile})
 
 # show checkout page
 @login_required(login_url='/login')# check for login
 def checkout(request):
     setting = Setting.objects.get(pk=1)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     items = Cart.objects.filter(customer__id=request.user.id, status=False)
     usr = User.objects.get(username=request.user.username)
     products=""
@@ -215,12 +219,14 @@ def checkout(request):
             messages.error(request,'Please fill in the required fields, to proceed further.')
             return HttpResponseRedirect(request. META['HTTP_REFERER'])
     pcategories = Category.objects.filter(parent=None)
-    context={'pcategories':pcategories,'items':items,'form':form,'setting':setting}
+    context={'pcategories':pcategories,'items':items,'form':form,
+    'setting':setting,'userprofile':userprofile}
     return render(request, 'products/checkout.html', context)
 
 @login_required(login_url='/login')# check for login
 def payment_done(request):
      setting = Setting.objects.get(pk=1)
+     userprofile = get_object_or_404(UserProfile, user=request.user)
      if "order_id" in request.session:
         order_id = request.session["order_id"]
         ord_obj = get_object_or_404(Order,id=order_id)
@@ -231,14 +237,15 @@ def payment_done(request):
             cart_object = Cart.objects.get(id=i)
             cart_object.status=True
             cart_object.save()
-     return render(request,"products/payment_success.html",{'setting':setting})
+     return render(request,"products/payment_success.html",{'setting':setting,'userprofile':userprofile})
 
     
 
 @login_required(login_url='/login')# check for login
 def payment_cancelled(request):
     setting = Setting.objects.get(pk=1)
-    return render(request,"products/payment_failed.html",{'setting':setting})
+    userprofile = get_object_or_404(UserProfile, user=request.user)
+    return render(request,"products/payment_failed.html",{'setting':setting,'userprofile':userprofile})
 
 @login_required(login_url='/login')# check for login
 def order_history(request):
