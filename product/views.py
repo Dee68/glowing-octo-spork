@@ -13,23 +13,27 @@ from paypal.standard.forms import PayPalPaymentsForm
 # all products
 def index(request):
     setting = Setting.objects.get(pk=1)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     products = Product.objects.all()
-    context = {'products':products,'pictures':pictures,'pcategories':pcategories,'setting':setting}
+    context = {'products':products,'pictures':pictures,'pcategories':pcategories,
+    'setting':setting,'userprofile':userprofile}
     return render(request, 'products/index.html', context)
 
 # detail of  a single product
 def product_details(request, id, slug):
     setting = Setting.objects.get(pk=1)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     pictures = Picture.objects.filter(title__contains='slider')
     product = get_object_or_404(Product,id=id, slug=slug)
     specifications = product.specification.split(",")
     pcategories = Category.objects.filter(parent=None)
     ppictures = Picture.objects.filter(product=product)
     context = {'product':product,'pcategories':pcategories,
-    'ppictures':ppictures,'pictures':pictures,'setting':setting,'specifications':specifications}
+    'ppictures':ppictures,'pictures':pictures,'setting':setting,
+    'specifications':specifications,'userprofile':userprofile}
     return render(request, 'products/product_details.html', context)
 
 # get parent subcategories
