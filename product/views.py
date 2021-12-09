@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
 from home.models import Setting
+from account.models import UserProfile
 from django.conf import settings
 from .forms import ShippingForm
 from paypal.standard.forms import PayPalPaymentsForm
@@ -64,8 +65,10 @@ def category_products(request, cslug=None):
 @login_required(login_url='/login')# check for login
 def add_to_cart(request):
     context = {}
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     pcategories = Category.objects.filter(parent=None)
     setting = Setting.objects.get(pk=1)
+    context['userprofile'] = userprofile
     context['pcategories']= pcategories
     context['setting'] = setting
     

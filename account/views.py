@@ -280,9 +280,11 @@ def add_to_whishlist(request, id):
 def whishlist(request):
     setting = Setting.objects.get(pk=1)
     products = Product.objects.filter(users_wishlist=request.user)
+    userprofile = get_object_or_404(UserProfile, user=request.user)
     pcategories = Category.objects.filter(parent=None)
     # print(products)
-    return render(request,'account/whishlist.html',{'products':products,'setting':setting,'pcategories':pcategories})
+    return render(request,'account/whishlist.html',{'products':products,'setting':setting,
+    'pcategories':pcategories,'userprofile':userprofile})
 
 # logout
 def logoutPage(request):
