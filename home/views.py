@@ -12,7 +12,7 @@ def home(request):
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
     
     if request.method == "POST":
         form = SubscribersForm(request.POST)
@@ -31,7 +31,7 @@ def home(request):
     else:
         form = SubscribersForm() 
     context = {'form':form,'products':products, 'pictures':pictures, 
-    'pcategories':pcategories,'setting':setting,'userprofile':userprofile}
+    'pcategories':pcategories,'setting':setting}
     return render(request, 'home/index.html', context)
 
 
@@ -40,7 +40,7 @@ def contactUs(request):
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
     if request.method == "POST":# check for button click
         form = ContactForm(request.POST)
         if form.is_valid():
@@ -55,7 +55,7 @@ def contactUs(request):
             return HttpResponseRedirect('/contact')
     form = ContactForm
     context = {'form':form,'products':products,'pcategories':pcategories,
-    'setting':setting,'userprofile':userprofile}
+    'setting':setting}
     return render(request, 'home/contact.html', context)
 
 # about us page
@@ -63,7 +63,6 @@ def aboutUs(request):
     products = Product.objects.all()
     pcategories = Category.objects.filter(parent=None)
     setting = Setting.objects.get(pk=1)
-    userprofile = get_object_or_404(UserProfile, user=request.user)
-    context = {'products':products,'pcategories':pcategories,'setting':setting,
-    'userprofile':userprofile}
+    # userprofile = get_object_or_404(UserProfile, user=request.user)
+    context = {'products':products,'pcategories':pcategories,'setting':setting}
     return render(request, 'home/about.html', context)
