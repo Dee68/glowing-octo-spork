@@ -1,3 +1,5 @@
+from django.db.models import query
+from django.db.models.query_utils import Q
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.contrib import messages
@@ -6,6 +8,7 @@ from . models import ContactMessage, Setting, SubscribedUser
 from product.models import *
 from account.models import UserProfile
 from django_pandas.io import read_frame
+from django.views.generic import ListView
 # Create your views here.
 def home(request):
     pictures = Picture.objects.filter(title__contains='slider')
@@ -66,3 +69,16 @@ def aboutUs(request):
     # userprofile = get_object_or_404(UserProfile, user=request.user)
     context = {'products':products,'pcategories':pcategories,'setting':setting}
     return render(request, 'home/about.html', context)
+
+class SearchResultsView(ListView):
+    template_name = 'home/search_results.html'
+    model = Product
+    setting = Setting.objects.get(pk=1)
+    context = {'setting':setting }
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Product.objects.filter(
+            Q(title__icontains=query) | Q(price__icontains=query)
+        )
+        return object_list

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-{{ setting.title}} | About us
+{{ setting.title}} | Search Results
 {% endblock title %}
 {% block description %}
 {{ setting.description }}
@@ -17,7 +17,7 @@
 				<div class="col-md-8 col-md-offset-2 text-center">
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
-							<h1>About Us</h1>
+							<h1>Search Results</h1>
 							<h2>Inuwa Agro <a href="#" target="_blank">InuwaAgro</a></h2>
 						</div>
 					</div>
@@ -28,28 +28,43 @@
 {% endblock aside %}
 
 {% block products %}
-<div id="fh5co-about">
-
-	<div class="container">
-
-	<div class="about-content">
-
-	<div class="row animate-box">
-
-	<div class="col-md-6">
-
-	<div class="desc">
-	{{ setting.aboutus|safe}}
-	</div>
-	</div>
-	<div class="col-md-6">
-
-	<div class="desc">
-	<img class="img-responsive" src="{% static 'images/aboutbg.jpg' %}">
-	</div>
-	</div>
-	</div>
-	</div>
+<div id="fh5co-product">
+		<div class="container">
+			<div class="row animate-box">
+				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+					<span>Cool Stuff</span>
+					<h2>Products. {{ object_list.count }}</h2>
+					<p>We provide unmatched products as a result of simplifying production processes and eliminating costs.</p>
+				</div>
+			</div>
+			<div class="row">
+            {% if object_list %}
+			
+			
+			{% for product in object_list %}
+			
+				<div class="col-md-4 text-center animate-box">
+					<div class="product">
+						<div class="product-grid" style="background-image:url({% if product.image %}{{ product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %});">
+							<div class="inner">
+								<p>
+									<a href="#" class="icon update-cart"><i class='icon-shopping-cart'></i></a>
+									<a href="{{ product.get_absolute_url }}" class="icon"><i class="icon-eye"></i></a>
+								</p>
+							</div>
+						</div>
+						<div class="desc">
+							<h3><a href="{{ product.get_absolute_url }}">{{ product.title }}</h3>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+			{% else %}
+			
+			{% endif %}
+			
+		</div>
+</div>
 	
 
 {% endblock products %}
