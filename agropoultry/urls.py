@@ -18,7 +18,7 @@ from django.urls import path
 from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
-from home.views import aboutUs, contactUs, SearchResultsView
+from home.views import aboutUs, contactUs, SearchResultsView,searchresults
 from product.views import process_payment, payment_done, payment_cancelled
 from account.views import RegistrationView,LoginView,logoutPage
 from django.contrib.auth import views as auth_views
@@ -30,7 +30,8 @@ urlpatterns = [
     path('services/', include('service.urls', namespace='services')),
     path('register/', RegistrationView.as_view(), name='register'),
     path('account/', include('account.urls', namespace='account')),
-    path('search/', SearchResultsView.as_view(), name='search_results'),
+    # path('search/', SearchResultsView.as_view(), name='search_results'),
+    path('search/', searchresults, name='search_results'),
     # path('validate-username', csrf_exempt(UsernamevalidationView.as_view()), name='validate-username'),
     # path('validate-email', csrf_exempt(EmailValidation.as_view()), name='validate-email'),
     path('login/', LoginView.as_view(), name='login'),

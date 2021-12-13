@@ -70,15 +70,31 @@ def aboutUs(request):
     context = {'products':products,'pcategories':pcategories,'setting':setting}
     return render(request, 'home/about.html', context)
 
+def searchresults(request):
+    products = Product.objects.all()
+    pcategories = Category.objects.filter(parent=None)
+    setting = Setting.objects.get(pk=1)
+    context = {'products':products,'pcategories':pcategories,'setting':setting}
+    if request.method == 'GET':
+        query = request.GET.get('q')
+        if query is not None:
+            lookUps = Q(title__icontains=query) | Q(price__icontains=query) | Q(description__icontains=query)
+            object_list = Product.objects.filter(lookUps)
+            context['object_list'] = object_list
+            return render(request,'home/search_results.html', context)
+        return render(request,'home/search_results.html', context)
+    return render(request,'home/search_results.html', context)
+    
+
 class SearchResultsView(ListView):
     template_name = 'home/search_results.html'
     model = Product
-    setting = Setting.objects.get(pk=1)
-    context = {'setting':setting }
 
     def get_queryset(self):
+        setting = Setting.objects.get(pk=1)
         query = self.request.GET.get('q')
         object_list = Product.objects.filter(
-            Q(title__icontains=query) | Q(price__icontains=query)
+            Q(title__icontains=query) | Q(price__icontains=query) | Q(description__icontains=query)
         )
+        # context = {'setting':setting,'object_list':object_list}
         return object_list

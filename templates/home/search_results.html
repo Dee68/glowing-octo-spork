@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}
-{{ setting.title}} | Search Results
+{{ setting.title }} | Search Result
 {% endblock title %}
 {% block description %}
-{{ setting.description }}
+ {{ setting.description }}
 {% endblock description %}
 {% block keywords %}
  {{ setting.keywords }}
-{% endblock keywords %}
+{% endblock keywords %} 
 {% block aside %}
 <header id="fh5co-header" class="fh5co-cover fh5co-cover-sm" role="banner" style="background-image:url({% static 'images/aboutbg.jpg' %});">
 		<div class="overlay"></div>
@@ -18,7 +18,7 @@
 					<div class="display-t">
 						<div class="display-tc animate-box" data-animate-effect="fadeIn">
 							<h1>Search Results</h1>
-							<h2>Inuwa Agro <a href="#" target="_blank">InuwaAgro</a></h2>
+							<h2><a href="/" target="_blank">InuwaAgroPoultry Hatchery Ltd</a></h2>
 						</div>
 					</div>
 				</div>
@@ -32,9 +32,10 @@
 		<div class="container">
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<span>Cool Stuff</span>
-					<h2>Products. {{ object_list.count }}</h2>
-					<p>We provide unmatched products as a result of simplifying production processes and eliminating costs.</p>
+					<h2><span>Search Result</span></h2>
+					{% comment %} <h2>Products. {{ object_list.count }}</h2> {% endcomment %}
+					<h3>{{ object_list.count }} results for {{ request.GET.q }}</h3>
+					
 				</div>
 			</div>
 			<div class="row">
@@ -60,7 +61,7 @@
 				</div>
 			{% endfor %}
 			{% else %}
-			
+			  <h2 class="text-center">No search results for this query.</h2>
 			{% endif %}
 			
 		</div>
@@ -70,14 +71,14 @@
 {% endblock products %}
 {% block testimonial %}
 <div class="row animate-box">
-				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
+				{% comment %} <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<span>Productive Staff</span>
 					<h2>Meet Our Team</h2>
 					<p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p>
-				</div>
+				</div> {% endcomment %}
 			</div>
 			<div class="row">
-				<div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
+				{% comment %} <div class="col-md-4 col-sm-4 animate-box" data-animate-effect="fadeIn">
 					<div class="fh5co-staff">
 						<img src="{% static 'images/person1.jpg' %}" alt="Free HTML5 Templates by gettemplates.co">
 						<h3>Samson Inuwa</h3>
@@ -118,7 +119,7 @@
 							<li><a href="#"><i class="icon-github"></i></a></li>
 						</ul>
 					</div>
-				</div>
+				</div> {% endcomment %}
 			</div>		
     </div>
 </div>
