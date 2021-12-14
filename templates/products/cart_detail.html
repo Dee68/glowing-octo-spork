@@ -70,11 +70,11 @@ Agro,Poultry,Hatchery,Chicken, Machinery
 					 
 						<tr class="pcart">
 							<td class="cart_product">
-								<a href=""><img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}" style="width:50px;height:50px;"alt=""></a>
+								<a href="{{ item.product.get_absolute_url }}"><img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{% static 'images/no-image.png' %}{% endif %}" style="width:50px;height:50px;"alt=""></a>
 							</td>
 							<td class="cart_description">
-								<h4><a href="">{{ item.product.title }}</a></h4>
-								<p>{{ item.product.description }}</p>
+								<h4><a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}</a></h4>
+								<p>{{ item.product.description|safe | truncatechars_html:50 }}</p>
 							</td>
 							<td class="cart_price">
 								<p>&#8358;{{ item.product.price }}</p>
