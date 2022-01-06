@@ -89,6 +89,6 @@ const handleToggle = (e) => {
     }
 }
 
-showPasswdToggle.addEventListener('click', handleToggle);
+showPasswdToggle.addEventListener('click', handleToggle); 
 
 

@@ -18,7 +18,7 @@ class RegisterUserForm(UserCreationForm):
             'email':forms.EmailInput(attrs={'class':'text email','name':'email','id':'emailField','placeholder':'Email','value':"{{ fieldVals.email }}"}),
             'password1': forms.PasswordInput(attrs={'class':'text','id':'password1Field','placeholder':'Password','name':'password1'}),
             'password2':forms.PasswordInput(attrs={'class':'text w3lpass','name':'password2','id':'password2Field','placeholder':'Confirm Password'})
-        }
+        } 
 
     # def clean_first_name(self, *args, **kwargs):
     #     first_name = self.cleaned_data.get("first_name")
