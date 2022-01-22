@@ -24,7 +24,7 @@ class ContactForm(forms.ModelForm):
     
 class SubscribersForm(forms.ModelForm):
     class Meta:
-        model = SubscribedUser
+        model = SubscribedUser 
         fields = ['email']
         labels ={
             'email':''

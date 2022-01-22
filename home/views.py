@@ -52,7 +52,7 @@ def contactUs(request):
             data.email = form.cleaned_data['email']
             data.subject = form.cleaned_data['subject']
             data.message = form.cleaned_data['message']
-            data.ip = request.META.get('REMOTE_ADDR')
+            data.ip = request.META.get('REMOTE_ADDR') 
             data.save()# save to db
             messages.success(request,"Message successfully sent, we will get back to you soon.")
             return HttpResponseRedirect('/contact')

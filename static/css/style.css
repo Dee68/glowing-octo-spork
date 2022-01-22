@@ -1205,7 +1205,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 
 #fh5co-testimonial {
-  background: #efefef;
+  background: #3c763d;
 }
 #fh5co-testimonial .testimony-slide {
   text-align: center;
@@ -1251,7 +1251,7 @@ h1, h2, h3, h4, h5, h6, figure {
 }
 #fh5co-testimonial .arrow-thumb a {
   font-size: 32px;
-  color: #dadada;
+  color: #3c763d;
 }
 #fh5co-testimonial .arrow-thumb a:hover, #fh5co-testimonial .arrow-thumb a:focus, #fh5co-testimonial .arrow-thumb a:active {
   text-decoration: none;
