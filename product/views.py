@@ -59,7 +59,7 @@ def category_products(request, cslug=None):
     pcategories = Category.objects.filter(parent=None)
     if cslug:
         category = get_object_or_404(Category, slug=cslug)
-        products = products.filter(category=category)
+        products = products.filter(category=category) 
     
     context = {'products':products,
     'categories':categories,'category':category,'pcategories':pcategories,
